@@ -1,0 +1,105 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : Mar 23, 2014, 11:00:40 AM
+    Author     : Haining
+*/
+
+* {
+    font-family: Times New Roman;
+}
+
+h1 {text-align: center;}
+h2 {text-align: center;}
+h3 {text-align: center;}
+h4 {text-align: center;}
+
+
+#wrap {
+    text-align: center;
+    width: 720px;
+    height: 380px;
+    margin: auto;
+    background: #EFEFEF;
+    border-radius: 5px;
+    border: 2px solid black;    
+}
+
+#header {
+    width:200px;  
+    height: 100px;
+    margin-left:50px;
+}
+
+#footer {
+    width: 720px;
+    margin-top: 100px;
+    margin: auto;
+}
+
+label{
+    padding:5px;
+    font-size: 16px;
+    margin: 10px;
+}
+
+.one {
+    width:150px;
+    text-align: left;
+}
+
+.two {
+    width:150px;
+}
+
+
+#copy {
+    text-align:center;
+}
+
+.a2 {
+    text-decoration: none;
+    color:black;
+}
+
+input[tpye=number] {
+    width: 100px;
+} 
+
+#fd1 {
+    height: 240px;
+    margin: auto;
+}
+
+#fd2 {
+    height: 240px;
+    margin: auto;
+}
+
+.left {
+    padding:5px;
+    display: inline-block;
+    width:350px;
+    float:left;
+    height: 240px;
+}
+
+.right {
+    padding:5px;
+    display: inline-block;
+    width:350px;
+    float:left;
+    height: 240px;
+}
+
+button {
+    margin-left: 15px;
+    margin-top: 5px;
+    width: 100px;
+    height: 25px;
+    border-radius: 3px;
+    font-size:14px;
+}

@@ -1,0 +1,201 @@
+<?php
+
+function GibbsEnergy($Species, $t, $p, $DilectricConstant, $ro){
+    // Create a hashmap that maps each species to the following properties (TABLE 2 of Hall et al 2023) - can convert to DB later if necessary
+    // $ro is density, g/cm^3
+    // Trun is in Kelvin
+    $Species_to_properties = array(
+        "Ba2+" => [-560.8, 9.6, -1.94, 7.78, 0.92, -63.85, 0, 2],
+        "BaSO40" => [-1290.3, 33.3, -11.28, 21.04, 1.10, -677.12, 406, 0],
+        "Cl-" => [-131.3, 56.7, 2.34, 3.00, 1.37, -326.8, 0, -1],
+        "HCl0" => [-134.4, 123.6, 0.92, 0.81, 0.15, -326.8, 1.08, 0],
+        "K+" => [-282.5, 101, 0.62, 5.28, 1.12, -0.19, 0, 1],
+        "KCl0" => [-416.3, 94.3, -3.50, 3.00, 1.37, -93.91, 35.6, 0],
+        "KOH0" => [-433.9, 129.7, -5.93, 7.94, 1.68, -181.34, 35.7, 0],
+        "Li0" => [-292.6, 11.3, -0.29, 4.62, 1.18, 56.73, 0, 1],
+        "LiOH0" => [-447.7, 19.5, -1.18, 7.55, 1.66, -32.35, 32.8, 0],
+        "Na+" => [-261.9, 58.4, -0.32, 5.05, 1.23, 35.65, 0, 1],
+        "NaOH0" => [-421.9, 14.6, -2.34, 5.65, 2.42, -74.99, 22.8, 0],
+        "NH30" => [-79.5, 111.2, 1.45, 5.32, 1.02, 53.09, 0, 1],
+        "NH4+" => [-26.7, 107.8, 2.45, 1.96, 1.36, 77.92, 1.1],
+        "OH-" => [-157.3, -10.7, 0.3, 2.69, 2.18, -89.04, 0, -1],
+        "PO43-" => [-981.1, -221.8, -2.37, 6.7, 1.55, -303.19, 0, -3],
+        "HPO42-" => [-1089.1, -33.5, 1.22, 4.99, 1.75, -148.15, 0, -2],
+        "H2PO4-" => [-1130.3, 90.4, 3.19, 2.66, 2.58, -48.21, 0, -1],
+        "H3PO40" => [-1142.7, 159, 4.41, 0.86, 2.95, 56.28, 0.5, 0],
+        "SiO20" => [-833.4, 56.5, 2.19, 1.18, 2.62, -28.68, 1.3, 0],
+        "SO42-" => [-744.5, 18.8, 2.11, 5.21, 1.73, -167.53, 0, -2]
+    );
+    $properties = $Species_to_properties[$Species];
+
+
+
+
+    // All of this is a direct conversion of Dr. Hall's Mathematica code
+    $Trun = $t + 273.15;
+    $Gfaqs = $properties[0];
+    $Sref = $properties[1];
+    $aa1 = $properties[2];
+    $riMSA = $properties[3];
+    $rw = $properties[4];
+    $cc1 = $properties[5];
+    $dmol = $properties[6];
+    $zi = $properties[7];
+
+    
+
+    //b2 values through Calcb2 function
+    
+
+    $b2 = Calcb2($DilectricConstant);
+    $b3 = 1 + $b2 / 3;
+
+
+    $b6 = 1 - $b2 / 6;
+    $b12 = 1 + $b2 / 12;
+
+
+    $Pref = 1;
+    $Tref = 298.15;
+    $epsref = 78.24514;
+    $Mw = 18.0152;
+    $b225 = 2.13101;
+    $cj = 4.184;
+    $roref = 0.9970614;  // units g/cm3
+    $R = 1.9872;  // units cal/K/mol
+
+
+    
+
+    $b625 = 1 - $b225 / 6;
+    $b325 = 1 + $b225 / 3;
+    $b1225 = 1 + $b225 / 12;
+
+    $G1 = $Gfaqs - $Sref * ($Trun - $Tref);
+    $G2 = - $cc1 * ($Trun * log($Trun / $Tref) - $Trun + $Tref) + $aa1 * ($p - $Pref);
+
+    
+    $depsdt25 = -0.36005189; // del eps del  (numerical approximation)
+    $dbdt25 = -0.00206593; // del b del t (numerical approximation)
+    $gmsa = 166261.8 * ($zi ** 2) / ($riMSA + $rw * $b6 / $b3) * (1 / $DilectricConstant - 1); // Gmsa
+
+    $gmsa25 = 166261.8 * ($zi ** 2) / ($riMSA + $rw * $b625 / $b325) * (1 / $epsref - 1); // Gmsa25
+    $dsmsa25 = (166261.8 * ($zi ** 2) / ($riMSA + $rw * $b625 / $b325) / ($epsref ** 2) * $depsdt25 + 
+    166261.8 * ($zi ** 2) / ($riMSA + $rw * $b625 / $b325) ** 2 * (1 / $epsref - 1) * $rw * $dbdt25 * (-1 / 6 / $b325 - $b625 / $b325 ** 2 / 3)); // smsaref
+    $G3 = ($gmsa - $gmsa25 + $dsmsa25 * ($Trun - $Tref)); // MSA contributions, Gmsa - Gmsaref + Smsaref(T-Tr)
+    $G4 = ($R * $Trun * log($R * $cj * $Trun * $ro / (100 * $Pref)) - 
+        $R * $Tref * log($R * $cj * $Tref * $roref / (100 * $Pref)) + ($Trun - $Tref) *
+        $R * (-log($roref * $R * $cj * $Tref / (100 * $Pref)) - (1 + 
+            $Tref / $roref * (-0.258666 * 10 ** -3)))); // standard state contributions, Gss-Gssref+ Sssref(T-Tref)
+    $alf25 = 2.5530 * 10 ** -4;
+
+    $K = $riMSA / $rw; // ratio of radii
+    $Nconv = 0.602214; // Na*cm3/A3
+    $tet = pi() / 6 * (2 * $rw) ** 3 * $Nconv * $ro / $Mw; // eta = pi/6*simga^3*ro/MW*Na*cm3/A3
+    $tet1 = 1 - $tet; // 1-eta
+    $tet25 = pi() / 6 * (2 * $rw) ** 3 * $Nconv * $roref / $Mw;
+    $tet125 = 1 - $tet25;
+    $F = -log($tet1) + 3 * $K * ($tet / $tet1) + 
+    3 * $K ** 2 * ($tet / $tet1 ** 2 + $tet / $tet1 + log($tet1)) - 
+    $K ** 3 * (((3 * $tet ** 3 - 6 * $tet ** 2 + $tet) / $tet1 ** 3) + 2 * log($tet1)); // Ghs/RT
+    $F25 = -log($tet125) + 3 * $K * ($tet25 / $tet125) + 
+    3 * $K ** 2 * ($tet25 / $tet125 ** 2 + $tet25 / $tet125 + log($tet125)) - 
+    $K ** 3 * (((3 * $tet25 ** 3 - 6 * $tet25 ** 2 + $tet25) / $tet125 ** 3) + 
+        2 * log($tet125)); // Ghs/RT 25C
+    $L25 = (1 / $tet125) + 3 * $K * (1 / $tet125 + $tet25 / $tet125 ** 2) + 
+    3 * $K ** 2 * (2 * $tet25 / $tet125 ** 3 + (1 + $tet25) / $tet125 ** 2) - 
+    $K ** 3 * (((9 * $tet25 ** 2 - 12 * $tet25 + 1) / $tet125 ** 3) + ((9 * $tet25 ** 3 - 18 * $tet25 ** 2 + 3 * $tet25) / $tet125 ** 4) - (2 / $tet125)); // Lvov 1990 appendix HS
+
+    $muhs25 = $R * $Tref * $F25; // G Hard sphere at 25C
+    $muhs = $R * $Trun * $F; // G hard sphere
+    $shs25 = -$R * ($F25 - $tet25 * $alf25 * $Tref * $L25); // hs entropy at 25C
+    $G5 = $muhs - $muhs25 + $shs25 * ($Trun - $Tref); // hard sphere contribution
+    $KK = $rw / $riMSA;
+
+    $GDMSA = -14393.164 * pow($dmol, 2) * ($DilectricConstant - 1) /
+    ($riMSA**3 * (($KK**3*2*(1 - $b12/$b3)*pow($b12/$b6, 3)) +
+        2*$DilectricConstant*pow(1 + $KK*$b6/$b3, 3) + pow(1 + $KK*$b12/$b6, 3)));
+
+    $Deps25 = 2 * pow(1 + $b225/12, 4) * pow(1 + $b225/3, 2) / (3 * pow(1 - $b225/6, 6))
+    + pow(1 + $b225/12, 3) * pow(1 + $b225/3, 2) / (3 * pow(1 - $b225/6, 6))
+    + pow(1 + $b225/12, 4) * pow(1 + $b225/3, 2) / pow(1 - $b225/6, 7);
+
+    $Db1225 = 1/12;
+    $Db325 = 1/3;
+    $Db625 = -1/6;
+    $db2dt25 = $depsdt25 / $Deps25;
+
+    $dGDMSAdb225 = -14393.164 * $dmol**2 * $Deps25 /
+        ($riMSA**3 * (($KK*$b1225/$b625)**3 +
+            2*$KK**3*$b1225**3*($Db1225/$b325 - $b1225*$Db325/$b325**2)/$b625**3 +
+            2*(1 + $KK*$b625/$b325)**3*$epsref))
+        + 14393.164 * $dmol**2 * (-1 + $epsref) *
+        (6*$KK**3*$b1225**2*($Db1225/$b325 - $b1225*$Db325/$b325**2)/$b625**3 +
+            2*$KK**3*$b1225**3*(-$Db1225/$b325 + $b1225*$Db325/$b325**2)/$b625**3 -
+            6*$KK**3*$b1225**3*($Db625/$b625**4) +
+            6*(1 + $KK*$b625/$b325)**2*$epsref*(-$KK*$b625*$Db325/$b325**2 + $KK*$Db625/$b325) +
+            3*(1 + $KK*$b1225/$b625)**2*($KK*$Db1225/$b625 - $KK*$b1225*$Db625/$b625**2) +
+            2*pow(1 + $KK*$b625/$b325, 3) * $Deps25)
+        / ($riMSA**3 * (($KK*$b1225/$b625)**3 +
+            2*$KK**3*$b1225**3*($Db1225/$b325 - $b1225*$Db325/$b325**2)/$b625**3 +
+            2*(1 + $KK*$b625/$b325)**3*$epsref)**2);
+
+    $SDMSA25 = -$dGDMSAdb225 * $db2dt25;
+
+    $GDMSA25 = -14393.164 * $dmol**2 * ($epsref - 1) /
+        ($riMSA**3 * (($KK*$b1225/$b325)**3 +
+            2*$KK**3*$b1225**3*($Db1225/$b625 - $b1225*$Db625/$b625**2)/$b325**3 +
+            2*(1 + $KK*$b1225/$b625)**3*$epsref));
+
+    $G6 = $GDMSA - $GDMSA25 + $SDMSA25 * ($Trun - $Tref);
+
+    // Dipole-dipole contributions
+    $Gvalues = $G1 + $G2 + $G3 + $G4 + $G5 + $G6;
+    $Gent = $G1 - $Gfaqs;
+    $Gref = $G1 - $Gent;
+
+
+
+
+
+    return $Gvalues;
+};
+
+function Calcb2($DilectricConstant)
+{
+    $equation = function ($b2) use ($DilectricConstant) {
+        $b3 = 1 + $b2 / 3;
+        $b6 = 1 - $b2 / 6;
+        $b12 = 1 + $b2 / 12;
+        return $DilectricConstant - pow($b12, 4) * pow($b3, 2) / pow($b6, 6);
+    };
+
+    // Initial guess for b2 for Newton-Raphson method
+    $b2_guess = $DilectricConstant / 10;
+
+    // Newton-Raphson method to find the value of b2 given the Dielectric constant
+    function newtonMethod($equation, $initialGuess, $DilectricConstant)
+    {
+        $maxIterations = 1000;
+        $tolerance = 1e-6;
+
+        $x = $initialGuess;
+
+        for ($i = 0; $i < $maxIterations; $i++) {
+            $fx = $equation($x, $DilectricConstant);
+            $dfx = ($equation($x + $tolerance, $DilectricConstant) - $fx) / $tolerance;
+
+            $x = $x - $fx / $dfx;
+
+            if (abs($fx) < $tolerance) {
+                return $x;
+            }
+        }
+
+        return null; // Solution not found within the maximum number of iterations
+    }
+
+    $b2_solution = newtonMethod($equation, $b2_guess, $DilectricConstant);
+
+    return $b2_solution;
+};
