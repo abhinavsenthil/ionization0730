@@ -19,8 +19,8 @@ function validateSpeciesDataInput(species, TempC, PBar){
         
     }
     else if (species === "BaSO40"){
-        // if ( TempC > 600 || TempC < 200) return 'Temp should be between 200-600 C for ' + species;
-        // if (PBar > 2000 || PBar < 400) return 'Pressure should be between 400-2000 Bar for ' + species;
+        if ( TempC > 600 || TempC < 200) return 'Temp should be between 200-600 C for ' + species;
+        if (PBar > 2000 || PBar < 400) return 'Pressure should be between 400-2000 Bar for ' + species;
         return 'OK';
             
         
