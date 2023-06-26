@@ -241,7 +241,7 @@ and open the template in the editor.
                                         <option value="K+">K+</option>
                                         <option value="KCl0">KCl0</option>
                                         <option value="KOH0">KOH0</option>
-                                        <option value="Li0">Li0</option>
+                                        <option value="Li+">Li+</option>
                                         <option value="LiOH0">LiOH0</option>
                                         <option value="Na+">Na+</option>
                                         <option value="NaOH0">NaOH0</option>
@@ -301,10 +301,10 @@ and open the template in the editor.
                                 <td><Input class="two" id="Dilectric" label="ε" title="Dilectric constant" onblur=" "></td>  
                             </tr>
                             <tr>
-                                <td class="one">Gibbs Energy / J</td>
-                                <td><Input class="two" id="Gibbs" label="Input Gibbs Energy / J" title="Input Gibbs Energy / J" onblur=""></td>
+                                <td class="one">Δ<sub>f</sub> 𝐺<sup>0</sup><sub>j</sub> / kcal mol<sup>-1</sup></td>
+                                <td><Input class="two" id="Gibbs" label="Input Δ𝑓 𝐺₀ⱼ / J" title="Input Δ𝑓 𝐺₀ⱼ / J" onblur=""></td>
                             </tr>
-                            
+
                         </table>
                 </fieldset>
                 <br> <br>

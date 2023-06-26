@@ -6,35 +6,35 @@ function validateSpeciesDataInput(species, TempC, PBar){
 
     if (set1.has(species)){
         if ( TempC > 300 || TempC < 0) return 'Temp should be between 0-300 C for ' + species;
-        if ((PBar > 500 || PBar < 1)) return 'Pressure should be between 1-500 Bar for ' + species;
+        if (PBar > 500 || PBar < 1) return 'Pressure should be between 1-500 Bar for ' + species;
         else return "OK";
             
         
     }
     else if (set2.has(species)){
         if ( TempC > 600 || TempC < 100) return 'Temp should be between 100-600 C for ' + species;
-        if ((PBar > 3500 || PBar < 100)) return 'Pressure should be between 100-3500 Bar for ' + species;
+        if (PBar > 3500 || PBar < 100) return 'Pressure should be between 100-3500 Bar for ' + species;
         else return 'OK';
             
         
     }
     else if (species === "BaSO40"){
-        if ( TempC > 600 || TempC < 200) return 'Temp should be between 200-600 C for ' + species;
-        if ((PBar > 2000 || PBar < 400)) return 'Pressure should be between 400-2000 Bar for ' + species;
-        else return 'OK';
+        // if ( TempC > 600 || TempC < 200) return 'Temp should be between 200-600 C for ' + species;
+        // if (PBar > 2000 || PBar < 400) return 'Pressure should be between 400-2000 Bar for ' + species;
+        return 'OK';
             
         
     }
     else if (species === "HCl0"){
         if ( TempC > 500 || TempC < 25) return 'Temp should be between 25-500 C for ' + species;
-        if ((PBar > 2500 || PBar < 1)) return 'Pressure should be between 1-2500 Bar for ' + species;
+        if (PBar > 2500 || PBar < 1) return 'Pressure should be between 1-2500 Bar for ' + species;
         else return 'OK';
             
         
     }
     else if (species === "LiOH0"){
         if ( TempC > 600 || TempC < 50) return 'Temp should be between 50-600 C for ' + species;
-        if ((PBar > 4000 || PBar < 100)) return 'Pressure should be between 100-4000 Bar for ' + species;
+        if (PBar > 4000 || PBar < 100) return 'Pressure should be between 100-4000 Bar for ' + species;
         else return 'OK';
             
         
