@@ -1,3 +1,7 @@
+// This implementation is not actually used in the website, just kept here for JS version of newton-raphson method (beeter to view in terminal than website in PHP) 
+
+// Try Bisection implementation: O(log n) instead of Newton-RAPHSON: O(n) for faster results
+
 // Define the equation as a function
 function equation(b2, eps) {
     var b3 = 1 + b2 / 3;
