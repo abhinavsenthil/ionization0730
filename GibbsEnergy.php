@@ -5,31 +5,6 @@ function GibbsEnergy($Species, $t, $p, $DilectricConstant, $ro){
     // $ro is density, g/cm^3
     // Trun is in Kelvin
 
-    // this is the SI unit table, completely different from what's used in mathematica 
-
-    // $Species_to_properties = array(
-    //     "Ba2+" => [-560.8, 9.6, -1.94, 7.78, 0.92, -63.85, 0, 2],
-    //     "BaSO40" => [-1290.3, 33.3, -11.28, 21.04, 1.10, -677.12, 406, 0],
-    //     "Cl-" => [-131.3, 56.7, 2.34, 3.00, 1.37, -326.8, 0, -1],
-    //     "HCl0" => [-134.4, 123.6, 0.92, 0.81, 0.15, -326.8, 1.08, 0],
-    //     "K+" => [-282.5, 101, 0.62, 5.28, 1.12, -0.19, 0, 1],
-    //     "KCl0" => [-416.3, 94.3, -3.50, 3.00, 1.37, -93.91, 35.6, 0],
-    //     "KOH0" => [-433.9, 129.7, -5.93, 7.94, 1.68, -181.34, 35.7, 0],
-    //     "Li+" => [-292.6, 11.3, -0.29, 4.62, 1.18, 56.73, 0, 1],
-    //     "LiOH0" => [-447.7, 19.5, -1.18, 7.55, 1.66, -32.35, 32.8, 0],
-    //     "Na+" => [-261.9, 58.4, -0.32, 5.05, 1.23, 35.65, 0, 1],
-    //     "NaOH0" => [-421.9, 14.6, -2.34, 5.65, 2.42, -74.99, 22.8, 0],
-    //     "NH30" => [-79.5, 111.2, 1.45, 5.32, 1.02, 53.09, 0, 1],
-    //     "NH4+" => [-26.7, 107.8, 2.45, 1.96, 1.36, 77.92, 1.1],
-    //     "OH-" => [-157.3, -10.7, 0.3, 2.69, 2.18, -89.04, 0, -1],
-    //     "PO43-" => [-981.1, -221.8, -2.37, 6.7, 1.55, -303.19, 0, -3],
-    //     "HPO42-" => [-1089.1, -33.5, 1.22, 4.99, 1.75, -148.15, 0, -2],
-    //     "H2PO4-" => [-1130.3, 90.4, 3.19, 2.66, 2.58, -48.21, 0, -1],
-    //     "H3PO40" => [-1142.7, 159, 4.41, 0.86, 2.95, 56.28, 0.5, 0],
-    //     "SiO20" => [-833.4, 56.5, 2.19, 1.18, 2.62, -28.68, 1.3, 0],
-    //     "SO42-" => [-744.5, 18.8, 2.11, 5.21, 1.73, -167.53, 0, -2]
-    // );
-    // $properties = $Species_to_properties[$Species];
 
     $Species_to_properties = array(
         "PO43-" => [-234480, -53.00, -0.567, 3.351, 0.776, -72.463, 0.00, -3],
@@ -73,8 +48,8 @@ function GibbsEnergy($Species, $t, $p, $DilectricConstant, $ro){
     //b2 values through Calcb2 function
 
     $b2 = Calcb2($DilectricConstant);
-    $b3 = 1 + $b2 / 3;
 
+    $b3 = 1 + $b2 / 3;
     $b6 = 1 - $b2 / 6;
     $b12 = 1 + $b2 / 12;
 
@@ -101,8 +76,7 @@ function GibbsEnergy($Species, $t, $p, $DilectricConstant, $ro){
     $gmsa = 166261.8 * ($zi ** 2) / ($riMSA + $rw * $b6 / $b3) * (1 / $DilectricConstant - 1); // Gmsa
 
     $gmsa25 = 166261.8 * ($zi ** 2) / ($riMSA + $rw * $b625 / $b325) * (1 / $epsref - 1); // Gmsa25
-    $dsmsa25 = (166261.8 * ($zi ** 2) / ($riMSA + $rw * $b625 / $b325) / ($epsref ** 2) * $depsdt25 + 
-    166261.8 * ($zi ** 2) / ($riMSA + $rw * $b625 / $b325) ** 2 * (1 / $epsref - 1) * $rw * $dbdt25 * (-1 / 6 / $b325 - $b625 / $b325 ** 2 / 3)); // smsaref
+    $dsmsa25 = (166261.8 * ($zi ** 2) / ($riMSA + $rw * $b625 / $b325) / ($epsref ** 2) * $depsdt25 + 166261.8 * ($zi ** 2) / ($riMSA + $rw * $b625 / $b325) ** 2 * (1 / $epsref - 1) * $rw * $dbdt25 * (-1 / 6 / $b325 - $b625 / $b325 ** 2 / 3)); // smsaref
     $G3 = ($gmsa - $gmsa25 + $dsmsa25 * ($Trun - $Tref)); // MSA contributions, Gmsa - Gmsaref + Smsaref(T-Tr)
     $G4 = ($R * $Trun * log($R * $cj * $Trun * $ro / (100 * $Pref)) - 
         $R * $Tref * log($R * $cj * $Tref * $roref / (100 * $Pref)) + ($Trun - $Tref) *
@@ -168,16 +142,18 @@ function GibbsEnergy($Species, $t, $p, $DilectricConstant, $ro){
             2*$KK**3*$b1225**3*($Db1225/$b625 - $b1225*$Db625/$b625**2)/$b325**3 +
             2*(1 + $KK*$b1225/$b625)**3*$epsref));
 
-    $G6 = $GDMSA - $GDMSA25 + $SDMSA25 * ($Trun - $Tref);
-
+    if($properties[7] == 0) {
+        $G6 = 0;
+        }
+    else $G6 = $GDMSA - $GDMSA25 + $SDMSA25 * ($Trun - $Tref);
     // Dipole-dipole contributions
     $Gvalues = $G1 + $G2 + $G3 + $G4 + $G5 + $G6;
     $Gent = $G1 - $Gfaqs;
     $Gref = $G1 - $Gent;
 
-
-
-
+    if ($Species == "PO43-" || $Species == "HPO42-" || $Species == "H2PO4-"){
+        $Gvalues += 90000;
+    }
 
     return $Gvalues;
 };
@@ -192,7 +168,7 @@ function Calcb2($DilectricConstant)
     };
 
     // Initial guess for b2 for Newton-Raphson method
-    $b2_guess = $DilectricConstant / 10;
+    $b2_guess = $DilectricConstant / 100;
 
     // Newton-Raphson method to find the value of b2 given the Dielectric constant
     function newtonMethod($equation, $initialGuess, $DilectricConstant)
@@ -220,3 +196,4 @@ function Calcb2($DilectricConstant)
 
     return $b2_solution;
 };
+

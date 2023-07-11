@@ -4,6 +4,9 @@ function validateSpeciesDataInput(species, TempC, PBar){
     const set1 = new Set(["Ba2+", "Cl-", "K+", "Li+", "Na+", "NH30", "NH4+", "OH-", "PO43-", "HPO42-", "H2PO4-", "H3PO40", "SiO20", "SO42-" ]);
     const set2 = new Set(["KCl0", "KOH0", "NaOH0"]);
 
+    // for degugging
+    return 'OK';
+
     if (set1.has(species)){
         if ( TempC > 300 || TempC < 0) return 'Temp should be between 0-300 C for ' + species;
         if (PBar > 500 || PBar < 1) return 'Pressure should be between 1-500 Bar for ' + species;
