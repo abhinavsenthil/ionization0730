@@ -151,9 +151,6 @@ function GibbsEnergy($Species, $t, $p, $DilectricConstant, $ro){
     $Gent = $G1 - $Gfaqs;
     $Gref = $G1 - $Gent;
 
-    if ($Species == "PO43-" || $Species == "HPO42-" || $Species == "H2PO4-"){
-        $Gvalues += 90000;
-    }
 
     return $Gvalues;
 };
