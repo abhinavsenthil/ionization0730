@@ -69,6 +69,26 @@
 
     //$selfDefine[8] = $Species;
     $selfDefine[8] = GibbsEnergy($Species, $Tc, $Pbar, $epsilon, $finalDensity);
+
+
+
+    // Function to round float values to 4 decimal places
+    function roundFloatToFourDP(&$value) {
+        if (is_float($value)) {
+            $value = round($value, 4);
+        }
+    }
+
+    // Loop through the $selfDefine array and round float values to 4 decimal places
+    foreach ($selfDefine as &$item) {
+        if (is_float($item)) {
+            roundFloatToFourDP($item);
+        }
+    }
+
+    
+
+
    // echo json_encode($Pbar);
     echo json_encode($selfDefine);
    

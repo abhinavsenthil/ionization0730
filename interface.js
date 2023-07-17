@@ -320,7 +320,9 @@ function ajaxPost(p, t){
                     document.getElementById("Dilectric").value = returnedData[7];
                     document.getElementById("Gibbs").value = returnedData[8];
 
-                    appendStepTable(returnedData, p, t);
+                    returnedData.unshift(p, t);
+
+                    appendStepTable(returnedData);
                    // alert(returnedData);
                     }
                 });
@@ -340,18 +342,17 @@ function ajaxPost(p, t){
 };
 
 
-function appendStepTable(val, p, t){
+function appendStepTable(val){
     console.log(val);
     allData.push(val);
-    document.getElementById("stepTable").innerHTML = generateTable(p, t);
+    document.getElementById("stepTable").innerHTML = generateTable();
 
 }
 
-function generateTable(p, t){
-    console.log(p, t);
+function generateTable(){
 
     let tableHTML = "";
-    tableHTML += "<table>";
+    tableHTML += "<table class='innerTable'>";
     tableHTML += "<tr>";
     tableHTML += "<th>P/ bar</th>";
     tableHTML += "<th><em>t</em> / <sup>o</sup>C:</th>";
@@ -367,14 +368,15 @@ function generateTable(p, t){
     tableHTML += "</tr>";
 
 
+
+
     for (let i = 0; i < allData.length; i++) {
         data = allData[i];
         tableHTML += "<tr>";
-        tableHTML += "<td>" + p + "</td>";
-        tableHTML += "<td>" + t + "</td>";
         for (let j = 0; j < data.length; j++) {
             
             tableHTML += "<td>" + data[j] + "</td>";
+            
             
         }
         tableHTML += "</tr>";
