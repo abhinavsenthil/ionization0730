@@ -39,7 +39,7 @@ h4 {text-align: center;}
     background: #EFEFEF;
     border-radius: 5px;
     border: 2px solid black;  
-    position: relative;
+    position: absolute;
     justify-content: space-between;  
 }
 

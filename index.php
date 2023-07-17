@@ -12,7 +12,7 @@ and open the template in the editor.
         <meta name="keywords" content="Ionization Constant of Water, Self-ionization Constant of Water, Dissociation constant of water, density of water, equation of state, Kw, high temperature, high pressure, low density">
         <meta name="author" content="Haining Zhao">
         <meta name="description" content="The Ionization Constant of Water pKw≡-log10(Kw) computational tool">
-        <title>The Ionization Constant of Water pKw≡-log10(Kw) computational tool</title>
+        <title>Web Computational Tool</title>
         <style>
             <?php include 'ion.css'; ?>
         </style>
@@ -286,12 +286,10 @@ and open the template in the editor.
             <a href="">DataBase</a>
         </nav>
         -->
-        <h1>The Ionization Constant of Water</h1>
-        <h2>p<em>K</em>w&equiv;-log<sub>10</sub>(<em>K</em>w)</h2>
+        <h1>Calculate Aqueous Thermodynamic Properties</h1>
         <h3>&#8212;&#8212; A web computational tool &#8212;&#8212;</h3>
         <div id="wrap">
-            <p style="text-align:center">Negative logarithm (base 10) of the ionization constant of water, <em>K</em>w, can be <br> calculated at temperatures of 0-800 <sup>o</sup>C, pressures of 1-10000 bar, and densities of 0-1.25 g cm<sup>-3</sup></p>
-            <p style="text-align:center; font-size:13px">The water properties are calculated by IAPWS-95 EOS (Wagner and Pruβ, 2002).</p>
+            <p style="text-align:center">Calculate Different aqueous Thermodynamic Properties such as the p<em>K</em>w, <em>ε</em> or Gibbs Energy of Reaction of different species. </p>
                         <div role="main">
             <div class="left" role="form" >
                 <fieldset id="fd1">
@@ -403,7 +401,7 @@ and open the template in the editor.
             </div>
             
         <!-- blank space for aethetics -->
-        <div style="width: 100px; height: 285px; border: 1px solid transparent;">
+        <div style="width: 100px; height: 320px; border: 1px solid transparent;">
                 &nbsp;
             </div>
         <!-- create new div for the range functionality -->
@@ -449,6 +447,10 @@ and open the template in the editor.
         </div>
             </div>
             </div>
+        
+        <div style="width: 100px; height: 140px; border: 1px solid transparent;">
+            &nbsp;
+        </div>
         
         <div id="buttons">
             <button type="button" onclick="reSet()" >Reset</button>
