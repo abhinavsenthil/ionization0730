@@ -59,6 +59,6 @@
     $selfDefine[3] = $liqDens; // liquid phase density
     $selfDefine[4] = $vapDens; // vapor phase density
     
-   // echo json_encode($Pbar);
+    // echo json_encode($Pbar);
     echo json_encode($selfDefine);
    

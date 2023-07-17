@@ -171,7 +171,7 @@ function Calcb2($DilectricConstant)
     function newtonMethod($equation, $initialGuess, $DilectricConstant)
     {
         $maxIterations = 1000;
-        $tolerance = 1e-6;
+        $tolerance = 1e-8;
 
         $x = $initialGuess;
 

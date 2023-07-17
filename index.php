@@ -28,6 +28,10 @@ and open the template in the editor.
                 {
                     document.getElementById('Dens').value = '';
                     document.getElementById('Dens').disabled = true;
+                    document.getElementById('Gibbs').value = '';
+                    document.getElementById('Gibbs').disabled = true;
+                    document.getElementById('Constant').value = '';
+                    document.getElementById('Constant').disabled = false;
                     document.getElementById('Temp').value = '';
                     document.getElementById('Temp').disabled = true;
                     document.getElementById('Pres').value = '';
@@ -52,10 +56,16 @@ and open the template in the editor.
                     document.getElementById('ROT').onchange = disablefield;
                     document.getElementById('T').onchange = disablefield;
                     document.getElementById('PT2').onchange = disablefield;
+                    document.getElementById('PT3').onchange = disablefield;
+                    document.getElementById('constT').onchange = disablefield;
+                    document.getElementById('constP').onchange = disablefield;
                     document.getElementById('PT').checked = false;
                     document.getElementById('ROT').checked = false;
                     document.getElementById('T').checked = false;
                     document.getElementById('PT2').checked = false;
+                    document.getElementById('PT3').checked = false;
+                    document.getElementById('constT').checked = false;
+                    document.getElementById('constP').checked = false;
                     
                 };
                 function disablefield()
@@ -88,9 +98,7 @@ and open the template in the editor.
                         document.getElementById('Pkw').value = '';
                         document.getElementById('Pkw').disabled = false;
                         document.getElementById('Dilectric').value = '';
-                        document.getElementById('Dilectric').disabled = true;
-                        
-                        
+                        document.getElementById('Dilectric').disabled = true;                       
                         document.getElementById('scDens').value ='';
                         document.getElementById('scDens').disabled =true;
                         document.getElementById('Psat').value = '';
@@ -146,6 +154,88 @@ and open the template in the editor.
                         document.getElementById('Dilectric').value = '';
                         document.getElementById('Dilectric').disabled = false;
                     }
+                    else if ( document.getElementById('PT3').checked == true )
+                    {
+                        document.getElementById('Dens').value = '';
+                        document.getElementById('Dens').disabled = true;
+                        document.getElementById('Temp').value = '';
+                        document.getElementById('Temp').disabled = false;
+                        document.getElementById('Pres').disabled = false;
+                        document.getElementById('Psat').disabled = true;
+                        document.getElementById('Pkw').value = '';
+                        document.getElementById('Pkw').disabled = true;
+                        document.getElementById('Pkwl').disabled = true;
+                        document.getElementById('Pkwv').disabled = true;
+                        document.getElementById('scDens').disabled = true;
+                        document.getElementById('LiqDens').disabled = true;
+                        document.getElementById('VapDen').disabled = true;
+                        document.getElementById('Dilectric').value = '';
+                        document.getElementById('Dilectric').disabled = true;
+                    }
+                    else if (document.getElementById('constT').checked == true )
+                    {
+                        document.getElementById('Pres').value = '';
+                        document.getElementById('Pres').disabled = true; 
+                        document.getElementById('Temp').value = '';
+                        document.getElementById('Temp').disabled = true;
+                        document.getElementById('Dens').disabled = true;
+                        document.getElementById('Pkw').value = '';
+                        document.getElementById('Pkw').disabled = true;
+                        document.getElementById('Dilectric').value = '';
+                        document.getElementById('Dilectric').disabled = true;                       
+                        document.getElementById('scDens').value ='';
+                        document.getElementById('scDens').disabled =true;
+                        document.getElementById('Psat').value = '';
+                        document.getElementById('Psat').disabled = true;
+                        document.getElementById('LiqDens').value = '';
+                        document.getElementById('LiqDens').disabled = true;
+                        document.getElementById('VapDen').value = '';
+                        document.getElementById('VapDen').disabled = true;
+                        document.getElementById('Pkwl').value = '';
+                        document.getElementById('Pkwl').disabled = true;
+                        document.getElementById('Pkwv').value = '';
+                        document.getElementById('Pkwv').disabled = true;
+                        document.getElementById('Constant').value = '';
+                        document.getElementById('Constant').disabled = false;
+                        document.getElementById('Start').value = '';
+                        document.getElementById('Start').disabled = false;
+                        document.getElementById('End').value = '';
+                        document.getElementById('End').disabled = false;
+                        document.getElementById('Step').value = '';
+                        document.getElementById('Step').disabled = false;
+                    }
+                    else if (document.getElementById('constP').checked == true )
+                    {
+                        document.getElementById('Pres').value = '';
+                        document.getElementById('Pres').disabled = true; 
+                        document.getElementById('Temp').value = '';
+                        document.getElementById('Temp').disabled = true;
+                        document.getElementById('Dens').disabled = true;
+                        document.getElementById('Pkw').value = '';
+                        document.getElementById('Pkw').disabled = true;
+                        document.getElementById('Dilectric').value = '';
+                        document.getElementById('Dilectric').disabled = true;                       
+                        document.getElementById('scDens').value ='';
+                        document.getElementById('scDens').disabled =true;
+                        document.getElementById('Psat').value = '';
+                        document.getElementById('Psat').disabled = true;
+                        document.getElementById('LiqDens').value = '';
+                        document.getElementById('LiqDens').disabled = true;
+                        document.getElementById('VapDen').value = '';
+                        document.getElementById('VapDen').disabled = true;
+                        document.getElementById('Pkwl').value = '';
+                        document.getElementById('Pkwl').disabled = true;
+                        document.getElementById('Pkwv').value = '';
+                        document.getElementById('Pkwv').disabled = true;
+                        document.getElementById('Constant').value = '';
+                        document.getElementById('Constant').disabled = false;
+                        document.getElementById('Start').value = '';
+                        document.getElementById('Start').disabled = false;
+                        document.getElementById('End').value = '';
+                        document.getElementById('End').disabled = false;
+                        document.getElementById('Step').value = '';
+                        document.getElementById('Step').disabled = false;
+                    }
                 }
         </script>
         <script>
@@ -153,6 +243,8 @@ and open the template in the editor.
                 {
                     document.getElementById('Dens').value = '';
                     document.getElementById('Dens').disabled = true;
+                    document.getElementById('Gibbs').value = '';
+                    document.getElementById('Gibbs').disabled = true;
                     document.getElementById('Temp').value = '';
                     document.getElementById('Temp').disabled = true;
                     document.getElementById('Pres').value = '';
@@ -184,10 +276,7 @@ and open the template in the editor.
         <link rel="shortcut icon" type="image/x-icon" href="http://carbonlab.org/favicon.ico" />
     </head>
     <body>
-            <p role="banner"><a href="/" title="Home"><img src="http://www.energy.psu.edu/sites/default/files/EI_Wordmark-web.png" alt="Home" width="392" height="54" /></a></p>
-        <p align="center">
-          <nav class="links" id="nav" role="navigation" aria-label="Navigation"><a href="http://www.energy.psu.edu" title="EMS Energy Institute">Home</a> |  <a href="http://www.energy.psu.edu/about.html" title="About the EMS Energy Institute">About Us</a> |  <a href="http://www.energy.psu.edu/research.html" title="EMS Energy Institute research">Research</a> |  <a href="http://www.energy.psu.edu/facilities.html" title="Facilities at the EMS Energy Institute">Facilities</a> |  <a href="http://www.energy.psu.edu/news.html" title="News &amp; publications of the EMS Energy Institute">News & Publications</a> |  <a href="http://www.energy.psu.edu/energyoutreach" title="Services of the EMS Energy Institute">Services</a> |  <a href="http://www.energy.psu.edu/osd/index.html" title="Office of Student Development">Students</a> |  <a href="http://www.energy.psu.edu/employeeinfo.html" title="EMS Energy Institute employees section">Employees</a> |  <a href="http://www.energy.psu.edu/sitemap" title="Site map of the EMS Enregy Institute">Site Map</a></nav>
-        </p>
+            
         <!--
         <nav>
             <a href="">Water Model</a> |
@@ -216,7 +305,10 @@ and open the template in the editor.
                             <label for="T"><em>t</em>: p<em>K</em>w at saturation conditions</label></br>
                             <!-- Abhinav's Code-->
                             <input type="radio" name="inputselector" value="3" id="PT2" onclick="chooseConditions()"/>
-                            <label for="PT2"><em>t&#8212;P</em>: <em>ε</em> at a given <em>t</em>-<em>P</em></label></br></br>
+                            <label for="PT2"><em>t&#8212;P</em>: <em>ε</em> at a given <em>t</em>-<em>P</em></label><br>
+
+                            <input type="radio" name="inputselector" value="4" id="PT3" onclick="chooseConditions()"/>
+                            <label for="PT3"><em>t&#8212;P</em>: range of Gibbs energy functions</label></br></br>
                             <table role="presentation">
                                 <tr>
                                     <td class="one"><em>t</em> / <sup>o</sup>C:</td>
@@ -259,11 +351,11 @@ and open the template in the editor.
                                 </tr>
                                 
                             </table>
-                            <button type="button" onclick="reSet()" >Reset</button>
-                            <button type="button" onclick="ajaxPost()" >Calculate</button>
+                            
                         </form>
                 </fieldset>
             </div>
+            
             <div class="right">
                 <fieldset id="fd2">
                     <legend>Outputs</legend>
@@ -309,31 +401,63 @@ and open the template in the editor.
                 </fieldset>
                 <br> <br>
             </div>
-        </div><br>
-        <!-- <div id="footer" role="contentinfo">
-                <p><br><br></p>
-                <p style="margin-left:15px; margin-right:15px; font-size:13px">
-                    <em>P</em>&#8212; pressure, bar<br>
-                    p<em>K</em>w&#8212; negative logarithm (base 10) of the ionization constant of water<br>
-                    <em>P</em><sub>sat</sub>&#8212; water saturation pressure, bar<br>
-                    <em>t</em>&#8212; temperature, <sup>o</sup>C<br>
-                    <em>&rho;</em><sub>H2O</sub>&#8212; density of water, g cm<sup>-3</sup><br>
-                    <sub>(l)</sub>&#8212; liquid phase<br>
-                    <sub>(v)</sub>&#8212; vapor phase<br>
-                    <sub>(sc)</sub>&#8212; supercritical phase<br>
-                </p><br>
-                
-                <p style="margin-left:15px;"><Strong>References</strong></p>
-                <p style="margin-left:15px; margin-right:15px; font-size:13px">
-                    1.  Bandura A.V. and Lvov S. N. (2006), The ionization constant of water over wide ranges of temperature and density, <em>J. Phys. Chem. Ref. Data</em>., 35, 15-30.<br>
-                    2. Cooper, J.P. and Dooley R.B. (2007), Release on the ionization constant of H<sub>2</sub>O, <em>The International Association for the Properties of Water and Steam</em>, Lucerne, Switzerland, 7 pages.<br>
-                    3. Lvov S. N. and Harvey A. H. , Ionization constant of water, Chapter 5-70-71, <em>CRC Handbook of Chemistry and Physics</em>, 92<sup>nd</sup> Edition.</p><br>
-                
-               
-                <p p style="margin-left:15px; margin-right:15px; font-size:13px">
-                    *Haining Zhao has designed and programmed this web computational tool.
-                </p>
-        </div><br><br> -->
+            
+        <!-- blank space for aethetics -->
+        <div style="width: 100px; height: 285px; border: 1px solid transparent;">
+                &nbsp;
+            </div>
+        <!-- create new div for the range functionality -->
+        <div id="wrap3">
+        <div class="bottom-left"><fieldset id="fd3">
+                    <legend>Set one to Constant</legend>
+                        <form action="" method="get" name="input">
+                            <input type="radio" name="rangeselector" value="0" id="constT" onclick="chooseRangeConditions()"/>
+                            <label for="PT">Constant <em>t</em>, variable P</label></br>
+                            <input type="radio" name="rangeselector" value="1" id="constP" onclick="chooseRangeConditions()"/>
+                            <label for="ROT">Constant P, variable <em>t</em></label></br></br>
+                            <table role="presentation">
+                                <tr>
+                                    <td class="one">Constant <em>t</em> or P:</td>
+                                    <td><input class="two" type="number" name="Constant" id="Constant" value="" label="Input your constant value here" /></td>
+                                </tr>
+                            </table>
+                            
+                        </form>
+                </fieldset></div>
+
+                <div class="bottom-right"><fieldset id="fd4">
+                    <legend>Define the Range</legend>
+                        <form action="" method="get" name="input">
+                        <table role="presentation">
+                                <tr>
+                                    <td class="one">Start <em>t</em> or P:</td>
+                                    <td><input class="two" type="number" id="Start" label="Input starting Temp or Pres" onblur=""/></td>
+                                </tr>
+                                <tr>
+                                    <td class="one">End <em>t</em> or P:</td>
+                                    <td><input class="two" type="number" id="End" label="Input ending Temp or Pres" onblur=""/></td>
+                                </tr>
+                                <tr>
+                                    <td class="one">Δ<em>t</em> or ΔP (Integer):</td>
+                                    <td><input class="two" type="number" id="Step" label="Input Delta temp or Pres" onblur=""/></td>
+                                </tr>
+                                
+                                
+                            </table>
+                        </form>
+                </fieldset></div>
+        </div>
+            </div>
+            </div>
+        
+        <div id="buttons">
+            <button type="button" onclick="reSet()" >Reset</button>
+            <button type="button" onclick="ajaxPostBulk()" >Calculate</button>
+        </div>    
+        <div id="wrap2">
+            <div id="stepTable"></div>
+        </div>
+ 
        
     </body>
 </html>
