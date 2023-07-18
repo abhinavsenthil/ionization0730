@@ -178,6 +178,7 @@ button {
     border: 1px transparent solid;
     text-align:center;
     position: relative;
+    height: 100px;
 }
 
 .innerTable {

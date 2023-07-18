@@ -310,18 +310,7 @@ function ajaxPost(p, t){
                 }, 
                 // Call to PHP is sucessful   
                 success: function(returnedData){    
-                    document.getElementById("Pkw").value = returnedData[0];
-                    document.getElementById("Pkwl").value = returnedData[1];
-                    document.getElementById("Pkwv").value = returnedData[2];
-                    document.getElementById("Psat").value = returnedData[3];
-                    document.getElementById("scDens").value = returnedData[4];
-                    document.getElementById("LiqDens").value = returnedData[5];
-                    document.getElementById("VapDen").value = returnedData[6];
-                    document.getElementById("Dilectric").value = returnedData[7];
-                    document.getElementById("Gibbs").value = returnedData[8];
-
                     returnedData.unshift(p, t);
-
                     appendStepTable(returnedData);
                    // alert(returnedData);
                     }
@@ -341,10 +330,31 @@ function ajaxPost(p, t){
 
 };
 
+// Custom comparison function for sorting based on the second element of each sub-array
+function sortBySecondElement(a, b) {
+    if (range_condition === 0) {
+        const firstElementA = a[0];
+        const firstElementB = b[0];
+        return firstElementA - firstElementB;
+    } else if (range_condition === 1) {
+        const secondElementA = a[1];
+        const secondElementB = b[1];
+        return secondElementA - secondElementB;
+    } else {
+        // If range_condition is neither 0 nor 1, return 0 to keep the original order.
+        return 0;
+    }
+}
+
+// Sort the allData array using the custom comparison function
+allData.sort(sortBySecondElement);
+
+
 
 function appendStepTable(val){
     console.log(val);
     allData.push(val);
+    allData.sort(sortBySecondElement); // Sort the array based on the second element
     document.getElementById("stepTable").innerHTML = generateTable();
 
 }
@@ -374,13 +384,16 @@ function generateTable(){
         data = allData[i];
         tableHTML += "<tr>";
         for (let j = 0; j < data.length; j++) {
-            
-            tableHTML += "<td>" + data[j] + "</td>";
-            
-            
+            tableHTML += "<td>" + data[j] + "</td>";       
         }
         tableHTML += "</tr>";
+        if (allData[i][7] === 'N/A'){
+            tableHTML+= '</table>';
+            tableHTML += "<h3> After the last few values of the Temperature and Pressure printed above, you are beyond the Liquid Phase and the model is not built for Predicting Gibbs energy of reaction values in the Supercritical or vapour phase.</h3>";
+            break;
+        }
     }
+    console.log(allData);
     return tableHTML;
 
 }
