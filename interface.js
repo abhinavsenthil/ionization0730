@@ -1,48 +1,10 @@
 // Abhinav: validation of species
 function validateSpeciesDataInput(species, TempC, PBar){
     // Implementation of Table 1 of the 2023 Paper
-    const set1 = new Set(["Ba2+", "Cl-", "K+", "Li+", "Na+", "NH30", "NH4+", "OH-", "PO43-", "HPO42-", "H2PO4-", "H3PO40", "SiO20", "SO42-" ]);
-    const set2 = new Set(["KCl0", "KOH0", "NaOH0"]);
 
-    // for degugging
-    return 'OK';
-
-    if (set1.has(species)){
-        if ( TempC > 300 || TempC < 0) return 'Temp should be between 0-300 C for ' + species;
-        if (PBar > 500 || PBar < 1) return 'Pressure should be between 1-500 Bar for ' + species;
-        else return "OK";
-            
-        
-    }
-    else if (set2.has(species)){
-        if ( TempC > 600 || TempC < 100) return 'Temp should be between 100-600 C for ' + species;
-        if (PBar > 3500 || PBar < 100) return 'Pressure should be between 100-3500 Bar for ' + species;
-        else return 'OK';
-            
-        
-    }
-    else if (species === "BaSO40"){
-        if ( TempC > 600 || TempC < 200) return 'Temp should be between 200-600 C for ' + species;
-        if (PBar > 2000 || PBar < 400) return 'Pressure should be between 400-2000 Bar for ' + species;
-        return 'OK';
-            
-        
-    }
-    else if (species === "HCl0"){
-        if ( TempC > 500 || TempC < 25) return 'Temp should be between 25-500 C for ' + species;
-        if (PBar > 2500 || PBar < 1) return 'Pressure should be between 1-2500 Bar for ' + species;
-        else return 'OK';
-            
-        
-    }
-    else if (species === "LiOH0"){
-        if ( TempC > 600 || TempC < 50) return 'Temp should be between 50-600 C for ' + species;
-        if (PBar > 4000 || PBar < 100) return 'Pressure should be between 100-4000 Bar for ' + species;
-        else return 'OK';
-            
-        
-    }
-
+    if ( TempC > 800 || TempC < 0) return 'Temp should be between 0-800 C for ' + species;
+    if (PBar > 4000 || PBar < 1) return 'Pressure should be between 1-4000 Bar for ' + species;
+    else return 'OK';
 
 }
 
@@ -52,6 +14,10 @@ var rho;
 var condition;
 var range_condition;
 var allData = [];
+
+let startTime;
+let endTime;
+
 
 function chooseConditions() {
    var radios = document.getElementsByName('inputselector');
@@ -104,6 +70,8 @@ function chooseRangeConditions(){
     console.log(range_condition);
 }
 function ajaxPostBulk(){
+    
+    startTime = performance.now();
     if (condition === 4){
         // t constant
         allData = [];
@@ -289,6 +257,8 @@ function ajaxPost(p, t){
         }
     }
 
+    // Done by abhinav from here
+
     else if (condition === 4) 
     {
         message = validateSpeciesDataInput(species, t, p)
@@ -374,7 +344,7 @@ function generateTable(){
     tableHTML += "<th><em>&rho;</em><sub>H2O(l)</sub> / g cm<sup>-3</sup></th>";
     tableHTML += "<th><em>&rho;</em><sub>H2O(v)</sub> / g cm<sup>-3</sup></th>";
     tableHTML += "<th><em>ε</em></th>";
-    tableHTML += "<th>Δ<sub>f</sub> 𝐺<sup>0</sup><sub>j</sub> / kcal mol<sup>-1</sup></th>";
+    tableHTML += "<th>Δ<sub>f</sub> 𝐺<sup>0</sup><sub>j</sub> / kJ mol<sup>-1</sup></th>";
     tableHTML += "</tr>";
 
 
@@ -389,10 +359,14 @@ function generateTable(){
         tableHTML += "</tr>";
         if (allData[i][7] === 'N/A'){
             tableHTML+= '</table>';
-            tableHTML += "<h3> After the last few values of the Temperature and Pressure printed above, you are beyond the Liquid Phase and the model is not built for Predicting Gibbs energy of reaction values in the Supercritical or vapour phase.</h3>";
+            tableHTML += "<h3> In the last value of the Temperature and Pressure printed above, you are beyond the Liquid Phase and the model is not built for Predicting Gibbs energy of reaction values in the Supercritical or vapour phase.</h3>";
             break;
         }
     }
+
+    const endTime = performance.now(); // Record the end time
+    console.log("Time taken to generate the table: " + (endTime - startTime) + " milliseconds");
+
     console.log(allData);
     return tableHTML;
 

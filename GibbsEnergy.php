@@ -152,7 +152,7 @@ function GibbsEnergy($Species, $t, $p, $DilectricConstant, $ro){
     $Gref = $G1 - $Gent;
 
 
-    return $Gvalues;
+    return $Gvalues * 4.184;
 };
 
 function Calcb2($DilectricConstant)

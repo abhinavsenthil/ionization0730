@@ -153,14 +153,17 @@ and open the template in the editor.
                         document.getElementById('VapDen').disabled = false;
                         document.getElementById('Dilectric').value = '';
                         document.getElementById('Dilectric').disabled = false;
+                        document.getElementById('Gibbs').value = '';
+                        document.getElementById('Gibbs').disabled = false;
+                        
                     }
                     else if ( document.getElementById('PT3').checked == true )
                     {
                         document.getElementById('Dens').value = '';
                         document.getElementById('Dens').disabled = true;
                         document.getElementById('Temp').value = '';
-                        document.getElementById('Temp').disabled = false;
-                        document.getElementById('Pres').disabled = false;
+                        document.getElementById('Temp').disabled = true;
+                        document.getElementById('Pres').disabled = true;
                         document.getElementById('Psat').disabled = true;
                         document.getElementById('Pkw').value = '';
                         document.getElementById('Pkw').disabled = true;
@@ -359,6 +362,11 @@ and open the template in the editor.
                     <legend>Outputs</legend>
                         <table role="presentation">
                             <tr>
+                                <td class="one">Δ<sub>f</sub> 𝐺<sup>0</sup><sub>j</sub> / kJ mol<sup>-1</sup></td>
+                                <td><Input class="two" id="Gibbs" label="Input Δ𝑓 𝐺₀ⱼ / J" title="Input Δ𝑓 𝐺₀ⱼ / J" onblur=""></td>
+                            </tr>
+
+                            <tr>
                                 <td class="one" >p<em>K</em>w<sub>(sc or use <em>&rho;</em>)</sub></td>
                                 <td><Input class="two" id="Pkw" label="Input pKw(sc or use ρ)" title="Input pKw(sc or use ρ)" onblur=" "></td>
                             </tr>
@@ -389,10 +397,6 @@ and open the template in the editor.
                             <tr>
                                 <td class="one"><em>ε</em></td> 
                                 <td><Input class="two" id="Dilectric" label="ε" title="Dilectric constant" onblur=" "></td>  
-                            </tr>
-                            <tr>
-                                <td class="one">Δ<sub>f</sub> 𝐺<sup>0</sup><sub>j</sub> / kcal mol<sup>-1</sup></td>
-                                <td><Input class="two" id="Gibbs" label="Input Δ𝑓 𝐺₀ⱼ / J" title="Input Δ𝑓 𝐺₀ⱼ / J" onblur=""></td>
                             </tr>
 
                         </table>

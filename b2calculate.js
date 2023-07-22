@@ -1,4 +1,4 @@
-// This implementation is not actually used in the website, just kept here for JS version of newton-raphson method (beeter to view in terminal than website in PHP) 
+// This implementation is not actually used in the website, just kept here for JS version of newton-raphson method (better to view in terminal than website in PHP) 
 
 // Try Bisection implementation: O(log n) instead of Newton-RAPHSON: O(n) for faster results
 
