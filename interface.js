@@ -364,6 +364,8 @@ function generateTable(){
         }
     }
 
+    // will have to update the table significantly
+    
     const endTime = performance.now(); // Record the end time
     console.log("Time taken to generate the table: " + (endTime - startTime) + " milliseconds");
 

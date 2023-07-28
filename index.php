@@ -289,10 +289,10 @@ and open the template in the editor.
             <a href="">DataBase</a>
         </nav>
         -->
-        <h1>Calculate Aqueous Thermodynamic Properties</h1>
+        <h1>Aqueous Thermodynamic Properties at Elevated Temperatures and Pressures</h1>
         <h3>&#8212;&#8212; A web computational tool &#8212;&#8212;</h3>
         <div id="wrap">
-            <p style="text-align:center">Calculate Different aqueous Thermodynamic Properties such as the p<em>K</em>w, <em>ε</em> or Gibbs Energy of Reaction of different species. </p>
+            <p style="text-align:center">This computational tool provides the dissociation constant of water (<em>K</em>w), Dielectric constant of water (<em>ε</em>) and the standard Gibbs Energy of Formation (Δ<sub>f</sub> 𝐺<sup>0</sup><sub>j</sub>) of several aqueous species over a wide range of temperatures (<em>T</em>), pressures (<em>P</em>), and densities (<em>&rho;</em>) above and below the critical point of water. </p>
                         <div role="main">
             <div class="left" role="form" >
                 <fieldset id="fd1">
