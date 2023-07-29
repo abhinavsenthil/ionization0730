@@ -336,13 +336,8 @@ function generateTable(){
     tableHTML += "<tr>";
     tableHTML += "<th>P/ bar</th>";
     tableHTML += "<th><em>t</em> / <sup>o</sup>C:</th>";
-    tableHTML += "<th>p<em>K</em>w<sub>(sc or use <em>&rho;</em>)</sub></th>";
     tableHTML += "<th>p<em>K</em>w<sub>(l)</sub></th>";
-    tableHTML += "<th>p<em>K</em>w<sub>(v)</sub></th>";
-    tableHTML += "<th><em>P</em><sub>sat</sub> / bar</th>";
-    tableHTML += "<th><em>&rho;</em><sub>H2O(sc)</sub> / g cm<sup>-3</sup></th>";
     tableHTML += "<th><em>&rho;</em><sub>H2O(l)</sub> / g cm<sup>-3</sup></th>";
-    tableHTML += "<th><em>&rho;</em><sub>H2O(v)</sub> / g cm<sup>-3</sup></th>";
     tableHTML += "<th><em>ε</em></th>";
     tableHTML += "<th>Δ<sub>f</sub> 𝐺<sup>0</sup><sub>j</sub> / kJ mol<sup>-1</sup></th>";
     tableHTML += "</tr>";
@@ -354,6 +349,9 @@ function generateTable(){
         data = allData[i];
         tableHTML += "<tr>";
         for (let j = 0; j < data.length; j++) {
+            if(j === 2 || j === 4 || j === 5 || j === 6|| j === 8){
+                continue
+            }
             tableHTML += "<td>" + data[j] + "</td>";       
         }
         tableHTML += "</tr>";
@@ -365,7 +363,7 @@ function generateTable(){
     }
 
     // will have to update the table significantly
-    
+
     const endTime = performance.now(); // Record the end time
     console.log("Time taken to generate the table: " + (endTime - startTime) + " milliseconds");
 

@@ -452,7 +452,7 @@ and open the template in the editor.
             </div>
             </div>
         
-        <div style="width: 100px; height: 140px; border: 1px solid transparent;">
+        <div style="width: 100px; height: 155px; border: 1px solid transparent;">
             &nbsp;
         </div>
         

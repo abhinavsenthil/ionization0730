@@ -43,13 +43,15 @@ h4 {text-align: center;}
     justify-content: space-between;  
 }
 
-
+/* wrap 2 for the dynamic table */
 #wrap2 {
     text-align: left;
     width: 700px;
     margin: auto;
     border-radius: 5px;
-    border: 2px solid white;    
+    border: 2px solid white;
+    justify-content: center;    
+    align-self: center;
 }
 
 
@@ -183,11 +185,13 @@ button {
 
 .innerTable {
     border-collapse: collapse;
-    width: 700px;
-    align-self: left;
+    width: 420px;
+    align-self: center;
+    justify-content: center;
+    transform: translate(33%, 0);
 }
 
 
 .innerTable th { background-color:#000;color:white;width:50%; }
 .innerTable td, .innerTable th { padding:5px;border:1px solid #000; }
-
+.innerTable td {background-color: rgb(247, 244, 244);}
