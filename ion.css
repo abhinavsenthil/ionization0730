@@ -1,15 +1,10 @@
-/*
-To change this license header, choose License Headers in Project Properties.
-To change this template file, choose Tools | Templates
-and open the template in the editor.
-*/
-/* 
-    Created on : Mar 23, 2014, 11:00:40 AM
-    Author     : Haining
-*/
 
 * {
     font-family: Times New Roman;
+}
+
+body {
+    background: #f6eed1;
 }
 
 h1 {text-align: center;}
@@ -17,30 +12,38 @@ h2 {text-align: center;}
 h3 {text-align: center;}
 h4 {text-align: center;}
 
+.three-titles {
+    color: black;
+
+}
 
 #wrap {
     text-align: center;
     width: 720px;
-    height: 380px;
+    height: 343px;
     margin: auto;
-    background: #EFEFEF;
     border-radius: 5px;
-    border: 2px solid black;  
+    border: 2px solid black; 
+    background: #fbeec4; 
 
     justify-content: space-between;  
 }
+
+#wrap p {
+    font-size: 10pt;
+  }
 
 /* wrap 3 is for the gibbs range function styles*/
 #wrap3 {
     text-align: center;
     width: 720px;
-    height: 125px;
+    height: 315px;
     margin: auto;
-    background: #EFEFEF;
+    background: #fbeec4;
     border-radius: 5px;
     border: 2px solid black;  
     position: absolute;
-    justify-content: space-between;  
+    justify-content: space-between;
 }
 
 /* wrap 2 for the dynamic table */
@@ -49,7 +52,7 @@ h4 {text-align: center;}
     width: 700px;
     margin: auto;
     border-radius: 5px;
-    border: 2px solid white;
+    border: 2px solid #f6eed1;
     justify-content: center;    
     align-self: center;
 }
@@ -111,24 +114,31 @@ input[tpye=number] {
 } 
 
 #fd1 {
-    height: 252px;
+    height: 200px;
     margin: auto;
 }
 
 #fd2 {
-    height: 252px;
+    height: 200px;
     margin: auto;
 }
 
 #fd3 {
-    height: 95px;
+    height: 100px;
     align-items: center;
     margin: auto;
 }
 
 #fd4 {
-    height: 95px;
+    height: 175px;
     margin: auto;
+}
+
+#fd5 {
+    height: 70px;
+    align-items: center;
+    margin: auto;
+    transform: translate(0,-125px);
 }
 
 .left {
@@ -169,19 +179,31 @@ button {
     margin-top: 5px;
     width: 100px;
     height: 25px;
-    border-radius: 3px;
+    background-color:#f8f6cf;
     font-size:14px;
+
 }
 
-#buttons {
+.buttons {
     margin: 0px auto;
     width: 300px;
     padding: 5px;
-    border: 1px transparent solid;
     text-align:center;
     position: relative;
-    height: 100px;
+    height: 1px;
+    transform: translate(180px, 147px);
 }
+
+.buttons2 {
+    margin: 0px auto;
+    width: 300px;
+    padding: 5px;
+    text-align:center;
+    position: relative;
+    transform: translate(-7px, -350%);
+    height: 10px;
+}
+
 
 .innerTable {
     border-collapse: collapse;
@@ -192,6 +214,17 @@ button {
 }
 
 
-.innerTable th { background-color:#000;color:white;width:50%; }
+.innerTable th { background-color:#000;color:white;width:50%; text-align: center; }
 .innerTable td, .innerTable th { padding:5px;border:1px solid #000; }
 .innerTable td {background-color: rgb(247, 244, 244);}
+
+#references {
+    align-items: center;
+}
+
+.reference-text {
+    font-size: 13px;
+    width: 720px;
+    margin: auto;
+
+}

@@ -69,6 +69,11 @@ function chooseRangeConditions(){
     console.log('range');
     console.log(range_condition);
 }
+
+
+
+
+
 function ajaxPostBulk(){
     
     startTime = performance.now();
@@ -213,6 +218,9 @@ function ajaxPost(p, t){
     }
     else if (condition === 3) 
     {
+        allData = [];
+        p = parseFloat(document.getElementById("Gibbs-Pres").value);
+        t = parseFloat(document.getElementById("Gibbs-Temp").value);
         message = validateSpeciesDataInput(species, t, p)
         if( message !== 'OK'){
             return alert(message);
@@ -232,15 +240,8 @@ function ajaxPost(p, t){
                 }, 
                 // Call to PHP is sucessful   
                 success: function(returnedData){    
-                    document.getElementById("Pkw").value = returnedData[0];
-                    document.getElementById("Pkwl").value = returnedData[1];
-                    document.getElementById("Pkwv").value = returnedData[2];
-                    document.getElementById("Psat").value = returnedData[3];
-                    document.getElementById("scDens").value = returnedData[4];
-                    document.getElementById("LiqDens").value = returnedData[5];
-                    document.getElementById("VapDen").value = returnedData[6];
-                    document.getElementById("Dilectric").value = returnedData[7];
-                    document.getElementById("Gibbs").value = returnedData[8];
+                    returnedData.unshift(p, t);
+                    appendStepTable(returnedData);
                    // alert(returnedData);
                     }
                 });
@@ -330,18 +331,21 @@ function appendStepTable(val){
 }
 
 function generateTable(){
-
     let tableHTML = "";
-    tableHTML += "<table class='innerTable'>";
-    tableHTML += "<tr>";
-    tableHTML += "<th>P/ bar</th>";
-    tableHTML += "<th><em>t</em> / <sup>o</sup>C:</th>";
-    tableHTML += "<th>p<em>K</em>w<sub>(l)</sub></th>";
-    tableHTML += "<th><em>&rho;</em><sub>H2O(l)</sub> / g cm<sup>-3</sup></th>";
-    tableHTML += "<th><em>ε</em></th>";
-    tableHTML += "<th>Δ<sub>f</sub> 𝐺<sup>0</sup><sub>j</sub> / kJ mol<sup>-1</sup></th>";
-    tableHTML += "</tr>";
+    if(condition === 4 || condition === 3){
+        tableHTML += "<table class='innerTable'>";
+        tableHTML += "<tr>";
+        tableHTML += "<th>P/ bar</th>";
+        tableHTML += "<th><em>t</em> / <sup>o</sup>C:</th>";
+        tableHTML += "<th>p<em>K</em>w<sub>(l)</sub></th>";
+        tableHTML += "<th><em>&rho;</em><sub>H2O(l)</sub> / g cm<sup>-3</sup></th>";
+        tableHTML += "<th><em>ε</em></th>";
+        tableHTML += "<th>Δ<sub>f</sub> 𝐺<sup>0</sup><sub>j</sub> / kJ mol<sup>-1</sup></th>";
+        tableHTML += "</tr>";
 
+    }
+    
+    
 
 
 
