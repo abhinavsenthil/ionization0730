@@ -297,7 +297,7 @@ and open the template in the editor.
         <div id="wrap">
             <br>
             Calculate dissociation constant of water, Saturation Pressure and Density
-            <p>Select Temperature between 1-800 oC, Pressure between 1-10000 Bar, and Density between 1-1.25 g/cm<sup>3</sup></p>
+            <p>Select Temperature between 0-800 <sup>o</sup>C, Pressure between 1-10000 Bar, and Density between 1-1.25 g/cm<sup>3</sup></p>
             <div role="main">
             <div class="left" role="form" >
                 <fieldset id="fd1">
@@ -387,7 +387,7 @@ and open the template in the editor.
         <div id="wrap3">
             <br>
             Calculate Gibbs Energy of Formation here
-            <p>Enter Pressures between 1-4000 Bar, Temperatures between 0-800 oC</p> 
+            <p>Enter Pressures between 1-4000 Bar, Temperatures between 0-600 <sup>o</sup>C</p> 
 
         <div class="bottom-left"><fieldset id="fd3">
             <legend>Select Options</legend>
