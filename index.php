@@ -297,7 +297,7 @@ and open the template in the editor.
         <div id="wrap">
             <br>
             Calculate dissociation constant of water, Saturation Pressure and Density
-            <p>Select Temperature between 0-800 <sup>o</sup>C, Pressure between 1-10000 Bar, and Density between 1-1.25 g/cm<sup>3</sup></p>
+            <p>Select Temperature between 0-800 <sup>o</sup>C, Pressure between 1-10000 Bar, and Density between 0-1.25 g/cm<sup>3</sup></p>
             <div role="main">
             <div class="left" role="form" >
                 <fieldset id="fd1">
