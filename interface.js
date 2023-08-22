@@ -14,6 +14,7 @@ var rho;
 var condition;
 var range_condition;
 var allData = [];
+var gibbsDens;
 
 let startTime;
 let endTime;
@@ -221,6 +222,7 @@ function ajaxPost(p, t){
         allData = [];
         p = parseFloat(document.getElementById("Gibbs-Pres").value);
         t = parseFloat(document.getElementById("Gibbs-Temp").value);
+        gibbsDens = parseFloat(document.getElementById("Gibbs-Dens").value);
         message = validateSpeciesDataInput(species, t, p)
         if( message !== 'OK'){
             return alert(message);
@@ -232,7 +234,7 @@ function ajaxPost(p, t){
                 $.ajax({
                 url: "DilectricConstant.php",  
                 type: "POST",
-                data:{pres:p,temp:t,species:species},
+                data:{pres:p,temp:t,species:species, gibbsDens: gibbsDens},
                 dataType: "json",
                 // Call to PHP is failed
                 error: function(){  
@@ -241,6 +243,7 @@ function ajaxPost(p, t){
                 // Call to PHP is sucessful   
                 success: function(returnedData){    
                     returnedData.unshift(p, t);
+                    console.log(returnedData);
                     appendStepTable(returnedData);
                    // alert(returnedData);
                     }

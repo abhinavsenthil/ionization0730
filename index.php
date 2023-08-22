@@ -477,6 +477,10 @@ and open the template in the editor.
                             <td class="one"><em>P</em> / bar</td>
                             <td><input class="two" type="number" id="Gibbs-Pres" label="Input P / bar" title="Input P / bar" onblur=""/></td>
                         </tr>
+                        <tr>
+                            <td class="one"><em>ρ</em>H2O(l) / g cm-3</td>
+                            <td><input class="two" type="number" id="Gibbs-Dens" label="Input density" title="Input density" onblur=""/></td>
+                        </tr>
                     </table>
                         
                 </fieldset></div>

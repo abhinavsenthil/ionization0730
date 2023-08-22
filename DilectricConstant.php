@@ -6,6 +6,7 @@
     // Get pressure and temperature from input box
     
     $Pbar = filter_input(INPUT_POST, 'pres'); 
+    $GibbsDens = filter_input(INPUT_POST, 'gibbsDens');
     $Tk = filter_input(INPUT_POST, 'temp')+273.15;
     $Species = filter_input(INPUT_POST, 'species');
 
@@ -64,10 +65,12 @@
     $epsilon = DilectricCalc($Tk, $selfDefine);
     $selfDefine[7] = $epsilon;
 
-    $finalDensity = findFinalDensity($selfDefine);
+    //$finalDensity = findFinalDensity($selfDefine);
+    $finalDensity = $GibbsDens;
 
     //$selfDefine[8] = $Species;
     $selfDefine[8] = GibbsEnergy($Species, $Tc, $Pbar, $epsilon, $finalDensity);
+    $selfDefine[5] = $finalDensity;
 
 
 

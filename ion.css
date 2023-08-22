@@ -37,7 +37,7 @@ h4 {text-align: center;}
 #wrap3 {
     text-align: center;
     width: 720px;
-    height: 315px;
+    height: 320px;
     margin: auto;
     background: #fbeec4;
     border-radius: 5px;
@@ -135,7 +135,7 @@ input[tpye=number] {
 }
 
 #fd5 {
-    height: 70px;
+    height: 83px;
     align-items: center;
     margin: auto;
     transform: translate(0,-125px);
@@ -191,7 +191,7 @@ button {
     text-align:center;
     position: relative;
     height: 1px;
-    transform: translate(180px, 147px);
+    transform: translate(180px, 152px);
 }
 
 .buttons2 {
