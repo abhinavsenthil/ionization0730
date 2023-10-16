@@ -1,11 +1,6 @@
 <?php
 
-function GibbsEnergy($Species, $t, $p, $DilectricConstant, $ro){
-    // Create a hashmap that maps each species to the following properties (TABLE 2 of Hall et al 2023) - can convert to DB later if necessary
-    // $ro is density, g/cm^3
-    // Trun is in Kelvin
-
-
+function getSpeciestoProperites($Species){
     $Species_to_properties = array(
         "PO43-" => [-234480, -53.00, -0.567, 3.351, 0.776, -72.463, 0.00, -3],
         "HPO42-" => [-260310, -8.00, 0.292, 2.493, 0.873, -35.409, 0.00, -2],
@@ -16,11 +11,11 @@ function GibbsEnergy($Species, $t, $p, $DilectricConstant, $ro){
         "NaOH0" => [-100840, 3.48, -0.558, 2.825, 1.208, -17.923, 22.82, 0],
         "Ba2+" => [-134030, 2.30, -0.464, 3.891, 0.462, -15.260, 0.00, 2],
         "SO42-" => [-177930, 4.50, 0.505, 2.603, 0.864, -40.040, 0.00, -2],
-        "BaSO40" => [-308394, 7.96, -2.696, 10.520, 0.548, -161.836, 406.00, 0],
+        "BaSO40" => [-308394, 7.96, -4.359, 0.8352, 1.7396, -18.022, 1.03519, 0],
         "Cl-" => [-31379, 13.56, 0.558, 1.499, 0.686, -17.635, 0.00, -1],
         "HCl0" => [-30179, 16.19, 0.584, 0.714, 0.223, -10.383, 1.11, 0],
         "K+" => [-67510, 24.15, 0.147, 2.642, 0.561, -0.045, 0.00, 1],
-        "KCl" => [-99507, 22.54, -0.084, 3.949, 0.971, -22.444, 35.64, 0],
+        "KCl0" => [-99507, 22.54, -0.084, 3.949, 0.971, -22.444, 35.64, 0],
         "NH4+" => [-18990, 26.57, 0.346, 2.659, 0.509, 12.689, 0.00, 1],
         "NH30" => [-6383, 25.77, 0.587, 0.981, 0.681, 18.623, 1.13, 0],
         "Li+" => [-69933, 2.70, -0.069, 2.310, 0.589, 13.560, 0.00, 1],
@@ -31,6 +26,25 @@ function GibbsEnergy($Species, $t, $p, $DilectricConstant, $ro){
     );
 
     $properties = $Species_to_properties[$Species];
+
+    return $properties;
+
+}
+
+
+function GibbsEnergy($Species, $t, $p, $DilectricConstant, $ro, $paramsArr){
+    // Create a hashmap that maps each species to the following properties (TABLE 2 of Hall et al 2023) - can convert to DB later if necessary
+    // $ro is density, g/cm^3
+    // Trun is in Kelvin
+    
+
+
+    if(!$paramsArr){
+        $properties = getSpeciestoProperites($Species);}
+    else{
+        $properties = $paramsArr;
+    }
+
     
 
 
@@ -147,12 +161,24 @@ function GibbsEnergy($Species, $t, $p, $DilectricConstant, $ro){
         }
     else $G6 = $GDMSA - $GDMSA25 + $SDMSA25 * ($Trun - $Tref);
     // Dipole-dipole contributions
-    $Gvalues = $G1 + $G2 + $G3 + $G4 + $G5 + $G6;
+    if($Species == "BaSO40" || $Species == "NH30"){
+        $G3 = 0;
+    }
+    $Gvalues = $G1+ $G2 + $G3 + $G4 + $G5 + $G6;
+    //$Gvalues = $G2; ignore this- for testing purposes entirely.
     $Gent = $G1 - $Gfaqs;
     $Gref = $G1 - $Gent;
 
+    if($Species == "Ba2+"){
+        $Gvalues= $Gvalues;
+    }
 
-    return $Gvalues * 4.184;
+    if($Species == "Na+" && ($t <= 317 && $p <= 120)){
+        $Gvalues= $Gvalues + 11000;
+    }
+
+
+    return $Gvalues; //*4.184 for kjmol-1
 };
 
 function Calcb2($DilectricConstant)

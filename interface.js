@@ -1,8 +1,8 @@
 // Abhinav: validation of species
 function validateSpeciesDataInput(species, TempC, PBar){
     // Implementation of Table 1 of the 2023 Paper
-
-    if ( TempC > 800 || TempC < 0) return 'Temp should be between 0-800 C for ' + species;
+    console.log("TempC: " + TempC);
+    if ( TempC > 800 || TempC <0) return 'Temp should be between 0-800 C for ' + species;
     if (PBar > 4000 || PBar < 1) return 'Pressure should be between 1-4000 Bar for ' + species;
     else return 'OK';
 
@@ -18,6 +18,15 @@ var gibbsDens;
 
 let startTime;
 let endTime;
+
+var params1;
+var params2;
+var params3;
+var params4;
+var params5;
+var params6;
+var params7;
+var params8;
 
 
 function chooseConditions() {
@@ -42,6 +51,8 @@ function chooseConditions() {
             break;
         case '4': // PT3
             condition = 4;
+        case '5':
+            condition = 5;
         default:
             break;
     }
@@ -78,7 +89,7 @@ function chooseRangeConditions(){
 function ajaxPostBulk(){
     
     startTime = performance.now();
-    if (condition === 4){
+    if (condition === 5){
         // t constant
         allData = [];
         let constant = parseFloat(document.getElementById("Constant").value);
@@ -117,7 +128,19 @@ function ajaxPostBulk(){
 function ajaxPost(p, t){
     rho = parseFloat(document.getElementById("Dens").value);
     species = document.getElementById("Species").value;
-    
+    params1 = parseFloat(document.getElementById("params1").value);
+    params2 = parseFloat(document.getElementById("params2").value);
+    params3 = parseFloat(document.getElementById("params3").value);
+    params4 = parseFloat(document.getElementById("params4").value);
+    params5 = parseFloat(document.getElementById("params5").value);
+    params6 = parseFloat(document.getElementById("params6").value);
+    params7 = parseFloat(document.getElementById("params7").value);
+    params8 = parseFloat(document.getElementById("params8").value);
+    //let paramsArr = [1000, 100, 200, 400, 500, 600, 700, 800];
+    let paramsArr = [params1, params2, params3, params4, params5, params6, params7, params8];
+    paramsArr = JSON.stringify(paramsArr);
+    console.log('paramarray');
+    console.log(paramsArr);
     if (condition === 0) 
     {
         if (p>=1 && p<=10000)
@@ -175,6 +198,7 @@ function ajaxPost(p, t){
                 // Call to PHP is sucessful   
                 success: function(returnedData){      
                     document.getElementById("Pkw").value = Math.round(returnedData*100000)/100000;
+                    //document.getElementById("Psat").value = Math.round(returnedData*100000)/100000;
                     }   
                 });
             }
@@ -216,8 +240,9 @@ function ajaxPost(p, t){
          {
              alert("Please enter the correct temperature: 0-373.917 oC");
          }
+         // Done by abhinav from here
     }
-    else if (condition === 3) 
+    else if (condition === 3 || condition === 4) 
     {
         allData = [];
         p = parseFloat(document.getElementById("Gibbs-Pres").value);
@@ -227,14 +252,14 @@ function ajaxPost(p, t){
         if( message !== 'OK'){
             return alert(message);
         }
-        if (p>=1 && p<=10000)
+        if (p>=1 && p<=10000 || condition === 4)
         {
             if (t>=0 && t<=800)
             {
                 $.ajax({
                 url: "DilectricConstant.php",  
                 type: "POST",
-                data:{pres:p,temp:t,species:species, gibbsDens: gibbsDens},
+                data:{pres:p,temp:t,species:species, gibbsDens: gibbsDens, paramsArr: paramsArr},
                 dataType: "json",
                 // Call to PHP is failed
                 error: function(){  
@@ -242,7 +267,7 @@ function ajaxPost(p, t){
                 }, 
                 // Call to PHP is sucessful   
                 success: function(returnedData){    
-                    returnedData.unshift(p, t);
+                    // returnedData.unshift(p, t);
                     console.log(returnedData);
                     appendStepTable(returnedData);
                    // alert(returnedData);
@@ -261,22 +286,22 @@ function ajaxPost(p, t){
         }
     }
 
-    // Done by abhinav from here
+    
 
-    else if (condition === 4) 
+    else if (condition === 5) 
     {
         message = validateSpeciesDataInput(species, t, p)
         if( message !== 'OK'){
             return alert(message);
         }
-        if (p>=1 && p<=10000)
-        {
-            if (t>=0 && t<=800)
+
+            if (t>=0 && t<=600)
             {
+                gibbsDens = parseFloat(document.getElementById("Gibbs-Dens").value);
                 $.ajax({
                 url: "DilectricConstant.php",  
                 type: "POST",
-                data:{pres:p,temp:t,species:species},
+                data:{pres:p,temp:t,species:species, gibbsDens: gibbsDens, paramsArr: paramsArr},
                 dataType: "json",
                 // Call to PHP is failed
                 error: function(){  
@@ -284,7 +309,7 @@ function ajaxPost(p, t){
                 }, 
                 // Call to PHP is sucessful   
                 success: function(returnedData){    
-                    returnedData.unshift(p, t);
+                    // returnedData.unshift(p, t);
                     appendStepTable(returnedData);
                    // alert(returnedData);
                     }
@@ -300,7 +325,7 @@ function ajaxPost(p, t){
         {
             alert("Pressure enter the correct pressure: 1-10000 bar");
         }
-    }
+    
 
 };
 
@@ -335,7 +360,7 @@ function appendStepTable(val){
 
 function generateTable(){
     let tableHTML = "";
-    if(condition === 4 || condition === 3){
+    if(condition === 4 || condition === 3 || condition === 5){
         tableHTML += "<table class='innerTable'>";
         tableHTML += "<tr>";
         tableHTML += "<th>P/ bar</th>";
@@ -349,9 +374,6 @@ function generateTable(){
     }
     
     
-
-
-
     for (let i = 0; i < allData.length; i++) {
         data = allData[i];
         tableHTML += "<tr>";
@@ -377,4 +399,37 @@ function generateTable(){
     console.log(allData);
     return tableHTML;
 
+}
+
+
+function loadDynamicParams(val){
+    if (val === 'Select_One'){
+        alert("Select a valid value");
+        return;
+    }
+
+    $.ajax({
+        url: "DilectricConstant.php",  
+        type: "POST",
+        data:{command:'GetParams', selectedSpecies: val},
+        dataType: "json",
+        // Call to PHP is failed
+        error: function(){  
+            alert('Error loading XML document');  
+        }, 
+        // Call to PHP is sucessful   
+        success: function(returnedData){    
+            // returnedData.unshift(p, t);
+            console.log("returned data " + returnedData);
+            populateDynamicParams(returnedData);
+           // alert(returnedData);
+            }
+        });
+
+}
+
+function populateDynamicParams(returnedData){
+    for (let i = 0; i < returnedData.length; i++) {
+        document.getElementById("params" + (i+1)).value = returnedData[i];
+      }
 }

@@ -2,6 +2,20 @@
    // $root = $_SERVER['DOCUMENT_ROOT'];
     include_once "ionizationCalculation.php";
     include_once "GibbsEnergy.php";
+    include_once "DensityH2Ocalculation.php";
+
+
+    // used to get the species
+    $selectedSpecies = filter_input(INPUT_POST, 'selectedSpecies'); 
+    $Command = filter_input(INPUT_POST, 'command'); 
+    if($Command == "GetParams"){
+        $properties = getSpeciestoProperites($selectedSpecies);
+        echo json_encode($properties);
+        return;
+    }
+   
+    
+
 
     // Get pressure and temperature from input box
     
@@ -9,8 +23,34 @@
     $GibbsDens = filter_input(INPUT_POST, 'gibbsDens');
     $Tk = filter_input(INPUT_POST, 'temp')+273.15;
     $Species = filter_input(INPUT_POST, 'species');
+    $GibbsDens = calculateDensity($GibbsDens, $Pbar, $Tk);
 
+    $ParamsArr = json_decode(filter_input(INPUT_POST, 'paramsArr'));
+
+    $Pbar = calculatePressure($Pbar, $Tk);
+
+    // write logic to check if $species exists, if it does, pass $type = 'Gibbs' as we need the density in liquid phase regardless of the temp
+    // ...
+    // ...
     $selfDefine = ionizationCalculation($Tk, $Pbar);
+
+    function calculateDensity($GibbsDens, $Pbar, $Tk){ 
+        if($GibbsDens == 'NaN'){
+            $dH2O = DensityH2OCalculation($Pbar, $Tk);
+            return $dH2O[0];
+            
+        }
+        return $GibbsDens;
+    }
+
+
+
+    function calculatePressure($Pbar, $Tk){
+        if($Pbar == 'NaN'){
+            return vappurewater($Tk);;
+        }
+        return $Pbar;
+    }
 
     function findFinalDensity($selfDefine){
         $finalDensity = 0;
@@ -69,7 +109,8 @@
     $finalDensity = $GibbsDens;
 
     //$selfDefine[8] = $Species;
-    $selfDefine[8] = GibbsEnergy($Species, $Tc, $Pbar, $epsilon, $finalDensity);
+    if (!is_array($ParamsArr)){ $selfDefine[8] = GibbsEnergy($Species, $Tc, $Pbar, $epsilon, $finalDensity, null);}
+    else{$selfDefine[8] = GibbsEnergy($Species, $Tc, $Pbar, $epsilon, $finalDensity, $ParamsArr);}
     $selfDefine[5] = $finalDensity;
 
 
@@ -88,7 +129,7 @@
         }
     }
 
-    
+    array_unshift($selfDefine, $Pbar, $Tk-273.15);
 
 
    // echo json_encode($Pbar);
