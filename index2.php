@@ -65,7 +65,7 @@ and open the template in the editor.
             document.getElementById('PD2').onchange = disablefield;
             document.getElementById('PT2').checked = false;
             document.getElementById('PT2').onchange = disablefield;
-            openCalc(event, 'Gibbs1');
+            openCalc(event, 'Gibbs1', false, 'Gibbs');
 
 
         };
@@ -300,7 +300,11 @@ and open the template in the editor.
             document.getElementById('T').checked = false;
         }
 
-        function openCalc(evt, calcName, isParams = false) {
+        var TABNAME = "Gibbs";
+
+        function openCalc(evt, calcName, isParams = false, tabName) {
+            TABNAME = tabName;
+
             var i, tabcontent, tablinks;
             tabcontent = document.getElementsByClassName("tabcontent");
             for (i = 0; i < tabcontent.length; i++) {
@@ -338,21 +342,34 @@ and open the template in the editor.
 
     <h1 class="three-titles">Aqueous Thermodynamic Properties at Elevated Temperatures and Pressures</h1>
     <h3 class="three-titles">&#8212;&#8212; A web computational tool &#8212;&#8212;</h3>
-    <h4 style="text-align:center; width:720px; margin:auto; color:black; ">This computational tool provides the dissociation constant of water (<em>K</em>w), Dielectric constant of water (<em>ε</em>) and the standard Gibbs Energy of Formation (Δ<sub>f</sub> 𝐺<sup>0</sup><sub>j</sub>) of several aqueous species over a wide range of temperatures (<em>T</em>), pressures (<em>P</em>), and densities (<em>&rho;</em>) above and below the critical point of water. </h4>
+    <h4 style="text-align:center; width:720px; margin:auto; color:black; ">This computational tool provides the dissociation constant of water (<em>K</em>w), Dielectric constant of water (<em>ε</em>) and the standard Gibbs Energy of Formation (Δ<sub>f</sub> 𝐺<sup>0</sup><sub>j</sub>) of several aqueous species over a wide range of temperatures (<em>t</em>), pressures (<em>P</em>), and densities (<em>&rho;</em>) above and below the critical point of water. </h4>
     <br>
 
-    <div class="tab">
-        <button class="tablinks" onclick="openCalc(event, 'Gibbs1', false)">Gibbs Energy</button>
-        <button class="tablinks" onclick="openCalc(event, 'Gibbs1', true)">Gibbs with Parameters</button>
-        <button class="tablinks" onclick="openCalc(event, 'ionization', false)">Ionization</button>
+
+
+    <!-- <div class="param">
+        <table role="presentation">
+            <tr>
+                <td style="width:33%;"><button class="tablinks" onclick="openCalc(event, 'Gibbs1', false, 'Gibbs')">Gibbs Energy</button></td>
+                <td style="width:33%;"><button class="tablinks" onclick="openCalc(event, 'Gibbs1', true, 'GibbsWithParam')">Gibbs with Parameters</button></td>
+                <td style="width:33%;"><button class="tablinks" onclick="openCalc(event, 'ionization', false, 'Ionization')">Ionization</button></td>
+            </tr>  
+        </table>
     </div>
+  -->
+
+    <div class="tab">
+        <button class="tablinks" onclick="openCalc(event, 'Gibbs1', false, 'Gibbs')">Gibbs Energy</button>
+        <button class="tablinks" onclick="openCalc(event, 'Gibbs1', true, 'GibbsWithParam')">Gibbs with Parameters</button>
+        <button class="tablinks" onclick="openCalc(event, 'ionization', false, 'Ionization')">pKw</button>
+    </div>
+
 
     <div id="Gibbs1" class="tabcontent">
         <h3>Gibbs Energy Calculator</h3>
         <div id="wrap3">
-            <br>
-            Calculate Gibbs Energy of Formation here
             <p>Enter Pressures between 1-4000 Bar, Temperatures between 0-600 <sup>o</sup>C</p>
+            <div id="error_message" style="color:red"></div>
 
             <div class="bottom-left">
                 <fieldset id="fd3">
@@ -388,30 +405,15 @@ and open the template in the editor.
                             </td>
                         </tr>
                     </table>
-                    <div id="param-display">
-                        <table>
-                            <tr>
-                                <td>Parameters: <input class="two2" type="number" id="params1" name="Temp" label="Input  t / oC" title="Input  t / oC" onblur="" disabled />
-                                    <input class="two2" type="number" id="params2" name="Temp" label="Input  t / oC" title="Input  t / oC" onblur="" disabled />
-                                    <input class="two2" type="number" id="params3" name="Temp" label="Input  t / oC" title="Input  t / oC" onblur="" />
-                                    <input class="two2" type="number" id="params4" name="Temp" label="Input  t / oC" title="Input  t / oC" onblur="" />
-                                    <input class="two2" type="number" id="params5" name="Temp" label="Input  t / oC" title="Input  t / oC" onblur="" />
-                                    <input class="two2" type="number" id="params6" name="Temp" label="Input  t / oC" title="Input  t / oC" onblur="" />
-                                    <input class="two2" type="number" id="params7" name="Temp" label="Input  t / oC" title="Input  t / oC" onblur="" />
-                                    <input class="two2" type="number" id="params8" name="Temp" label="Input  t / oC" title="Input  t / oC" onblur="" />
-                                </td>
-                            </tr>
-
-                        </table>
-                    </div>
+                    
                     <form action="" method="get" name="input">
                         <input type="radio" name="inputselector" value="3" id="PT2" onclick="chooseConditions()" />
-                        <label for="PT2">Δ<sub>f</sub> 𝐺<sup>0</sup><sub>j</sub> at a given <em>T</em>-<em>P</em></label><br>
+                        <label for="PT2">Δ<sub>f</sub> 𝐺<sup>0</sup><sub>j</sub> at a given <em>t</em>-<em>P</em></label><br>
 
-                        <input type="radio" name="inputselector" value="5" id="PD2" onclick="chooseConditions()" />
-                        <label for="PT2">Δ<sub>f</sub> 𝐺<sup>0</sup><sub>j</sub> at a given <em>T</em>-<em>Density</em></label><br>
+                        <input type="radio" name="inputselector" value="4" id="PD2" onclick="chooseConditions()" />
+                        <label for="PT2">Δ<sub>f</sub> 𝐺<sup>0</sup><sub>j</sub> at a given <em>t</em>-<em>ρ</em></label><br>
 
-                        <input type="radio" name="inputselector" value="4" id="PT3" onclick="chooseConditions()" />
+                        <input type="radio" name="inputselector" value="5" id="PT3" onclick="chooseConditions()" />
                         <label for="PT3">Range of Δ<sub>f</sub> 𝐺<sup>0</sup><sub>j</sub></label>
                     </form>
                 </fieldset>
@@ -460,11 +462,11 @@ and open the template in the editor.
                     <table role="presentation">
                         <tr>
                             <td class="one"><em>t</em> / <sup>o</sup>C:</td>
-                            <td><input class="two" type="number" id="Gibbs-Temp" name="Temp" label="Input  t / oC" title="Input  t / oC" onblur="" /></td>
+                            <td><input class="two" type="number" id="Gibbs-Temp" name="Temp" label="Input  t / oC" title="Input  t / oC" onblur="" onkeyup="validateUserInputRange(this, 'Temp')"/></td>
                         </tr>
                         <tr>
                             <td class="one"><em>P</em> / bar</td>
-                            <td><input class="two" type="number" id="Gibbs-Pres" label="Input P / bar" title="Input P / bar" onblur="" /></td>
+                            <td><input class="two" type="number" id="Gibbs-Pres" label="Input P / bar" title="Input P / bar" onblur="" onkeyup="validateUserInputRange(this, 'Pres')"/></td>
                         </tr>
                         <tr>
                             <td class="one"><em>ρ</em>H2O(l) / g cm-3</td>
@@ -478,6 +480,47 @@ and open the template in the editor.
 
         </div>
 
+        <br>
+
+
+        <div id="param-display" class="param">
+                <fieldset id="fd5_param">
+                    <legend>Set Parameters</legend>
+                    <table role="presentation">
+                        <tr>
+                            <td class="one" style="width:25%;">G<sup>0</sup><sub>TrPr</sub>: </td>
+                            <td style="width:20%;"><input class="two2" type="number" id="params1" name="Temp" label="Input  t / oC" title="Input  t / oC" onblur="" disabled /></td>
+                            <td style="width:10%;">&nbsp;</td>
+                            <td class="one" style="width:25%;">σ<sub>w</sub> / A:</td>
+                            <td style="width:20%;"><input class="two2" type="number" id="params5" name="Temp" label="Input  t / oC" title="Input  t / oC" onblur="" /></td>
+                        </tr>
+                        <tr>
+                            <td class="one" style="width:25%;">S<sup>0</sup><sub>TrPr</sub>: </td>
+                            <td style="width:20%;"><input class="two2" type="number" id="params2" name="Temp" label="Input  t / oC" title="Input  t / oC" onblur="" disabled /></td>
+                            <td style="width:10%;">&nbsp;</td>
+                            <td class="one" style="width:25%;">C / JK<sup>-1</sup>:</td>
+                            <td style="width:20%;"><input class="two2" type="number" id="params6" name="Temp" label="Input  t / oC" title="Input  t / oC" onblur="" /></td>
+                        </tr>
+                        <tr>
+                            <td class="one" style="width:25%;">A / Jbar<sup>-1</sup>: </td>
+                            <td style="width:20%;"><input class="two2" type="number" id="params3" name="Temp" label="Input  t / oC" title="Input  t / oC" onblur="" /></td>
+                            <td style="width:10%;">&nbsp;</td>
+                            <td class="one" style="width:25%;">p / D:</td>
+                            <td style="width:20%;"><input class="two2" type="number" id="params7" name="Temp" label="Input  t / oC" title="Input  t / oC" onblur="" /></td>
+                        </tr>
+                        <tr>
+                            <td class="one" style="width:25%;">σ<sub>l</sub> /  A: </td>
+                            <td style="width:20%;"><input class="two2" type="number" id="params4" name="Temp" label="Input  t / oC" title="Input  t / oC" onblur="" /></td>
+                            <td style="width:10%;">&nbsp;</td>
+                            <td class="one" style="width:25%;">z:</td>
+                            <td style="width:20%;"><input class="two2" type="number" id="params8" name="Temp" label="Input  t / oC" title="Input  t / oC" onblur="" disabled/></td>
+                        </tr>
+                        
+
+                    </table>
+
+                </fieldset>
+        </div>
         <div id="wrap2">
             <div id="stepTable"></div>
         </div>

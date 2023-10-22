@@ -8,6 +8,46 @@ function validateSpeciesDataInput(species, TempC, PBar){
 
 }
 
+function validateUserInputRange(field, type){
+    let species = document.getElementById('Species').value;
+    let value = parseInt(field.value);
+    let name = field.name;
+    console.log('name: ' , name);
+    console.log('value: ' , value);
+
+
+    let error_msg = '';
+
+
+    const set1 = new Set(["Ba2+", "Cl-", "K+", "Li+", "Na+", "NH30", "NH4+", "OH-", "PO43-", "HPO42-", "H2PO4-", "H3PO40", "SiO20", "SO42-" ]);
+    const set2 = new Set(["KCl0", "KOH0", "NaOH0"]);
+    if (set1.has(species)){
+        if ( type === 'Temp' && (value > 300 || value < 0)) error_msg = 'Warning: Temperature Exceeds the theoretical range of 0-300 C for ' + species;
+        if (type === 'Pres' && (value > 500 || value < 1)) error_msg = 'Warning: Pressure Exceeds the theoretical range of 1-500 Bar for ' + species;
+            
+        
+    }
+    else if (set2.has(species)){
+        if (type === 'Temp' && (value > 600 || value < 100)) error_msg = 'Warning: Temp should be between 100-600 C for ' + species;
+        if (type === 'Pres' &&  (value > 3500 || value < 100)) error_msg = 'Warning: Pressure Exceeds the theoretical range of 100-3500 Bar for ' + species;
+            
+
+    }
+    else if (species === "BaSO40"){
+        // if ( TempC > 600 || TempC < 200) return 'Temp should be between 200-600 C for ' + species;
+        // if (PBar > 2000 || PBar < 400) return 'Pressure should be between 400-2000 Bar for ' + species;
+        if (type === 'Temp' && (value > 600 || value < 200)) error_msg = 'Warning: Temperature Exceeds the theoretical range of 200-600 C for ' + species;
+        if (type === 'Pres' && (value > 2000 || value < 400)) error_msg = 'Warning: Pressure Exceeds the theoretical range of 400-2000 Bar for ' + species;
+  
+    }
+
+    document.getElementById('error_message').innerHTML = error_msg;
+
+}
+
+
+
+
 var pres;
 var temp;
 var rho;
@@ -51,6 +91,7 @@ function chooseConditions() {
             break;
         case '4': // PT3
             condition = 4;
+            break;
         case '5':
             condition = 5;
         default:
@@ -87,6 +128,8 @@ function chooseRangeConditions(){
 
 
 function ajaxPostBulk(){
+
+    //if (document.getElementById('PD2').checked == true) {
     
     startTime = performance.now();
     if (condition === 5){
@@ -119,13 +162,25 @@ function ajaxPostBulk(){
         }
         
     }
-    else { p = parseFloat(document.getElementById("Pres").value);
-           t = parseFloat(document.getElementById("Temp").value);
-            ajaxPost(p, t);}
+    else { 
+        
+        let pName = "Pres";
+        let tName = "Temp";
+        
+        if(TABNAME === "Gibbs"){
+            pName = "Gibbs-Pres";
+            tName = "Gibbs-Temp";
+        }
+
+        p = parseFloat(document.getElementById(pName).value);
+        t = parseFloat(document.getElementById(tName).value);
+        ajaxPost(p, t);
+        }
 
 }
 
 function ajaxPost(p, t){
+
     rho = parseFloat(document.getElementById("Dens").value);
     species = document.getElementById("Species").value;
     params1 = parseFloat(document.getElementById("params1").value);

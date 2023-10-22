@@ -99,7 +99,7 @@ label{
 }
 
 .two2 {
-    width:53px;
+    width:100%;
 }
 
 #copy {
@@ -166,6 +166,26 @@ input[tpye=number] {
     float:left;
     /* height: 240px; */
 }
+
+.param {
+
+    padding:5px;
+    text-align: center;
+    width: 720px;
+    margin: auto;
+    background: #fbeec4;
+    border-radius: 5px;
+    border: 2px solid black;  
+    justify-content: space-between;
+}
+
+#fd5_param {
+    /* height: 83px; */
+    align-items: center;
+    margin: auto;
+    /* transform: translate(0,-65px); */
+}
+
 
 .bottom-right {
     padding:5px;
