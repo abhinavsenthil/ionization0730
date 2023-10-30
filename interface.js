@@ -41,8 +41,14 @@ function validateUserInputRange(field, type){
   
     }
 
-    document.getElementById('error_message').innerHTML = error_msg;
+    displayError(error_msg);
 
+
+    
+}
+
+function displayError(msg){
+    document.getElementById('error_message').innerHTML = msg;
 }
 
 
@@ -129,6 +135,7 @@ function chooseRangeConditions(){
 
 function ajaxPostBulk(){
 
+    displayError('');
     //if (document.getElementById('PD2').checked == true) {
     
     startTime = performance.now();
@@ -208,8 +215,8 @@ function ajaxPost(p, t){
                 data:{pres:p,temp:t},
                 dataType: "json",
                 // Call to PHP is failed
-                error: function(){  
-                    alert('Error loading XML document');  
+                error: function(){
+                    displayError('Error loading XML document');
                 }, 
                 // Call to PHP is sucessful   
                 success: function(returnedData){    
@@ -226,13 +233,13 @@ function ajaxPost(p, t){
             }
             else
             {
-                alert("Please enter the correct temperature: 0-800 oC");
+                displayError("Please enter the correct temperature: 0-800 oC");
             }
             
         }
         else
         {
-            alert("Pressure enter the correct pressure: 1-10000 bar");
+            displayError("Pressure enter the correct pressure: 1-10000 bar");
         }
     }
     else if (condition === 1)
@@ -248,7 +255,7 @@ function ajaxPost(p, t){
                 dataType: "json",
                 // Call to PHP is failed
                 error: function(){  
-                    alert('Error loading XML document');  
+                    displayError('Error loading XML document');  
                 }, 
                 // Call to PHP is sucessful   
                 success: function(returnedData){      
@@ -259,12 +266,12 @@ function ajaxPost(p, t){
             }
             else
             {
-                alert("Please enter the correct density: 0-1.25 g cm-3");
+                displayError("Please enter the correct density: 0-1.25 g cm-3");
             }    
          }
          else
          {
-             alert("Please enter the correct temperature: 0-800 oC");
+             displayError("Please enter the correct temperature: 0-800 oC");
          }
     }
     else if (condition === 2)
@@ -279,7 +286,7 @@ function ajaxPost(p, t){
             dataType: "json",
             // Call to PHP is failed
             error: function(){  
-                alert('Error loading XML document');  
+                displayError('Error loading XML document');  
             }, 
             // Call to PHP is sucessful   
             success: function(returnedData){      
@@ -293,7 +300,7 @@ function ajaxPost(p, t){
          }
          else
          {
-             alert("Please enter the correct temperature: 0-373.917 oC");
+            displayError("Please enter the correct temperature: 0-373.917 oC");
          }
          // Done by abhinav from here
     }
@@ -305,7 +312,7 @@ function ajaxPost(p, t){
         gibbsDens = parseFloat(document.getElementById("Gibbs-Dens").value);
         message = validateSpeciesDataInput(species, t, p)
         if( message !== 'OK'){
-            return alert(message);
+            return displayError(message);
         }
         if (p>=1 && p<=10000 || condition === 4)
         {
@@ -318,7 +325,7 @@ function ajaxPost(p, t){
                 dataType: "json",
                 // Call to PHP is failed
                 error: function(){  
-                    alert('Error loading XML document');  
+                    displayError('Error loading XML document');  
                 }, 
                 // Call to PHP is sucessful   
                 success: function(returnedData){    
@@ -331,13 +338,13 @@ function ajaxPost(p, t){
             }
             else
             {
-                alert("Please enter the correct temperature: 0-800 oC");
+                displayError("Please enter the correct temperature: 0-800 oC");
             }
             
         }
         else
         {
-            alert("Pressure enter the correct pressure: 1-10000 bar");
+            displayError("Pressure enter the correct pressure: 1-10000 bar");
         }
     }
 
@@ -347,7 +354,7 @@ function ajaxPost(p, t){
     {
         message = validateSpeciesDataInput(species, t, p)
         if( message !== 'OK'){
-            return alert(message);
+            return displayError(message);
         }
 
             if (t>=0 && t<=600)
@@ -360,7 +367,7 @@ function ajaxPost(p, t){
                 dataType: "json",
                 // Call to PHP is failed
                 error: function(){  
-                    alert('Error loading XML document');  
+                    displayError('Error loading XML document');  
                 }, 
                 // Call to PHP is sucessful   
                 success: function(returnedData){    
@@ -372,13 +379,13 @@ function ajaxPost(p, t){
             }
             else
             {
-                alert("Please enter the correct temperature: 0-800 oC");
+                displayError("Please enter the correct temperature: 0-800 oC");
             }
             
         }
         else
         {
-            alert("Pressure enter the correct pressure: 1-10000 bar");
+            displayError("Pressure enter the correct pressure: 1-10000 bar");
         }
     
 
@@ -470,7 +477,7 @@ function loadDynamicParams(val){
         dataType: "json",
         // Call to PHP is failed
         error: function(){  
-            alert('Error loading XML document');  
+            displayError('Error loading XML document');  
         }, 
         // Call to PHP is sucessful   
         success: function(returnedData){    

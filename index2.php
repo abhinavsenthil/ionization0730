@@ -24,6 +24,8 @@ and open the template in the editor.
         window.jQuery || document.write('<script src="http://mysite.com/jquery.min.js"><\/script>');
     </script>
     <script>
+        var allTextFieldIDs = ['Dens', 'Constant', 'Temp', 'Pres', 'Pkw', 'Pkwl', 'Pkwv', 'LiqDens', 'scDens', 'VapDen', 'Psat', 'PT', 'ROT', 'T', 'PT3', 'constT', 'constP', 'PD2', 'PT2'];
+
         window.onload = function() {
             document.getElementById('Dens').value = '';
             document.getElementById('Dens').disabled = true;
@@ -411,7 +413,7 @@ and open the template in the editor.
                         <label for="PT2">Δ<sub>f</sub> 𝐺<sup>0</sup><sub>j</sub> at a given <em>t</em>-<em>P</em></label><br>
 
                         <input type="radio" name="inputselector" value="4" id="PD2" onclick="chooseConditions()" />
-                        <label for="PT2">Δ<sub>f</sub> 𝐺<sup>0</sup><sub>j</sub> at a given <em>t</em>-<em>ρ</em></label><br>
+                        <label for="PD2">Δ<sub>f</sub> 𝐺<sup>0</sup><sub>j</sub> at a given <em>t</em>-<em>ρ</em></label><br>
 
                         <input type="radio" name="inputselector" value="5" id="PT3" onclick="chooseConditions()" />
                         <label for="PT3">Range of Δ<sub>f</sub> 𝐺<sup>0</sup><sub>j</sub></label>
