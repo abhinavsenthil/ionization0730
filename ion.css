@@ -237,10 +237,10 @@ button {
 
 .innerTable {
     border-collapse: collapse;
-    width: 420px;
+    width: 100%;
     align-self: center;
     justify-content: center;
-    transform: translate(33%, 0);
+    /*transform: translate(33%, 0);*/
 }
 
 
@@ -294,6 +294,7 @@ button {
     background-color: #f6eed1;
   }
   
+
   /* Style the tab content */
   .tabcontent {
     display: none;

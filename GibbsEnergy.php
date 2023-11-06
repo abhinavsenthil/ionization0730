@@ -177,6 +177,9 @@ function GibbsEnergy($Species, $t, $p, $DilectricConstant, $ro, $paramsArr){
         $Gvalues= $Gvalues + 11000;
     }
 
+    // to set it to kJ, divide by 1000
+    $Gvalues = $Gvalues / 1000;
+
 
     return $Gvalues; //*4.184 for kjmol-1
 };

@@ -32,7 +32,7 @@
     // write logic to check if $species exists, if it does, pass $type = 'Gibbs' as we need the density in liquid phase regardless of the temp
     // ...
     // ...
-    $selfDefine = ionizationCalculation($Tk, $Pbar);
+    $selfDefine = ionizationCalculation($Tk, $Pbar, 'Gibbs');
 
     function calculateDensity($GibbsDens, $Pbar, $Tk){ 
         if($GibbsDens == 'NaN'){

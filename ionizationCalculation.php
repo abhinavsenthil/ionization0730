@@ -4,7 +4,7 @@
     include_once "DensityH2Ocalculation.php";
     include_once "vappurewater.php";
 
-   function ionizationCalculation($Tk, $Pbar){
+   function ionizationCalculation($Tk, $Pbar, $type = null){
     //$Pbar = 4.76159;
     //$Tk = 273.15+150;
     $MH2O = 18.0152;
@@ -23,7 +23,7 @@
     $pKwv1 = 0;
     $pKwv2 = 0;
     
-    if ($vapDens == 0 || $liqDens == 0)
+    if ($vapDens == 0 || $liqDens == 0 || $type == 'Gibbs')
     {
         $label = 1; // Water is in Single phase at the given P-T
     }
@@ -38,7 +38,7 @@
 
     if ($label == 1) // Single-phase
     {
-        if ($Pbar > $Psat) // Single liquid 
+        if ($Pbar > $Psat || $type == 'Gibbs') // Single liquid 
         {
             $z = $liqDens*exp($alphaIoniz[1]+$alphaIoniz[2]*pow($Tk,-1)
                 +$alphaIoniz[3]*pow($Tk,-2)*pow($liqDens,(2/3)));
@@ -121,6 +121,9 @@
         $scDens = "N/A";
     }
     
+    if($type == 'Gibbs'){
+        $pKwl = $pKwl1;
+    }
    
     $Psat = "N/A";
     

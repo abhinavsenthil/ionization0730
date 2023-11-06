@@ -24,283 +24,6 @@ and open the template in the editor.
         window.jQuery || document.write('<script src="http://mysite.com/jquery.min.js"><\/script>');
     </script>
     <script>
-        var allTextFieldIDs = ['Dens', 'Constant', 'Temp', 'Pres', 'Pkw', 'Pkwl', 'Pkwv', 'LiqDens', 'scDens', 'VapDen', 'Psat', 'PT', 'ROT', 'T', 'PT3', 'constT', 'constP', 'PD2', 'PT2'];
-
-        window.onload = function() {
-            document.getElementById('Dens').value = '';
-            document.getElementById('Dens').disabled = true;
-            document.getElementById('Constant').value = '';
-            document.getElementById('Constant').disabled = false;
-            document.getElementById('Temp').value = '';
-            document.getElementById('Temp').disabled = true;
-            document.getElementById('Pres').value = '';
-            document.getElementById('Pres').disabled = true;
-            document.getElementById('Pkw').value = '';
-            document.getElementById('Pkw').disabled = true;
-            document.getElementById('Pkwl').value = '';
-            document.getElementById('Pkwl').disabled = true;
-            document.getElementById('Pkwv').value = '';
-            document.getElementById('Pkwv').disabled = true;
-            document.getElementById('LiqDens').value = '';
-            document.getElementById('scDens').value = '';
-            document.getElementById('scDens').disabled = true;
-            document.getElementById('LiqDens').disabled = true;
-            document.getElementById('VapDen').value = '';
-            document.getElementById('VapDen').disabled = true;
-            document.getElementById('Psat').value = '';
-            document.getElementById('Psat').disabled = true;
-            // //document.getElementById('Dilectric').value = '';
-            // document.getElementById('Dilectric').disabled = true;
-            document.getElementById('PT').onchange = disablefield;
-            document.getElementById('ROT').onchange = disablefield;
-            document.getElementById('T').onchange = disablefield;
-            document.getElementById('PT3').onchange = disablefield;
-            document.getElementById('constT').onchange = disablefield;
-            document.getElementById('constP').onchange = disablefield;
-            document.getElementById('PT').checked = false;
-            document.getElementById('ROT').checked = false;
-            document.getElementById('T').checked = false;
-            document.getElementById('PT3').checked = false;
-            document.getElementById('constT').checked = false;
-            document.getElementById('constP').checked = false;
-            document.getElementById('PD2').checked = false;
-            document.getElementById('PD2').onchange = disablefield;
-            document.getElementById('PT2').checked = false;
-            document.getElementById('PT2').onchange = disablefield;
-            openCalc(event, 'Gibbs1', false, 'Gibbs');
-
-
-        };
-
-        function disablefield() {
-            if (document.getElementById('PT').checked == true) {
-                document.getElementById('Dens').value = '';
-                document.getElementById('Dens').disabled = true;
-                document.getElementById('Temp').value = '';
-                document.getElementById('Temp').disabled = false;
-                document.getElementById('Pres').disabled = false;
-                document.getElementById('Psat').disabled = false;
-                document.getElementById('Pkw').value = '';
-                document.getElementById('Pkw').disabled = false;
-                document.getElementById('Pkwl').disabled = false;
-                document.getElementById('Pkwv').disabled = false;
-                document.getElementById('scDens').disabled = false;
-                document.getElementById('LiqDens').disabled = false;
-                document.getElementById('VapDen').disabled = false;
-                //document.getElementById('Dilectric').value = '';
-                document.getElementById('Dilectric').disabled = true;;
-            } else if (document.getElementById('ROT').checked == true) {
-                document.getElementById('Pres').value = '';
-                document.getElementById('Pres').disabled = true;
-                document.getElementById('Temp').value = '';
-                document.getElementById('Temp').disabled = false;
-                document.getElementById('Dens').disabled = false;
-                document.getElementById('Pkw').value = '';
-                document.getElementById('Pkw').disabled = false;
-                //document.getElementById('Dilectric').value = '';
-                document.getElementById('Dilectric').disabled = true;
-                document.getElementById('scDens').value = '';
-                document.getElementById('scDens').disabled = true;
-                document.getElementById('Psat').value = '';
-                document.getElementById('Psat').disabled = true;
-                document.getElementById('LiqDens').value = '';
-                document.getElementById('LiqDens').disabled = true;
-                document.getElementById('VapDen').value = '';
-                document.getElementById('VapDen').disabled = true;
-                document.getElementById('Pkwl').value = '';
-                document.getElementById('Pkwl').disabled = true;
-                document.getElementById('Pkwv').value = '';
-                document.getElementById('Pkwv').disabled = true;
-            } else if (document.getElementById('T').checked == true) {
-                document.getElementById('Pres').value = '';
-                document.getElementById('Pres').disabled = true;
-                document.getElementById('Temp').value = '';
-                document.getElementById('Temp').disabled = false;
-                document.getElementById('Dens').disabled = true;
-                document.getElementById('Pkw').value = '';
-                document.getElementById('Pkw').disabled = true;
-                document.getElementById('scDens').value = '';
-                document.getElementById('scDens').disabled = true;
-                document.getElementById('Psat').value = '';
-                document.getElementById('Psat').disabled = false;
-                document.getElementById('LiqDens').value = '';
-                document.getElementById('LiqDens').disabled = false;
-                document.getElementById('VapDen').value = '';
-                document.getElementById('VapDen').disabled = false;
-                document.getElementById('Pkwl').value = '';
-                document.getElementById('Pkwl').disabled = false;
-                document.getElementById('Pkwv').value = '';
-                document.getElementById('Pkwv').disabled = false;
-                //document.getElementById('Dilectric').value = '';
-                document.getElementById('Dilectric').disabled = true;
-            } else if (document.getElementById('PT2').checked == true) {
-                document.getElementById('Dens').value = '';
-                document.getElementById('Dens').disabled = true;
-                document.getElementById('Temp').value = '';
-                document.getElementById('Temp').disabled = false;
-                document.getElementById('Pres').disabled = false;
-                document.getElementById('Psat').disabled = false;
-                document.getElementById('Pkw').value = '';
-                document.getElementById('Pkw').disabled = false;
-                document.getElementById('Pkwl').disabled = false;
-                document.getElementById('Pkwv').disabled = false;
-                document.getElementById('scDens').disabled = false;
-                document.getElementById('LiqDens').disabled = false;
-                document.getElementById('VapDen').disabled = false;
-                document.getElementById('Gibbs-Temp').value = '';
-                document.getElementById('Gibbs-Temp').disabled = false;
-                document.getElementById('Gibbs-Dens').value = '';
-                document.getElementById('Gibbs-Dens').disabled = true;
-                document.getElementById('Gibbs-Pres').value = '';
-                document.getElementById('Gibbs-Pres').disabled = false;
-                //document.getElementById('Dilectric').value = '';
-                //document.getElementById('Dilectric').disabled = false;
-                // //document.getElementById('Gibbs').value = '';
-                // //document.getElementById('Gibbs').disabled = false;
-
-            } else if (document.getElementById('PD2').checked == true) {
-                document.getElementById('Dens').value = '';
-                document.getElementById('Dens').disabled = true;
-                document.getElementById('Temp').value = '';
-                document.getElementById('Temp').disabled = false;
-                document.getElementById('Pres').disabled = false;
-                document.getElementById('Psat').disabled = false;
-                document.getElementById('Pkw').value = '';
-                document.getElementById('Pkw').disabled = false;
-                document.getElementById('Pkwl').disabled = false;
-                document.getElementById('Pkwv').disabled = false;
-                document.getElementById('scDens').disabled = false;
-                document.getElementById('LiqDens').disabled = false;
-                document.getElementById('VapDen').disabled = false;
-                // //document.getElementById('Dilectric').value = '';
-                // //document.getElementById('Dilectric').disabled = false;
-                //document.getElementById('Gibbs').value = '';
-                //document.getElementById('Gibbs').disabled = false;
-                document.getElementById('Gibbs-Temp').value = '';
-                document.getElementById('Gibbs-Temp').disabled = false;
-                document.getElementById('Gibbs-Dens').value = '';
-                document.getElementById('Gibbs-Dens').disabled = false;
-                document.getElementById('Gibbs-Pres').value = '';
-                document.getElementById('Gibbs-Pres').disabled = true;
-
-            } else if (document.getElementById('PT3').checked == true) {
-                document.getElementById('Dens').value = '';
-                document.getElementById('Dens').disabled = true;
-                document.getElementById('Temp').value = '';
-                document.getElementById('Temp').disabled = true;
-                document.getElementById('Pres').disabled = true;
-                document.getElementById('Psat').disabled = true;
-                document.getElementById('Pkw').value = '';
-                document.getElementById('Pkw').disabled = true;
-                document.getElementById('Pkwl').disabled = true;
-                document.getElementById('Pkwv').disabled = true;
-                document.getElementById('scDens').disabled = true;
-                document.getElementById('LiqDens').disabled = true;
-                document.getElementById('VapDen').disabled = true;
-                // //document.getElementById('Dilectric').value = '';
-                // document.getElementById('Dilectric').disabled = true;
-                document.getElementById('Gibbs-Temp').value = '';
-                document.getElementById('Gibbs-Temp').disabled = true;
-                document.getElementById('Gibbs-Dens').value = '';
-                document.getElementById('Gibbs-Dens').disabled = true;
-                document.getElementById('Gibbs-Pres').value = '';
-                document.getElementById('Gibbs-Pres').disabled = true;
-            } else if (document.getElementById('constT').checked == true) {
-                document.getElementById('Pres').value = '';
-                document.getElementById('Pres').disabled = true;
-                document.getElementById('Temp').value = '';
-                document.getElementById('Temp').disabled = true;
-                document.getElementById('Dens').disabled = true;
-                document.getElementById('Pkw').value = '';
-                document.getElementById('Pkw').disabled = true;
-                // //document.getElementById('Dilectric').value = '';
-                // document.getElementById('Dilectric').disabled = true;                       
-                document.getElementById('scDens').value = '';
-                document.getElementById('scDens').disabled = true;
-                document.getElementById('Psat').value = '';
-                document.getElementById('Psat').disabled = true;
-                document.getElementById('LiqDens').value = '';
-                document.getElementById('LiqDens').disabled = true;
-                document.getElementById('VapDen').value = '';
-                document.getElementById('VapDen').disabled = true;
-                document.getElementById('Pkwl').value = '';
-                document.getElementById('Pkwl').disabled = true;
-                document.getElementById('Pkwv').value = '';
-                document.getElementById('Pkwv').disabled = true;
-                document.getElementById('Constant').value = '';
-                document.getElementById('Constant').disabled = false;
-                document.getElementById('Start').value = '';
-                document.getElementById('Start').disabled = false;
-                document.getElementById('End').value = '';
-                document.getElementById('End').disabled = false;
-                document.getElementById('Step').value = '';
-                document.getElementById('Step').disabled = false;
-            } else if (document.getElementById('constP').checked == true) {
-                document.getElementById('Pres').value = '';
-                document.getElementById('Pres').disabled = true;
-                document.getElementById('Temp').value = '';
-                document.getElementById('Temp').disabled = true;
-                document.getElementById('Dens').disabled = true;
-                document.getElementById('Pkw').value = '';
-                document.getElementById('Pkw').disabled = true;
-                // //document.getElementById('Dilectric').value = '';
-                // document.getElementById('Dilectric').disabled = true;                       
-                document.getElementById('scDens').value = '';
-                document.getElementById('scDens').disabled = true;
-                document.getElementById('Psat').value = '';
-                document.getElementById('Psat').disabled = true;
-                document.getElementById('LiqDens').value = '';
-                document.getElementById('LiqDens').disabled = true;
-                document.getElementById('VapDen').value = '';
-                document.getElementById('VapDen').disabled = true;
-                document.getElementById('Pkwl').value = '';
-                document.getElementById('Pkwl').disabled = true;
-                document.getElementById('Pkwv').value = '';
-                document.getElementById('Pkwv').disabled = true;
-                document.getElementById('Constant').value = '';
-                document.getElementById('Constant').disabled = false;
-                document.getElementById('Start').value = '';
-                document.getElementById('Start').disabled = false;
-                document.getElementById('End').value = '';
-                document.getElementById('End').disabled = false;
-                document.getElementById('Step').value = '';
-                document.getElementById('Step').disabled = false;
-            }
-        }
-    </script>
-    <script>
-        function reSet() {
-            document.getElementById('Dens').value = '';
-            document.getElementById('Dens').disabled = true;
-            //document.getElementById('Gibbs').value = '';
-            //document.getElementById('Gibbs').disabled = true;
-            document.getElementById('Temp').value = '';
-            document.getElementById('Temp').disabled = true;
-            document.getElementById('Pres').value = '';
-            document.getElementById('Pres').disabled = true;
-            document.getElementById('Pkw').value = '';
-            document.getElementById('Pkw').disabled = true;
-            document.getElementById('Pkwl').value = '';
-            document.getElementById('Pkwl').disabled = true;
-            document.getElementById('Pkwv').value = '';
-            document.getElementById('Pkwv').disabled = true;
-            document.getElementById('LiqDens').value = '';
-            document.getElementById('scDens').value = '';
-            document.getElementById('scDens').disabled = true;
-            document.getElementById('LiqDens').disabled = true;
-            document.getElementById('VapDen').value = '';
-            document.getElementById('VapDen').disabled = true;
-            document.getElementById('Psat').value = '';
-            document.getElementById('Psat').disabled = true;
-            // //document.getElementById('Dilectric').value = '';
-            // document.getElementById('Dilectric').disabled = true;
-            document.getElementById('PT').onchange = disablefield;
-            document.getElementById('ROT').onchange = disablefield;
-            document.getElementById('T').onchange = disablefield;
-            document.getElementById('PT').checked = false;
-            document.getElementById('ROT').checked = false;
-            document.getElementById('T').checked = false;
-        }
 
         var TABNAME = "Gibbs";
 
@@ -344,7 +67,7 @@ and open the template in the editor.
 
     <h1 class="three-titles">Aqueous Thermodynamic Properties at Elevated Temperatures and Pressures</h1>
     <h3 class="three-titles">&#8212;&#8212; A web computational tool &#8212;&#8212;</h3>
-    <h4 style="text-align:center; width:720px; margin:auto; color:black; ">This computational tool provides the dissociation constant of water (<em>K</em>w), Dielectric constant of water (<em>ε</em>) and the standard Gibbs Energy of Formation (Δ<sub>f</sub> 𝐺<sup>0</sup><sub>j</sub>) of several aqueous species over a wide range of temperatures (<em>t</em>), pressures (<em>P</em>), and densities (<em>&rho;</em>) above and below the critical point of water. </h4>
+    <h4 style="text-align:center; width:720px; margin:auto; color:black; ">This computational tool provides the ionization constant of water (<em>K</em><sub>w</sub>), Dielectric constant of water (<em>ε</em>) and the standard Gibbs Energy of Formation (Δ<sub>f</sub> 𝐺<sup>0</sup><sub>j</sub>) of several aqueous species over a wide range of temperatures (<em>t</em>), pressures (<em>P</em>), and densities (<em>&rho;</em>) above and below the critical point of water. </h4>
     <br>
 
 
@@ -361,17 +84,16 @@ and open the template in the editor.
   -->
 
     <div class="tab">
-        <button class="tablinks" onclick="openCalc(event, 'Gibbs1', false, 'Gibbs')">Gibbs Energy</button>
-        <button class="tablinks" onclick="openCalc(event, 'Gibbs1', true, 'GibbsWithParam')">Gibbs with Parameters</button>
-        <button class="tablinks" onclick="openCalc(event, 'ionization', false, 'Ionization')">pKw</button>
+        <button class="tablinks" onclick="openCalc(event, 'Gibbs1', false, 'Gibbs')" style="width:30%;">Gibbs Energy Calculator</button>
+        <button class="tablinks" onclick="openCalc(event, 'Gibbs1', true, 'GibbsWithParam')" style="width:30%;">Model Parameters Calculator</button>
+        <button class="tablinks" onclick="openCalc(event, 'ionization', false, 'Ionization')" style="width:30%;">Ionization Constant Calculator</button>
     </div>
-
-
+    <br>
     <div id="Gibbs1" class="tabcontent">
         <h3>Gibbs Energy Calculator</h3>
         <div id="wrap3">
-            <p>Enter Pressures between 1-4000 Bar, Temperatures between 0-600 <sup>o</sup>C</p>
-            <div id="error_message" style="color:red"></div>
+            <p>Enter Pressures between 1-4000 bar, Temperatures between 0-600 <sup>o</sup>C, and Densities above 0.4 g cm<sup>-3</sup></p>
+            
 
             <div class="bottom-left">
                 <fieldset id="fd3">
@@ -382,7 +104,7 @@ and open the template in the editor.
                             <td>
                                 Species:
                                 <select id="Species" name="Species" onchange="loadDynamicParams(this.value)">
-                                    <option value="Select_One+">Select One</option>
+                                    <option value="Select_One">Select One</option>
                                     <option value="Ba2+">Ba2+</option>
                                     <option value="BaSO40">BaSO40</option>
                                     <option value="Cl-">Cl-</option>
@@ -409,13 +131,13 @@ and open the template in the editor.
                     </table>
                     
                     <form action="" method="get" name="input">
-                        <input type="radio" name="inputselector" value="3" id="PT2" onclick="chooseConditions()" />
+                        <input type="radio" name="inputselector" value="3" id="PT2" onclick="chooseConditions(this)" />
                         <label for="PT2">Δ<sub>f</sub> 𝐺<sup>0</sup><sub>j</sub> at a given <em>t</em>-<em>P</em></label><br>
 
-                        <input type="radio" name="inputselector" value="4" id="PD2" onclick="chooseConditions()" />
+                        <input type="radio" name="inputselector" value="4" id="PD2" onclick="chooseConditions(this)" />
                         <label for="PD2">Δ<sub>f</sub> 𝐺<sup>0</sup><sub>j</sub> at a given <em>t</em>-<em>ρ</em></label><br>
 
-                        <input type="radio" name="inputselector" value="5" id="PT3" onclick="chooseConditions()" />
+                        <input type="radio" name="inputselector" value="5" id="PT3" onclick="chooseConditions(this)" />
                         <label for="PT3">Range of Δ<sub>f</sub> 𝐺<sup>0</sup><sub>j</sub></label>
                     </form>
                 </fieldset>
@@ -471,7 +193,7 @@ and open the template in the editor.
                             <td><input class="two" type="number" id="Gibbs-Pres" label="Input P / bar" title="Input P / bar" onblur="" onkeyup="validateUserInputRange(this, 'Pres')"/></td>
                         </tr>
                         <tr>
-                            <td class="one"><em>ρ</em>H2O(l) / g cm-3</td>
+                            <td class="one"><em>ρ</em>H2O(l) / g cm<sup>-3</sup></td>
                             <td><input class="two" type="number" id="Gibbs-Dens" label="Input density" title="Input density" onblur="" /></td>
                         </tr>
 
@@ -523,6 +245,9 @@ and open the template in the editor.
 
                 </fieldset>
         </div>
+        <br>
+        <div id="error_message" style="color:red; text-align:center;"></div>
+        <br>
         <div id="wrap2">
             <div id="stepTable"></div>
         </div>
@@ -535,18 +260,18 @@ and open the template in the editor.
         <h3>Ionization Calculator</h3>
         <div id="wrap">
             <br>
-            Calculate dissociation constant of water, Saturation Pressure and Density
+            Calculate Ionization constant of water, Saturation Pressure and Density
             <p>Select Temperature between 0-800 <sup>o</sup>C, Pressure between 1-10000 Bar, and Density between 0-1.25 g/cm<sup>3</sup></p>
             <div role="main">
                 <div class="left" role="form">
                     <fieldset id="fd1">
                         <legend>Input options</legend>
                         <form action="" method="get" name="input">
-                            <input type="radio" name="inputselector" value="0" id="PT" onclick="chooseConditions()" />
+                            <input type="radio" name="inputselector" value="0" id="PT" onclick="chooseConditions(this)" />
                             <label for="PT"><em>t&#8212;P</em>: p<em>K</em>w at a given <em>t</em>-<em>P</em></label></br>
-                            <input type="radio" name="inputselector" value="1" id="ROT" onclick="chooseConditions()" />
+                            <input type="radio" name="inputselector" value="1" id="ROT" onclick="chooseConditions(this)" />
                             <label for="ROT"><em>t</em>&#8212;<em>&rho;</em><sub>H2O</sub>: p<em>K</em>w at a given <em>t</em>-<em>&rho;</em><sub>H2O</sub></label></br>
-                            <input type="radio" name="inputselector" value="2" id="T" onclick="chooseConditions()" />
+                            <input type="radio" name="inputselector" value="2" id="T" onclick="chooseConditions(this)" />
                             <label for="T"><em>t</em>: p<em>K</em>w at saturation conditions</label></br><br>
                             <!-- Abhinav's Code-->
                             <table role="presentation">
@@ -625,14 +350,19 @@ and open the template in the editor.
         <button type="button" onclick="ajaxPostBulk()">Calculate</button>
     </div>
     <br>
+    <br>
     <div id="references">
-        <h3 style="text-align: left; transform: translate(26%, 0);">Acknowledgements</h3>
+        <h3 style="text-align: center;">References</h3>
         <p class="reference-text"> 1. Lvov, S. N., Hall, D. M., Bandura, A. V., Gamwo, I. K. (2018). A semi-empirical molecular statistical thermodynamic model for calculating standard molar Gibbs energies of aqueous species above and below the critical point of water. <em>Journal of Molecular Liquids</em>, 270, 62-73.<br><br>
             2. Bandura A.V. and Lvov S. N. (2006), The ionization constant of water over wide ranges of temperature and density, <em>J. Phys. Chem. Ref. Data</em>., 35, 15-30.<br><br>
             3. Cooper, J.P. and Dooley R.B. (2007), Release on the ionization constant of H<sub>2</sub>O, <em>The International Association for the Properties of Water and Steam</em>, Lucerne, Switzerland, 7 pages.<br><br>
-            4. Lvov S. N. and Harvey A. H. , Ionization constant of water, Chapter 5-70-71, <em>CRC Handbook of Chemistry and Physics</em>, 92<sup>nd</sup> Edition.</p>
+            4. Lvov S. N. and Harvey A. H. , Ionization constant of water, Chapter 5-70-71, <em>CRC Handbook of Chemistry and Physics</em>, 92<sup>nd</sup> Edition.
+            5. Hall, D.M. Lvov, S.N. Gamwo, I.K. (2022), A review of thermodynamic modeling techniques for mineral formation in high temperature, high pressure (HTHP) aqueous fluids. Liquids. 2 (4), 303-317.<br><br>
+            6. Hall, D.M. Lvov, S.N. Gamwo, I.K. (2022), Prediction of Barium Sulfate Deposition in Petroleum and Hydrothermal Systems, In Solid-Liquid Separation Technologies: Application for Produced Water, ed. O. I. Ogunsola, and I. K. Gamwo, 355-403. CRC Press/Taylor & Francis.<br><br>
 
+        </p>
         <br>
+        <h3 style="text-align: center;">Acknowledgements</h3>
         <p class="reference-text">
             *Haining Zhao has designed and programmed the functionalities for calculating the Dissociation constant of water, Saturation Pressure, and Density in different phases.
         </p>
