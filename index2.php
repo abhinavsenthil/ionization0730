@@ -28,8 +28,15 @@ and open the template in the editor.
         var TABNAME = "Gibbs";
 
         function openCalc(evt, calcName, isParams = false, tabName) {
+            
             TABNAME = tabName;
 
+            if(tabName === 'Gibbs'){
+                document.getElementById('SpeciesBlock').style.display = "block";
+            }
+            else{
+                document.getElementById('SpeciesBlock').style.display = "none";
+            }
             var i, tabcontent, tablinks;
             tabcontent = document.getElementsByClassName("tabcontent");
             for (i = 0; i < tabcontent.length; i++) {
@@ -85,7 +92,7 @@ and open the template in the editor.
 
     <div class="tab">
         <button class="tablinks" onclick="openCalc(event, 'Gibbs1', false, 'Gibbs')" style="width:30%;">Gibbs Energy Calculator</button>
-        <button class="tablinks" onclick="openCalc(event, 'Gibbs1', true, 'GibbsWithParam')" style="width:30%;">Model Parameters Calculator</button>
+        <button class="tablinks" onclick="openCalc(event, 'Gibbs1', true, 'GibbsWithParam')" style="width:30%;">Gibbs Energy Calculator (Custom)</button>
         <button class="tablinks" onclick="openCalc(event, 'ionization', false, 'Ionization')" style="width:30%;">Ionization Constant Calculator</button>
     </div>
     <br>
@@ -102,6 +109,7 @@ and open the template in the editor.
                     <table role="presentation" style="display:flex;justify-content: center;">
                         <tr>
                             <td>
+                                <div id="SpeciesBlock">
                                 Species:
                                 <select id="Species" name="Species" onchange="loadDynamicParams(this.value)">
                                     <option value="Select_One">Select One</option>
@@ -126,6 +134,7 @@ and open the template in the editor.
                                     <option value="SiO20">SiO20</option>
                                     <option value="SO42-">SO42-</option>
                                 </select>
+                                </div>
                             </td>
                         </tr>
                     </table>
@@ -135,11 +144,32 @@ and open the template in the editor.
                         <label for="PT2">Δ<sub>f</sub> 𝐺<sup>0</sup><sub>j</sub> at a given <em>t</em>-<em>P</em></label><br>
 
                         <input type="radio" name="inputselector" value="4" id="PD2" onclick="chooseConditions(this)" />
-                        <label for="PD2">Δ<sub>f</sub> 𝐺<sup>0</sup><sub>j</sub> at a given <em>t</em>-<em>ρ</em></label><br>
+                        <label for="PD2">Δ<sub>f</sub> 𝐺<sup>0</sup><sub>j</sub> at saturation conditions</label><br>
 
                         <input type="radio" name="inputselector" value="5" id="PT3" onclick="chooseConditions(this)" />
                         <label for="PT3">Range of Δ<sub>f</sub> 𝐺<sup>0</sup><sub>j</sub></label>
                     </form>
+                </fieldset>
+
+
+                <fieldset id="fd5">
+                    <legend>Set values</legend>
+                    <table role="presentation">
+                        <tr>
+                            <td class="one"><em>t</em> / <sup>o</sup>C:</td>
+                            <td><input class="two" type="number" id="Gibbs-Temp" name="Temp" label="Input  t / oC" title="Input  t / oC" onblur="" onkeyup="validateUserInputRange(this, 'Temp')"/></td>
+                        </tr>
+                        <tr>
+                            <td class="one"><em>P</em> / bar</td>
+                            <td><input class="two" type="number" id="Gibbs-Pres" label="Input P / bar" title="Input P / bar" onblur="" onkeyup="validateUserInputRange(this, 'Pres')"/></td>
+                        </tr>
+                        <tr>
+                            <td class="one"><em>ρ</em>H2O(l) / g cm<sup>-3</sup></td>
+                            <td><input class="two" type="number" id="Gibbs-Dens" label="Input density" title="Input density" onblur="" /></td>
+                        </tr>
+
+                    </table>
+
                 </fieldset>
             </div>
 
@@ -180,7 +210,7 @@ and open the template in the editor.
                 </fieldset>
             </div>
 
-            <div class="bottom-left">
+            <!-- <div class="bottom-left">
                 <fieldset id="fd5">
                     <legend>Set values</legend>
                     <table role="presentation">
@@ -200,7 +230,7 @@ and open the template in the editor.
                     </table>
 
                 </fieldset>
-            </div>
+            </div> -->
 
         </div>
 
@@ -213,14 +243,14 @@ and open the template in the editor.
                     <table role="presentation">
                         <tr>
                             <td class="one" style="width:25%;">G<sup>0</sup><sub>TrPr</sub>: </td>
-                            <td style="width:20%;"><input class="two2" type="number" id="params1" name="Temp" label="Input  t / oC" title="Input  t / oC" onblur="" disabled /></td>
+                            <td style="width:20%;"><input class="two2" type="number" id="params1" name="Temp" label="Input  t / oC" title="Input  t / oC" onblur="" /></td>
                             <td style="width:10%;">&nbsp;</td>
                             <td class="one" style="width:25%;">σ<sub>w</sub> / A:</td>
                             <td style="width:20%;"><input class="two2" type="number" id="params5" name="Temp" label="Input  t / oC" title="Input  t / oC" onblur="" /></td>
                         </tr>
                         <tr>
                             <td class="one" style="width:25%;">S<sup>0</sup><sub>TrPr</sub>: </td>
-                            <td style="width:20%;"><input class="two2" type="number" id="params2" name="Temp" label="Input  t / oC" title="Input  t / oC" onblur="" disabled /></td>
+                            <td style="width:20%;"><input class="two2" type="number" id="params2" name="Temp" label="Input  t / oC" title="Input  t / oC" onblur="" /></td>
                             <td style="width:10%;">&nbsp;</td>
                             <td class="one" style="width:25%;">C / JK<sup>-1</sup>:</td>
                             <td style="width:20%;"><input class="two2" type="number" id="params6" name="Temp" label="Input  t / oC" title="Input  t / oC" onblur="" /></td>
@@ -237,7 +267,7 @@ and open the template in the editor.
                             <td style="width:20%;"><input class="two2" type="number" id="params4" name="Temp" label="Input  t / oC" title="Input  t / oC" onblur="" /></td>
                             <td style="width:10%;">&nbsp;</td>
                             <td class="one" style="width:25%;">z:</td>
-                            <td style="width:20%;"><input class="two2" type="number" id="params8" name="Temp" label="Input  t / oC" title="Input  t / oC" onblur="" disabled/></td>
+                            <td style="width:20%;"><input class="two2" type="number" id="params8" name="Temp" label="Input  t / oC" title="Input  t / oC" onblur=""/></td>
                         </tr>
                         
 

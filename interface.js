@@ -16,8 +16,10 @@ function validateSpeciesDataInput(species, TempC, PBar, gibbsDens){
 
 const allTextFieldIDs = ['Dens', 'Constant', 'Temp', 'Pres', 'Pkw', 'Pkwl', 'Pkwv', 'LiqDens', 'scDens', 'VapDen', 'Psat', 'Gibbs-Temp', 'Gibbs-Dens', 'Gibbs-Pres', 'Start', 'End', 'Step'];
         const optionToFields = {'PT': ['Pres', 'Temp', 'Psat', 'Pkw', 'Pkwl', 'Pkwv', 'LiqDens', 'scDens', 'VapDen'], 
-                                'PT2': ['Gibbs-Temp', 'Gibbs-Pres'], 'PD2': ['Gibbs-Temp', 'Gibbs-Dens'], 
-                                'PT3': ['Start', 'End', 'Step', 'Constant'], 'ROT': ['Temp', 'Dens', 'Pkw'], 
+                                'PT2': ['Gibbs-Temp', 'Gibbs-Pres'], 
+                                'PD2': ['Gibbs-Temp'], 
+                                'PT3': ['Start', 'End', 'Step', 'Constant'], 
+                                'ROT': ['Temp', 'Dens', 'Pkw'], 
                                 'T': ['Temp', 'Pkw', 'Pkwl', 'Pkwv', 'LiqDens', 'VapDen', 'Psat']};
 
         function disableFields(ignoreFields){
@@ -36,6 +38,7 @@ const allTextFieldIDs = ['Dens', 'Constant', 'Temp', 'Pres', 'Pkw', 'Pkwl', 'Pkw
 
         }
 
+
         function reSet(){
             disableFields([]);
             document.getElementById("stepTable").innerHTML = '';
@@ -44,6 +47,7 @@ const allTextFieldIDs = ['Dens', 'Constant', 'Temp', 'Pres', 'Pkw', 'Pkwl', 'Pkw
             for (let x of Object.keys(optionToFields)){
                 document.getElementById(x).checked = false;
             }
+            displayError('');
 
             
         }
@@ -72,13 +76,9 @@ function validateUserInputRange(field, type){
         const retData = getSaturation(NaN, value, false);
         console.log('retData: ', retData);
         const lowerDensity = retData[3];
-        error_msg = 'Warning: maximum density allowed is: ' + lowerDensity;
+        //error_msg = 'Warning: maximum density allowed is: ' + lowerDensity;
         console.log('lower density: ', lowerDensity);
     }
-
-
-
-
 
     const set1 = new Set(["Ba2+", "Cl-", "K+", "Li+", "Na+", "NH30", "NH4+", "OH-", "PO43-", "HPO42-", "H2PO4-", "H3PO40", "SiO20", "SO42-" ]);
     const set2 = new Set(["KCl0", "KOH0", "NaOH0"]);
@@ -102,14 +102,20 @@ function validateUserInputRange(field, type){
   
     }
 
-    displayError(error_msg);
+    displayError(error_msg, 'Warning');
 
 
     
 }
 
-function displayError(msg){
-    document.getElementById('error_message').innerHTML = msg;
+function displayError(msg, type='Error'){
+    let node = document.getElementById('error_message');
+    let color = 'red';
+    if(type === 'Warning'){
+        color = 'blue';
+    }
+    node.style.color = color;
+    node.innerHTML = msg;
 }
 
 
@@ -135,6 +141,7 @@ var params6;
 var params7;
 var params8;
 var minAllowedDens;
+
 
 
 function chooseConditions(obj) {
@@ -357,7 +364,8 @@ function ajaxPost(p, t){
         allData = [];
         p = parseFloat(document.getElementById("Gibbs-Pres").value);
         t = parseFloat(document.getElementById("Gibbs-Temp").value);
-        gibbsDens = parseFloat(document.getElementById("Gibbs-Dens").value);
+        gibbsDens = parseFloat(document.getElementById("Gibbs-Dens").value) || minAllowedDens;
+        
         message = validateSpeciesDataInput(species, t, p, gibbsDens)
         if( message !== 'OK'){
             return displayError(message);
@@ -462,6 +470,10 @@ allData.sort(sortBySecondElement);
 
 
 function appendStepTable(val){
+    if(val[7] < 0.4){
+        displayError('For the given inputs, the calculated density is less than 0.4 g cm-3')
+        return;
+    }
     console.log(val);
     allData.push(val);
     allData.sort(sortBySecondElement); // Sort the array based on the second element
@@ -492,7 +504,7 @@ function generateTable(){
         for (let j = 0; j < data.length; j++) {
             let val = data[j]
             if(j===1 || j=== 0){
-                val = Number(data[j]).toPrecision(6);
+                val = Number(data[j]).toPrecision(5);
             }
             if(j === 2 || j === 4 || j === 5 || j === 6|| j === 8){
                 continue
@@ -574,7 +586,8 @@ function getSaturation(rho, t, display = true){
             }
             else{
                 minAllowedDens = returnedData[3];
-                displayError('Caution: density should be above: ' + minAllowedDens + "g cm -3");  
+                //document.getElementById('Gibbs-Dens').value = minAllowedDens;
+                //displayError('Note:- Density is calculated at saturation conditions');  
             }
 
             }   
