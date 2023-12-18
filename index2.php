@@ -33,6 +33,7 @@ and open the template in the editor.
 
             if(tabName === 'Gibbs'){
                 document.getElementById('SpeciesBlock').style.display = "block";
+                document.getElementById('calculatorTitle').innerHTML = '<h3> Gibbs Energy Calculator </h3>';
             }
             else{
                 document.getElementById('SpeciesBlock').style.display = "none";
@@ -55,6 +56,12 @@ and open the template in the editor.
             } else {
                 x.style.display = "none";
             }
+
+            // doing this for changing the heading of the calculator - december 4
+            if(tabName === 'GibbsWithParam'){
+                document.getElementById('calculatorTitle').innerHTML = '<h3> Gibbs Energy Calculator (custom) </h3>';
+            }
+
         }
     </script>
     <link rel="shortcut icon" type="image/x-icon" href="http://carbonlab.org/favicon.ico" />
@@ -74,7 +81,7 @@ and open the template in the editor.
 
     <h1 class="three-titles">Aqueous Thermodynamic Properties at Elevated Temperatures and Pressures</h1>
     <h3 class="three-titles">&#8212;&#8212; A web computational tool &#8212;&#8212;</h3>
-    <h4 style="text-align:center; width:720px; margin:auto; color:black; ">This computational tool provides the ionization constant of water (<em>K</em><sub>w</sub>), Dielectric constant of water (<em>ε</em>) and the standard Gibbs Energy of Formation (Δ<sub>f</sub> 𝐺<sup>0</sup><sub>j</sub>) of several aqueous species over a wide range of temperatures (<em>t</em>), pressures (<em>P</em>), and densities (<em>&rho;</em>) above and below the critical point of water. </h4>
+    <h4 style="text-align:center; width:720px; margin:auto; color:black; ">This computational tool provides the the standard Gibbs Energy of Formation (Δ<sub>f</sub> 𝐺<sup>0</sup><sub>j</sub>), the Dielectric constant of water (<em>ε</em>) and ionization constant of water (<em>K</em><sub>w</sub>) of several aqueous species over a wide range of temperatures (<em>t</em>), pressures (<em>P</em>), and densities (<em>&rho;</em>) above and below the critical point of water. </h4>
     <br>
 
 
@@ -97,7 +104,9 @@ and open the template in the editor.
     </div>
     <br>
     <div id="Gibbs1" class="tabcontent">
-        <h3>Gibbs Energy Calculator</h3>
+        <div id="calculatorTitle">
+            <h3>Gibbs Energy Calculator</h3>
+        </div>
         <div id="wrap3">
             <p>Enter Pressures between 1-4000 bar, Temperatures between 0-600 <sup>o</sup>C, and Densities above 0.4 g cm<sup>-3</sup></p>
             
@@ -144,7 +153,7 @@ and open the template in the editor.
                         <label for="PT2">Δ<sub>f</sub> 𝐺<sup>0</sup><sub>j</sub> at a given <em>t</em>-<em>P</em></label><br>
 
                         <input type="radio" name="inputselector" value="4" id="PD2" onclick="chooseConditions(this)" />
-                        <label for="PD2">Δ<sub>f</sub> 𝐺<sup>0</sup><sub>j</sub> at saturation conditions</label><br>
+                        <label for="PD2">Δ<sub>f</sub> 𝐺<sup>0</sup><sub>j</sub> on saturation curve</label><br>
 
                         <input type="radio" name="inputselector" value="5" id="PT3" onclick="chooseConditions(this)" />
                         <label for="PT3">Range of Δ<sub>f</sub> 𝐺<sup>0</sup><sub>j</sub></label>
@@ -164,7 +173,7 @@ and open the template in the editor.
                             <td><input class="two" type="number" id="Gibbs-Pres" label="Input P / bar" title="Input P / bar" onblur="" onkeyup="validateUserInputRange(this, 'Pres')"/></td>
                         </tr>
                         <tr>
-                            <td class="one"><em>ρ</em>H2O(l) / g cm<sup>-3</sup></td>
+                            <td class="one"><em>ρ</em><sub>H2O</sub>(l) / g cm<sup>-3</sup></td>
                             <td><input class="two" type="number" id="Gibbs-Dens" label="Input density" title="Input density" onblur="" /></td>
                         </tr>
 
@@ -242,14 +251,14 @@ and open the template in the editor.
                     <legend>Set Parameters</legend>
                     <table role="presentation">
                         <tr>
-                            <td class="one" style="width:25%;">G<sup>0</sup><sub>TrPr</sub>: </td>
+                            <td class="one" style="width:25%;">Δ<sub>f</sub>G<sup>0</sup><sub>TrPr</sub>: </td>
                             <td style="width:20%;"><input class="two2" type="number" id="params1" name="Temp" label="Input  t / oC" title="Input  t / oC" onblur="" /></td>
                             <td style="width:10%;">&nbsp;</td>
                             <td class="one" style="width:25%;">σ<sub>w</sub> / A:</td>
                             <td style="width:20%;"><input class="two2" type="number" id="params5" name="Temp" label="Input  t / oC" title="Input  t / oC" onblur="" /></td>
                         </tr>
                         <tr>
-                            <td class="one" style="width:25%;">S<sup>0</sup><sub>TrPr</sub>: </td>
+                            <td class="one" style="width:25%;">ΔS<sub>j</sub><sup>0</sup><sub>TrPr</sub>: </td>
                             <td style="width:20%;"><input class="two2" type="number" id="params2" name="Temp" label="Input  t / oC" title="Input  t / oC" onblur="" /></td>
                             <td style="width:10%;">&nbsp;</td>
                             <td class="one" style="width:25%;">C / JK<sup>-1</sup>:</td>
@@ -302,7 +311,7 @@ and open the template in the editor.
                             <input type="radio" name="inputselector" value="1" id="ROT" onclick="chooseConditions(this)" />
                             <label for="ROT"><em>t</em>&#8212;<em>&rho;</em><sub>H2O</sub>: p<em>K</em>w at a given <em>t</em>-<em>&rho;</em><sub>H2O</sub></label></br>
                             <input type="radio" name="inputselector" value="2" id="T" onclick="chooseConditions(this)" />
-                            <label for="T"><em>t</em>: p<em>K</em>w at saturation conditions</label></br><br>
+                            <label for="T"><em>t</em>: p<em>K</em>w on saturation curve</label></br><br>
                             <!-- Abhinav's Code-->
                             <table role="presentation">
                                 <tr>
