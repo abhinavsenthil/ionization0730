@@ -118,7 +118,7 @@
     // Function to round float values to 4 decimal places
     function roundFloatToFourDP(&$value) {
         if (is_float($value)) {
-            $value = round($value, 4);
+            $value = round($value, 6);
         }
     }
 

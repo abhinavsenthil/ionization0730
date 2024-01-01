@@ -81,7 +81,7 @@ and open the template in the editor.
 
     <h1 class="three-titles">Aqueous Thermodynamic Properties at Elevated Temperatures and Pressures</h1>
     <h3 class="three-titles">&#8212;&#8212; A web computational tool &#8212;&#8212;</h3>
-    <h4 style="text-align:center; width:720px; margin:auto; color:black; ">This computational tool provides the the standard Gibbs Energy of Formation (Δ<sub>f</sub> 𝐺<sup>0</sup><sub>j</sub>), the Dielectric constant of water (<em>ε</em>) and ionization constant of water (<em>K</em><sub>w</sub>) of several aqueous species over a wide range of temperatures (<em>t</em>), pressures (<em>P</em>), and densities (<em>&rho;</em>) above and below the critical point of water. </h4>
+    <h4 style="text-align:center; width:720px; margin:auto; color:black; ">This computational tool provides the the standard Gibbs energy of formation (Δ<sub>f</sub> 𝐺<sup>0</sup><sub>j</sub>), the dielectric constant of water (<em>ε</em>) and ionization constant of water (<em>K</em><sub>w</sub>) of several aqueous species over a wide range of temperatures (<em>t</em>), pressures (<em>P</em>), and densities (<em>&rho;</em>) above and below the critical point of water. </h4>
     <br>
 
 
@@ -394,16 +394,12 @@ and open the template in the editor.
         <h3 style="text-align: center;">References</h3>
         <p class="reference-text"> 1. Lvov, S. N., Hall, D. M., Bandura, A. V., Gamwo, I. K. (2018). A semi-empirical molecular statistical thermodynamic model for calculating standard molar Gibbs energies of aqueous species above and below the critical point of water. <em>Journal of Molecular Liquids</em>, 270, 62-73.<br><br>
             2. Bandura A.V. and Lvov S. N. (2006), The ionization constant of water over wide ranges of temperature and density, <em>J. Phys. Chem. Ref. Data</em>., 35, 15-30.<br><br>
-            3. Cooper, J.P. and Dooley R.B. (2007), Release on the ionization constant of H<sub>2</sub>O, <em>The International Association for the Properties of Water and Steam</em>, Lucerne, Switzerland, 7 pages.<br><br>
-            4. Lvov S. N. and Harvey A. H. , Ionization constant of water, Chapter 5-70-71, <em>CRC Handbook of Chemistry and Physics</em>, 92<sup>nd</sup> Edition.
-            5. Hall, D.M. Lvov, S.N. Gamwo, I.K. (2022), A review of thermodynamic modeling techniques for mineral formation in high temperature, high pressure (HTHP) aqueous fluids. Liquids. 2 (4), 303-317.<br><br>
-            6. Hall, D.M. Lvov, S.N. Gamwo, I.K. (2022), Prediction of Barium Sulfate Deposition in Petroleum and Hydrothermal Systems, In Solid-Liquid Separation Technologies: Application for Produced Water, ed. O. I. Ogunsola, and I. K. Gamwo, 355-403. CRC Press/Taylor & Francis.<br><br>
-
+            3. Derek M. Hall, Serguei N. Lvov, Andrzej Anderko, Isaac K. Gamwo (2023), Modeling aqueous association constants and mineral solubilities at subcritical and supercritical temperatures, <em>Journal of Molecular Liquids</em>, Volume 390, Part B, 2023.
         </p>
         <br>
         <h3 style="text-align: center;">Acknowledgements</h3>
         <p class="reference-text">
-            *Haining Zhao has designed and programmed the functionalities for calculating the Dissociation constant of water, Saturation Pressure, and Density in different phases.
+            *Haining Zhao has designed and programmed the functionalities for calculating the dissociation constant of water, saturation pressure, and density in different phases.
         </p>
 
         <center>

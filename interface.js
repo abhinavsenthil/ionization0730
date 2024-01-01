@@ -12,8 +12,6 @@ function validateSpeciesDataInput(species, TempC, PBar, gibbsDens){
 
 
 
-
-
 const allTextFieldIDs = ['Dens', 'Constant', 'Temp', 'Pres', 'Pkw', 'Pkwl', 'Pkwv', 'LiqDens', 'scDens', 'VapDen', 'Psat', 'Gibbs-Temp', 'Gibbs-Dens', 'Gibbs-Pres', 'Start', 'End', 'Step'];
         const optionToFields = {'PT': ['Pres', 'Temp', 'Psat', 'Pkw', 'Pkwl', 'Pkwv', 'LiqDens', 'scDens', 'VapDen'], 
                                 'PT2': ['Gibbs-Temp', 'Gibbs-Pres'], 
@@ -198,6 +196,12 @@ function chooseRangeConditions(){
 
 
 
+function roundDensity(x) {
+    let number = Number.parseFloat(x).toFixed(6);
+    if(number == "NaN")return 'N/A';
+    return number;
+  }
+
 
 
 function ajaxPostBulk(){
@@ -291,9 +295,9 @@ function ajaxPost(p, t){
                     document.getElementById("Pkwl").value = returnedData[1];
                     document.getElementById("Pkwv").value = returnedData[2];
                     document.getElementById("Psat").value = returnedData[3];
-                    document.getElementById("scDens").value = returnedData[4];
-                    document.getElementById("LiqDens").value = returnedData[5];
-                    document.getElementById("VapDen").value = returnedData[6];
+                    document.getElementById("scDens").value = roundDensity(returnedData[4]);
+                    document.getElementById("LiqDens").value = roundDensity(returnedData[5]);
+                    document.getElementById("VapDen").value = roundDensity(returnedData[6]);
                    // alert(returnedData);
                     }
                 });
@@ -471,6 +475,8 @@ function appendStepTable(val){
 
 }
 
+var valsOmmitted = false;
+
 function generateTable(){
     let tableHTML = "";
     if(condition === 4 || condition === 3 || condition === 5){
@@ -490,14 +496,24 @@ function generateTable(){
     for (let i = 0; i < allData.length; i++) {
         
         data = allData[i];
+        if(data[7] < 0.4){
+            valsOmmitted = true;
+            continue;
+        }
         tableHTML += "<tr>";
         for (let j = 0; j < data.length; j++) {
             let val = data[j]
             if(j===1 || j=== 0){
                 val = Number(data[j]).toPrecision(5);
             }
+            if(j=== 3){
+                val = Number(data[j]).toFixed(3); //pkw
+            }
+            if(j=== 7){
+                val = Number(data[j]).toFixed(6); //dens
+            }
             if(j===9){
-                val = Number(data[j]).toFixed(2);
+                val = Number(data[j]).toFixed(2); //d const
             }
             if(j===10){
                 val = Number(data[j]).toFixed(3);
@@ -521,6 +537,12 @@ function generateTable(){
     console.log("Time taken to generate the table: " + (endTime - startTime) + " milliseconds");
 
     console.log(allData);
+
+    if(valsOmmitted === true){
+        tableHTML += "<h3> Some value(s) are not displayed as certain input(s) of Pressure and Density yield a Density below 0.4 g/cm<sup>-3</sup> </h1>";
+            
+    }
+
     return tableHTML;
 
 }
