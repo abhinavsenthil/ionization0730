@@ -129,15 +129,17 @@
     
     // prepare the data to be returned in an array
     // define an array variable $selfDefine
+    // Define an array variable $selfDefine
     $selfDefine = array();
-    $selfDefine[0] = $pKw;
-    $selfDefine[1] = $pKwl;
-    $selfDefine[2] = $pKwv;
-    $selfDefine[3] = $Psat; // saturation pressure
-    $selfDefine[4] = $scDens; // liquid phase density
-    $selfDefine[5] = $liqDens; // liquid phase density
-    $selfDefine[6] = $vapDens; // vapor phase density
-    
+    $selfDefine[0] = is_float($pKw) && $pKw !== 'N/A' ? round($pKw, 3) : $pKw;
+    $selfDefine[1] = is_float($pKwl) && $pKwl !== 'N/A' ? round($pKwl, 3) : $pKwl;
+    $selfDefine[2] = is_float($pKwv) && $pKwv !== 'N/A' ? round($pKwv, 3) : $pKwv;
+    $selfDefine[3] = is_float($Psat) && $Psat !== 'N/A' ? round($Psat, 2) : $Psat;
+    $selfDefine[4] = is_float($scDens) && $scDens !== 'N/A' ? round($scDens, 6) : $scDens;
+    $selfDefine[5] = is_float($liqDens) && $liqDens !== 'N/A' ? round($liqDens, 6) : $liqDens;
+    $selfDefine[6] = is_float($vapDens) && $vapDens !== 'N/A' ? round($vapDens, 6) : $vapDens;
+
+        
 
     return $selfDefine;
    

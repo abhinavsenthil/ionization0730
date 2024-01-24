@@ -12,7 +12,7 @@ and open the template in the editor.
     <meta name="keywords" content="Ionization Constant of Water, Self-ionization Constant of Water, Dissociation constant of water, density of water, equation of state, Kw, high temperature, high pressure, low density">
     <meta name="author" content="Haining Zhao">
     <meta name="description" content="The Ionization Constant of Water pKw≡-log10(Kw) computational tool">
-    <title>Web Computational Tool</title>
+    <title>Gibbs energy calcualator</title>
     <style>
         <?php include 'ion.css'; ?>
     </style>
@@ -37,6 +37,7 @@ and open the template in the editor.
             }
             else{
                 document.getElementById('SpeciesBlock').style.display = "none";
+                
             }
             var i, tabcontent, tablinks;
             tabcontent = document.getElementsByClassName("tabcontent");
@@ -79,7 +80,7 @@ and open the template in the editor.
         </nav>
         -->
 
-    <h1 class="three-titles">Aqueous Thermodynamic Properties at Elevated Temperatures and Pressures</h1>
+    <h1 class="three-titles"> Thermodynamic Properties of Aqueous Species at Elevated Temperatures and Pressures</h1>
     <h3 class="three-titles">&#8212;&#8212; A web computational tool &#8212;&#8212;</h3>
     <h4 style="text-align:center; width:720px; margin:auto; color:black; ">This computational tool provides the the standard Gibbs energy of formation (Δ<sub>f</sub> 𝐺<sup>0</sup><sub>j</sub>), the dielectric constant of water (<em>ε</em>) and ionization constant of water (<em>K</em><sub>w</sub>) of several aqueous species over a wide range of temperatures (<em>t</em>), pressures (<em>P</em>), and densities (<em>&rho;</em>) above and below the critical point of water. </h4>
     <br>
@@ -112,8 +113,8 @@ and open the template in the editor.
             
 
             <div class="bottom-left">
-                <fieldset id="fd3">
-                    <legend>Select Options</legend>
+                <fieldset id="fd7">
+                    <legend><b>Step 1:</b> Select A Species</legend>
 
                     <table role="presentation" style="display:flex;justify-content: center;">
                         <tr>
@@ -148,6 +149,13 @@ and open the template in the editor.
                         </tr>
                     </table>
                     
+                </fieldset>
+
+                <fieldset id="fd3">
+                    <legend><b>Step 2:</b> Select Options</legend>
+
+        
+                    
                     <form action="" method="get" name="input">
                         <input type="radio" name="inputselector" value="3" id="PT2" onclick="chooseConditions(this)" />
                         <label for="PT2">Δ<sub>f</sub> 𝐺<sup>0</sup><sub>j</sub> at a given <em>t</em>-<em>P</em></label><br>
@@ -155,14 +163,11 @@ and open the template in the editor.
                         <input type="radio" name="inputselector" value="4" id="PD2" onclick="chooseConditions(this)" />
                         <label for="PD2">Δ<sub>f</sub> 𝐺<sup>0</sup><sub>j</sub> on saturation curve</label><br>
 
-                        <input type="radio" name="inputselector" value="5" id="PT3" onclick="chooseConditions(this)" />
-                        <label for="PT3">Range of Δ<sub>f</sub> 𝐺<sup>0</sup><sub>j</sub></label>
                     </form>
                 </fieldset>
 
-
                 <fieldset id="fd5">
-                    <legend>Set values</legend>
+                    <legend><b>Step 3:</b> Set values</legend>
                     <table role="presentation">
                         <tr>
                             <td class="one"><em>t</em> / <sup>o</sup>C:</td>
@@ -184,9 +189,13 @@ and open the template in the editor.
 
             <div class="bottom-right">
                 <fieldset id="fd4">
-                    <legend>Define the Range</legend>
+                    <legend><b>Step 4:</b> Define the Range</legend>
                     <form action="" method="get" name="input">
                         <form action="" method="get" name="input">
+
+                            <input type="radio" name="inputselector" value="5" id="PT3" onclick="chooseConditions(this)" />
+                            <label for="PT3">Range of Δ<sub>f</sub> 𝐺<sup>0</sup><sub>j</sub></label></br>
+
                             <input type="radio" name="rangeselector" value="0" id="constT" onclick="chooseRangeConditions()" />
                             <label for="PT">Constant <em>t</em>, variable P</label></br>
                             <input type="radio" name="rangeselector" value="1" id="constP" onclick="chooseRangeConditions()" />

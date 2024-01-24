@@ -126,18 +126,18 @@ input[tpye=number] {
 }
 
 #fd3 {
-    height: 110px;
+    height: 60px;
     align-items: center;
     margin: auto;
 }
 
 #fd4 {
-    height: 210px;
+    height: 217px;
     margin: auto;
 }
 
 #fd5 {
-    height: 83px;
+    height: 85px;
     align-items: center;
     margin: auto;
 }
@@ -149,6 +149,11 @@ input[tpye=number] {
     margin: auto;
 }
 
+#fd7 {
+    height: 35px;
+    align-items: center;
+    margin: auto;
+}
 
 .left {
     padding:5px;
