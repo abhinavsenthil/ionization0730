@@ -33,6 +33,7 @@ and open the template in the editor.
 
             if(tabName === 'Gibbs'){
                 document.getElementById('SpeciesBlock').style.display = "block";
+                document.getElementById('fd7').style.display = "block";
                 document.getElementById('calculatorTitle').innerHTML = '<h3> Gibbs Energy Calculator </h3>';
             }
             else{
@@ -61,6 +62,8 @@ and open the template in the editor.
             // doing this for changing the heading of the calculator - december 4
             if(tabName === 'GibbsWithParam'){
                 document.getElementById('calculatorTitle').innerHTML = '<h3> Gibbs Energy Calculator (custom) </h3>';
+                document.getElementById('fd7').style.display = "none";
+                
             }
 
         }
@@ -82,7 +85,7 @@ and open the template in the editor.
 
     <h1 class="three-titles"> Thermodynamic Properties of Aqueous Species at Elevated Temperatures and Pressures</h1>
     <h3 class="three-titles">&#8212;&#8212; A web computational tool &#8212;&#8212;</h3>
-    <h4 style="text-align:center; width:720px; margin:auto; color:black; ">This computational tool provides the the standard Gibbs energy of formation (Δ<sub>f</sub> 𝐺<sup>0</sup><sub>j</sub>), the dielectric constant of water (<em>ε</em>) and ionization constant of water (<em>K</em><sub>w</sub>) of several aqueous species over a wide range of temperatures (<em>t</em>), pressures (<em>P</em>), and densities (<em>&rho;</em>) above and below the critical point of water. </h4>
+    <h4 style="text-align:center; width:720px; margin:auto; color:black; ">This computational tool provides the standard Gibbs energy of formation (Δ<sub>f</sub> 𝐺<sup>0</sup><sub>j</sub>), the dielectric constant of water (<em>ε</em>) and ionization constant of water (<em>K</em><sub>w</sub>) of several aqueous species over a wide range of temperatures (<em>t</em>), pressures (<em>P</em>), and densities (<em>&rho;</em>) above and below the critical point of water. </h4>
     <br>
 
 
@@ -113,6 +116,7 @@ and open the template in the editor.
             
 
             <div class="bottom-left">
+
                 <fieldset id="fd7">
                     <legend><b>Step 1:</b> Select A Species</legend>
 
@@ -171,11 +175,11 @@ and open the template in the editor.
                     <table role="presentation">
                         <tr>
                             <td class="one"><em>t</em> / <sup>o</sup>C:</td>
-                            <td><input class="two" type="number" id="Gibbs-Temp" name="Temp" label="Input  t / oC" title="Input  t / oC" onblur="" onkeyup="validateUserInputRange(this, 'Temp')"/></td>
+                            <td><input class="two" type="number" id="Gibbs-Temp" name="Temp" label="Input  t / oC" title="Input  t / oC" onblur="" onkeyup="validateUserInputs()"/></td>
                         </tr>
                         <tr>
                             <td class="one"><em>P</em> / bar</td>
-                            <td><input class="two" type="number" id="Gibbs-Pres" label="Input P / bar" title="Input P / bar" onblur="" onkeyup="validateUserInputRange(this, 'Pres')"/></td>
+                            <td><input class="two" type="number" id="Gibbs-Pres" label="Input P / bar" title="Input P / bar" onblur="" onkeyup="validateUserInputs()"/></td>
                         </tr>
                         <tr>
                             <td class="one"><em>ρ</em><sub>H2O</sub>(l) / g cm<sup>-3</sup></td>

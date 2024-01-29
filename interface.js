@@ -2,10 +2,10 @@
 function validateSpeciesDataInput(species, TempC, PBar, gibbsDens){
     // Implementation of Table 1 of the 2023 Paper
     console.log("TempC: " + TempC);
-    if ( TempC > 800 || TempC <0) return 'Error: The temperature or pressure selected are outside the recommended limits for this calculator.';
-    if (PBar > 4000 || PBar < 1) return 'Error: The temperature or pressure selected are outside the recommended limits for this calculator.';
+    if ( TempC > 800 || TempC <0) return 'Error: The temperature selected is outside the recommended limits for this calculator.';
+    if (PBar > 4000 || PBar < 1) return 'Error: The pressure selected is outside the recommended limits for this calculator.';
     if (gibbsDens < 0.4) return 'Error: Density should be above 0.4 g cm-3';
-    if(gibbsDens < minAllowedDens) return 'Error: Density should be above ' + minAllowedDens + 'g cm -3';
+    // if(gibbsDens < minAllowedDens) return 'Error: Density should be above ' + minAllowedDens + 'g cm -3';
     else return 'OK';
 
 }
@@ -48,6 +48,7 @@ const allTextFieldIDs = ['Dens', 'Constant', 'Temp', 'Pres', 'Pkw', 'Pkwl', 'Pkw
             document.getElementById('constT').checked = false;
             document.getElementById('constP').checked = false;
             displayError('', 'reset');
+            
 
             
         }
@@ -63,10 +64,19 @@ const allTextFieldIDs = ['Dens', 'Constant', 'Temp', 'Pres', 'Pkw', 'Pkwl', 'Pkw
     
         }
 
-
+function validateUserInputs(){
+    displayMessages = new Set();
+    document.getElementById('error_message').innerHTML = '';
+    fields = ['Gibbs-Temp', 'Gibbs-Pres'];
+    types = ['Temp', 'Pres'];
+    for(let i = 0; i < fields.length; i++){
+        validateUserInputRange(document.getElementById(fields[i]), types[i]);
+    }
+}
 
 function validateUserInputRange(field, type){
-    let theoretical_val_exceeded = 'Warning: The temperature or pressure values selected are outside the data range used to fit these parameters. Calculator outputs may not be reliable. See the supporting publications for more details.';
+    let theoretical_val_exceeded_temp = 'Warning: The temperature value selected is outside the data range used to fit these parameters. Calculator outputs may not be reliable. See the supporting publications for more details.';
+    let theoretical_val_exceeded_pres = 'Warning: The pressure value selected is outside the data range used to fit these parameters. Calculator outputs may not be reliable. See the supporting publications for more details.';
     let error_msg = '';
     let species = document.getElementById('Species').value;
     let value = parseInt(field.value);
@@ -84,19 +94,19 @@ function validateUserInputRange(field, type){
     const set1 = new Set(["Ba2+", "Cl-", "K+", "Li+", "Na+", "NH30", "NH4+", "OH-", "PO43-", "HPO42-", "H2PO4-", "H3PO40", "SiO20", "SO42-" ]);
     const set2 = new Set(["KCl0", "KOH0", "NaOH0"]);
     if (set1.has(species)){
-        if ( type === 'Temp' && (value > 300 || value < 0)) error_msg = theoretical_val_exceeded;
-        if (type === 'Pres' && (value > 500 || value < 1)) error_msg = theoretical_val_exceeded;
+        if ( type === 'Temp' && (value > 300 || value < 0)) error_msg = theoretical_val_exceeded_temp;
+        if (type === 'Pres' && (value > 500 || value < 1)) error_msg = theoretical_val_exceeded_pres;
     }
     else if (set2.has(species)){
-        if (type === 'Temp' && (value > 600 || value < 100)) error_msg = theoretical_val_exceeded;
-        if (type === 'Pres' &&  (value > 3500 || value < 100)) error_msg = theoretical_val_exceeded;
+        if (type === 'Temp' && (value > 600 || value < 100)) error_msg = theoretical_val_exceeded_temp;
+        if (type === 'Pres' &&  (value > 3500 || value < 100)) error_msg = theoretical_val_exceeded_pres;
 
     }
     else if (species === "BaSO40"){
         // if ( TempC > 600 || TempC < 200) return 'Temp should be between 200-600 C for ' + species;
         // if (PBar > 2000 || PBar < 400) return 'Pressure should be between 400-2000 Bar for ' + species;
-        if (type === 'Temp' && (value > 600 || value < 200)) error_msg = theoretical_val_exceeded;
-        if (type === 'Pres' && (value > 2000 || value < 400)) error_msg = theoretical_val_exceeded;
+        if (type === 'Temp' && (value > 600 || value < 200)) error_msg = theoretical_val_exceeded_temp;
+        if (type === 'Pres' && (value > 2000 || value < 400)) error_msg = theoretical_val_exceeded_pres;
     }
 
     displayError(error_msg, 'warning');
@@ -105,7 +115,13 @@ function validateUserInputRange(field, type){
     
 }
 
+var displayMessages = new Set();
 function displayError(msg, type='error'){
+
+    if(msg){
+        displayMessages.add(msg);
+    }
+
     if(type==='warning'){
         document.getElementById('error_message').style.color = 'orange';
     }
@@ -114,12 +130,18 @@ function displayError(msg, type='error'){
     }
     else if(type === 'reset'){
         document.getElementById('error_message').innerHTML = '';
+        displayMessages = new Set();
     }
     else{
         document.getElementById('error_message').style.color = 'red';
     }
 
-    document.getElementById('error_message').innerHTML += msg + '</br>';
+    document.getElementById('error_message').innerHTML = '';
+    for (const item of displayMessages) {
+        document.getElementById('error_message').innerHTML += item + '</br>';
+      }
+        
+    
 }
 
 
@@ -377,7 +399,7 @@ function ajaxPost(p, t){
         p = parseFloat(document.getElementById("Gibbs-Pres").value);
         t = parseFloat(document.getElementById("Gibbs-Temp").value);
         gibbsDens = parseFloat(document.getElementById("Gibbs-Dens").value);
-        message = validateSpeciesDataInput(species, t, p, gibbsDens)
+        message = validateSpeciesDataInput(species, t, p, gibbsDens);
         if( message !== 'OK'){
             return displayError(message);
         }
