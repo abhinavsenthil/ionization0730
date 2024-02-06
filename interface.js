@@ -4,7 +4,7 @@ function validateSpeciesDataInput(species, TempC, PBar, gibbsDens){
     console.log("TempC: " + TempC);
     if ( TempC > 800 || TempC <0) return 'Error: The temperature selected is outside the recommended limits for this calculator.';
     if (PBar > 4000 || PBar < 1) return 'Error: The pressure selected is outside the recommended limits for this calculator.';
-    if (gibbsDens < 0.4) return 'Error: Density should be above 0.4 g cm-3';
+    // if (gibbsDens < 0.4) return 'Error: Density should be above 0.4 g cm-3';
     // if(gibbsDens < minAllowedDens) return 'Error: Density should be above ' + minAllowedDens + 'g cm -3';
     else return 'OK';
 
@@ -79,16 +79,22 @@ function validateUserInputRange(field, type){
     let theoretical_val_exceeded_pres = 'Warning: The pressure value selected is outside the data range used to fit these parameters. Calculator outputs may not be reliable. See the supporting publications for more details.';
     let error_msg = '';
     let species = document.getElementById('Species').value;
-    let value = parseInt(field.value);
+    let value = parseFloat(field.value);
     let name = field.name;
     console.log('name: ' , name);
     console.log('value: ' , value);
     if(document.getElementById('PD2').checked && type === 'Temp'){
-        const retData = getSaturation(NaN, value, false);
-        console.log('retData: ', retData);
-        const lowerDensity = retData[3];
-        error_msg = 'Warning: maximum density allowed is: ' + lowerDensity;
-        console.log('lower density: ', lowerDensity);
+        if(value > 373.15){
+            displayError('Warning: Temperature should not exceed the critical point of water (373.15 C)', 'Warning');
+            
+        }
+        else{
+            const retData = getSaturation(NaN, value, false);
+            console.log('retData: ', retData);
+            const lowerDensity = retData[3];
+            // error_msg = 'Warning: maximum density allowed is: ' + lowerDensity;
+            console.log('lower density: ', lowerDensity);
+        }
     }
 
     const set1 = new Set(["Ba2+", "Cl-", "K+", "Li+", "Na+", "NH30", "NH4+", "OH-", "PO43-", "HPO42-", "H2PO4-", "H3PO40", "SiO20", "SO42-" ]);
@@ -123,7 +129,7 @@ function displayError(msg, type='error'){
     }
 
     if(type==='warning'){
-        document.getElementById('error_message').style.color = 'orange';
+        document.getElementById('error_message').style.color = 'blue';
     }
     else if(type === 'note'){
         document.getElementById('error_message').style.color = 'black';
@@ -561,7 +567,7 @@ function generateTable(){
         tableHTML += "</tr>";
         if (allData[i][7] === 'N/A'){
             tableHTML+= '</table>';
-            tableHTML += "<h3> In the last value of the Temperature and Pressure printed above, you are beyond the Liquid Phase and the model is not built for Predicting Gibbs energy of reaction values in the Supercritical or vapour phase.</h3>";
+            tableHTML += "In the last value of the Temperature and Pressure printed above, you are beyond the Liquid Phase and the model is not built for Predicting Gibbs energy of reaction values in the Supercritical or vapour phase.";
             break;
         }
     }
@@ -574,8 +580,8 @@ function generateTable(){
     console.log(allData);
 
     if(valsOmmitted === true){
-        tableHTML += "<h3> Some value(s) are not displayed as certain input(s) of Pressure and Density yield a Density below 0.4 g/cm<sup>-3</sup> </h1>";
-            
+        displayError("Some value(s) are not displayed as certain input(s) of Pressure and Density yield a Density below 0.4 g/cm -3") 
+        valsOmmitted = false;
     }
 
     return tableHTML;
@@ -625,7 +631,7 @@ function getSaturation(rho, t, display = true){
         dataType: "json",
         // Call to PHP is failed
         error: function(){  
-            displayError('Error loading XML document');  
+            // displayError('Error loading XML document');  
         }, 
         // Call to PHP is sucessful   
         success: function(returnedData){ 
