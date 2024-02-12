@@ -156,7 +156,7 @@ and open the template in the editor.
                 </fieldset>
 
                 <fieldset id="fd3">
-                    <legend><b>Step 2:</b> Select Options</legend>
+                    <legend><b>Step 2a:</b> Select Options</legend>
 
         
                     
@@ -168,10 +168,8 @@ and open the template in the editor.
                         <label for="PD2">Δ<sub>f</sub> 𝐺<sup>0</sup><sub>j</sub> on saturation curve</label><br>
 
                     </form>
-                </fieldset>
 
-                <fieldset id="fd5">
-                    <legend><b>Step 3:</b> Set values</legend>
+                    
                     <table role="presentation">
                         <tr>
                             <td class="one"><em>t</em> / <sup>o</sup>C:</td>
@@ -187,13 +185,17 @@ and open the template in the editor.
                         </tr>
 
                     </table>
-
                 </fieldset>
+
+                <!-- <fieldset id="fd5">
+                    
+
+                </fieldset> -->
             </div>
 
             <div class="bottom-right">
                 <fieldset id="fd4">
-                    <legend><b>Step 4:</b> Define the Range</legend>
+                    <legend><b>Step 2b:</b> Define the Range</legend>
                     <form action="" method="get" name="input">
                         <form action="" method="get" name="input">
 
