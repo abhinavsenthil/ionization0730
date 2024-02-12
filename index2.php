@@ -12,7 +12,7 @@ and open the template in the editor.
     <meta name="keywords" content="Ionization Constant of Water, Self-ionization Constant of Water, Dissociation constant of water, density of water, equation of state, Kw, high temperature, high pressure, low density">
     <meta name="author" content="Haining Zhao">
     <meta name="description" content="The Ionization Constant of Water pKw≡-log10(Kw) computational tool">
-    <title>Gibbs energy calcualator</title>
+    <title>Gibbs energy calculator</title>
     <style>
         <?php include 'ion.css'; ?>
     </style>
@@ -399,7 +399,7 @@ and open the template in the editor.
     <br>
     <div class="buttons">
         <button type="button" onclick="reSet()">Reset</button>
-        <button type="button" onclick="ajaxPostBulk()">Calculate</button>
+        <button type="button" id="calculate_button" onclick="ajaxPostBulk()">Calculate</button>
     </div>
     <br>
     <br>

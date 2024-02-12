@@ -14,7 +14,6 @@
         return;
     }
    
-    
 
 
     // Get pressure and temperature from input box
@@ -25,14 +24,64 @@
     $Species = filter_input(INPUT_POST, 'species');
     $GibbsDens = calculateDensity($GibbsDens, $Pbar, $Tk);
 
+
     $ParamsArr = json_decode(filter_input(INPUT_POST, 'paramsArr'));
 
     $Pbar = calculatePressure($Pbar, $Tk);
+
 
     // write logic to check if $species exists, if it does, pass $type = 'Gibbs' as we need the density in liquid phase regardless of the temp
     // ...
     // ...
     $selfDefine = ionizationCalculation($Tk, $Pbar, 'Gibbs');
+
+
+
+    $Tc = $Tk - 273.15;
+    $epsilon = DilectricCalc($Tk, $selfDefine);
+    $selfDefine[7] = $epsilon;
+
+    
+
+    //$finalDensity = findFinalDensity($selfDefine);
+    $finalDensity = $GibbsDens;
+
+    // echo json_encode($finalDensity);
+
+    //$selfDefine[8] = $Species;
+    
+
+
+
+  
+    if (!is_array($ParamsArr)){ $selfDefine[8] = GibbsEnergy($Species, $Tc, $Pbar, $epsilon, $finalDensity, null);}
+    else{$selfDefine[8] = GibbsEnergy($Species, $Tc, $Pbar, $epsilon, $finalDensity, $ParamsArr);}
+
+    if(is_infinite($selfDefine[8])){
+        $selfDefine[8] = "Invalid";
+    }
+
+    $selfDefine[5] = $finalDensity;
+
+    
+    
+
+
+    // Loop through the $selfDefine array and round float values to 4 decimal places
+    foreach ($selfDefine as &$item) {
+        if (is_float($item)) {
+            roundFloatToFourDP($item);
+        }
+    }
+
+
+    array_unshift($selfDefine, $Pbar, $Tk-273.15);
+
+
+   // echo json_encode($Pbar);
+    echo json_encode($selfDefine);
+
+    // Below are all the functions
 
     function calculateDensity($GibbsDens, $Pbar, $Tk){ 
         if($GibbsDens == 'NaN'){
@@ -42,8 +91,6 @@
         }
         return $GibbsDens;
     }
-
-
 
     function calculatePressure($Pbar, $Tk){
         if($Pbar == 'NaN'){
@@ -101,19 +148,6 @@
 
         return $dc;
     }
-    $Tc = $Tk - 273.15;
-    $epsilon = DilectricCalc($Tk, $selfDefine);
-    $selfDefine[7] = $epsilon;
-
-    //$finalDensity = findFinalDensity($selfDefine);
-    $finalDensity = $GibbsDens;
-
-    //$selfDefine[8] = $Species;
-    if (!is_array($ParamsArr)){ $selfDefine[8] = GibbsEnergy($Species, $Tc, $Pbar, $epsilon, $finalDensity, null);}
-    else{$selfDefine[8] = GibbsEnergy($Species, $Tc, $Pbar, $epsilon, $finalDensity, $ParamsArr);}
-    $selfDefine[5] = $finalDensity;
-
-
 
     // Function to round float values to 4 decimal places
     function roundFloatToFourDP(&$value) {
@@ -121,17 +155,4 @@
             $value = round($value, 6);
         }
     }
-
-    // Loop through the $selfDefine array and round float values to 4 decimal places
-    foreach ($selfDefine as &$item) {
-        if (is_float($item)) {
-            roundFloatToFourDP($item);
-        }
-    }
-
-    array_unshift($selfDefine, $Pbar, $Tk-273.15);
-
-
-   // echo json_encode($Pbar);
-    echo json_encode($selfDefine);
    

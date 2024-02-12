@@ -2,7 +2,7 @@
 function validateSpeciesDataInput(species, TempC, PBar, gibbsDens){
     // Implementation of Table 1 of the 2023 Paper
     console.log("TempC: " + TempC);
-    if ( TempC > 800 || TempC <0) return 'Error: The temperature selected is outside the recommended limits for this calculator.';
+    if ( TempC > 600 || TempC <0) return 'Error: The temperature selected is outside the recommended limits for this calculator.';
     if (PBar > 4000 || PBar < 1) return 'Error: The pressure selected is outside the recommended limits for this calculator.';
     // if (gibbsDens < 0.4) return 'Error: Density should be above 0.4 g cm-3';
     // if(gibbsDens < minAllowedDens) return 'Error: Density should be above ' + minAllowedDens + 'g cm -3';
@@ -38,6 +38,7 @@ const allTextFieldIDs = ['Dens', 'Constant', 'Temp', 'Pres', 'Pkw', 'Pkwl', 'Pkw
 
 
         function reSet(){
+            document.getElementById('calculate_button').disabled = false;
             disableFields([]);
             document.getElementById("stepTable").innerHTML = '';
             document.getElementById("Species").value = 'Select_One';
@@ -65,6 +66,7 @@ const allTextFieldIDs = ['Dens', 'Constant', 'Temp', 'Pres', 'Pkw', 'Pkwl', 'Pkw
         }
 
 function validateUserInputs(){
+    document.getElementById('calculate_button').disabled = false;
     displayMessages = new Set();
     document.getElementById('error_message').innerHTML = '';
     fields = ['Gibbs-Temp', 'Gibbs-Pres'];
@@ -84,8 +86,8 @@ function validateUserInputRange(field, type){
     console.log('name: ' , name);
     console.log('value: ' , value);
     if(document.getElementById('PD2').checked && type === 'Temp'){
-        if(value > 373.15){
-            displayError('Warning: Temperature should not exceed the critical point of water (373.15 C)', 'Warning');
+        if(value > 373.95){
+            displayError('Error: Temperature should not exceed the critical point of water (373.95 C)', 'error');
             
         }
         else{
@@ -125,7 +127,7 @@ var displayMessages = new Set();
 function displayError(msg, type='error'){
 
     if(msg){
-        displayMessages.add(msg);
+        displayMessages.add([msg, type]);
     }
 
     if(type==='warning'){
@@ -143,10 +145,18 @@ function displayError(msg, type='error'){
     }
 
     document.getElementById('error_message').innerHTML = '';
-    for (const item of displayMessages) {
-        document.getElementById('error_message').innerHTML += item + '</br>';
-      }
+    let messages = '';
+    for (const [message, type_] of displayMessages) {
+        let color = 'blue';
+        if(type_ === 'error'){
+            color = 'red';
+            document.getElementById('calculate_button').disabled = true;
+        }
+        messages += ('<div style = "color:'+color + ';">' + message + '</div>');
         
+      }
+      document.getElementById('error_message').innerHTML = messages + '</br>';
+      
     
 }
 
@@ -348,7 +358,7 @@ function ajaxPost(p, t){
         }
         else
         {
-            displayError("Pressure enter the correct pressure: 1-10000 bar");
+            displayError("Please complete all steps before calculating a value");
         }
     }
     else if (condition === 1)
@@ -439,7 +449,7 @@ function ajaxPost(p, t){
         }
         else
         {
-            displayError("Pressure enter the correct pressure: 1-10000 bar");
+            displayError("Please complete all steps before calculating a value");
         }
     }
 
@@ -481,7 +491,7 @@ function ajaxPost(p, t){
         }
         else
         {
-            displayError("Pressure enter the correct pressure: 1-10000 bar");
+            displayError("Please complete all steps before calculating a value");
         }
     
 
@@ -654,3 +664,5 @@ function getSaturation(rho, t, display = true){
         });
     return retData;
 }
+
+
