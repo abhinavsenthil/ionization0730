@@ -1,4 +1,7 @@
 // Abhinav: validation of species
+ // error message
+
+
 function validateSpeciesDataInput(species, TempC, PBar, gibbsDens){
     // Implementation of Table 1 of the 2023 Paper
     console.log("TempC: " + TempC);
@@ -68,7 +71,8 @@ const allTextFieldIDs = ['Dens', 'Constant', 'Temp', 'Pres', 'Pkw', 'Pkwl', 'Pkw
 function validateUserInputs(){
     document.getElementById('calculate_button').disabled = false;
     displayMessages = new Set();
-    document.getElementById('error_message').innerHTML = '';
+    console.log('tabname is: ', TABNAME);
+    document.getElementById(err).innerHTML = '';
     fields = ['Gibbs-Temp', 'Gibbs-Pres'];
     types = ['Temp', 'Pres'];
     for(let i = 0; i < fields.length; i++){
@@ -125,26 +129,26 @@ function validateUserInputRange(field, type){
 
 var displayMessages = new Set();
 function displayError(msg, type='error'){
-
+    
     if(msg){
         displayMessages.add([msg, type]);
     }
 
     if(type==='warning'){
-        document.getElementById('error_message').style.color = 'blue';
+        document.getElementById(err).style.color = 'blue';
     }
     else if(type === 'note'){
-        document.getElementById('error_message').style.color = 'black';
+        document.getElementById(err).style.color = 'black';
     }
     else if(type === 'reset'){
-        document.getElementById('error_message').innerHTML = '';
+        document.getElementById(err).innerHTML = '';
         displayMessages = new Set();
     }
     else{
-        document.getElementById('error_message').style.color = 'red';
+        document.getElementById(err).style.color = 'red';
     }
 
-    document.getElementById('error_message').innerHTML = '';
+    document.getElementById(err).innerHTML = '';
     let messages = '';
     for (const [message, type_] of displayMessages) {
         let color = 'blue';
@@ -155,7 +159,7 @@ function displayError(msg, type='error'){
         messages += ('<div style = "color:'+color + ';">' + message + '</div>');
         
       }
-      document.getElementById('error_message').innerHTML = messages + '</br>';
+      document.getElementById(err).innerHTML = messages + '</br>';
       
     
 }
@@ -590,7 +594,7 @@ function generateTable(){
     console.log(allData);
 
     if(valsOmmitted === true){
-        displayError("Some value(s) are not displayed as certain input(s) of Pressure and Density yield a Density below 0.4 g/cm -3") 
+        displayError("Some value(s) are not displayed as certain input(s) of Pressure and Temperature yield a Density below 0.4 g cm <sup>-3</sup>") 
         valsOmmitted = false;
     }
 

@@ -26,11 +26,13 @@ and open the template in the editor.
     <script>
 
         var TABNAME = "Gibbs";
+        var err = 'error_message';
 
         function openCalc(evt, calcName, isParams = false, tabName) {
-            
+            displayError('', 'reset');
             TABNAME = tabName;
-
+            console.log('the tab name is: ', TABNAME);
+            
             if(tabName === 'Gibbs'){
                 document.getElementById('SpeciesBlock').style.display = "block";
                 document.getElementById('fd7').style.display = "block";
@@ -108,11 +110,15 @@ and open the template in the editor.
     </div>
     <br>
     <div id="Gibbs1" class="tabcontent">
+        
         <div id="calculatorTitle">
+            
             <h3>Gibbs Energy Calculator</h3>
         </div>
+        <h5 style="text-align:center; width:720px; margin:auto; color:blue; "> Note: The Gibbs Energy Calculator is developed and tested only in a specific range (see table below), input values outside the range yields a Warning message </h5>
         <div id="wrap3">
-            <p>Enter Pressures between 1-4000 bar, Temperatures between 0-600 <sup>o</sup>C, and Densities above 0.4 g cm<sup>-3</sup></p>
+            <p>Enter Pressures between 1-4000 bar, Temperatures between 0-600 <sup>o</sup>C<br/>
+            Only densities above 0.4 g cm<sup>-3</sup> will be displayed in the output</p>
             
 
             <div class="bottom-left">
@@ -300,7 +306,7 @@ and open the template in the editor.
                 </fieldset>
         </div>
         <br>
-        <div id="error_message" style="color:red; text-align:center;"></div>
+        
         <br>
         <div id="wrap2">
             <div id="stepTable"></div>
@@ -308,7 +314,6 @@ and open the template in the editor.
     </div>
  
     <div id="Gibbs2" class="tabcontent">
-        hello
     </div>
     <div id="ionization" class="tabcontent">
         <h3>Ionization Calculator</h3>
@@ -395,10 +400,12 @@ and open the template in the editor.
 
 
         </div>
+        
 
     </div>
 
     <br>
+    <div id="error_message" style="color:red; text-align:center;"></div>
     <div class="buttons">
         <button type="button" onclick="reSet()">Reset</button>
         <button type="button" id="calculate_button" onclick="ajaxPostBulk()">Calculate</button>
@@ -414,7 +421,10 @@ and open the template in the editor.
         <br>
         <h3 style="text-align: center;">Acknowledgements</h3>
         <p class="reference-text">
-            *Haining Zhao has designed and programmed the functionalities for calculating the dissociation constant of water, saturation pressure, and density in different phases.
+            Haining Zhao has designed and programmed the functionalities for calculating the dissociation constant of water, saturation pressure, and density in different phases.
+            <br/>
+            <br/>
+            Abhinav S Chinnaiyan has designed and programmed the functionalities for calculating the Gibbs energy of formation.
         </p>
 
         <center>
