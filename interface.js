@@ -651,11 +651,11 @@ function getSaturation(rho, t, display = true){
         success: function(returnedData){ 
             retData = returnedData;  
             if(display){
-                document.getElementById("Pkwl").value = returnedData[0];
-                document.getElementById("Pkwv").value = returnedData[1];
-                document.getElementById("Psat").value = returnedData[2];
-                document.getElementById("LiqDens").value = returnedData[3];
-                document.getElementById("VapDen").value = returnedData[4];
+                document.getElementById("Pkwl").value = returnedData[0].toFixed(3);
+                document.getElementById("Pkwv").value = returnedData[1].toFixed(3);
+                document.getElementById("Psat").value = returnedData[2].toFixed(2);
+                document.getElementById("LiqDens").value = returnedData[3].toFixed(6);
+                document.getElementById("VapDen").value = returnedData[4].toFixed(6);
             }
             else{
                 minAllowedDens = returnedData[3].toFixed(6);

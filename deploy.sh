@@ -1,0 +1,1 @@
+scp -r -i /Users/abhinavsenthil/Desktop/internship_DOE/gibbs-energy-access-keys.pem /Applications/XAMPP/xamppfiles/htdocs/ionization0730/* ec2-user@54.166.176.79:/var/www/html/ionization0730/

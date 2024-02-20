@@ -115,7 +115,7 @@ and open the template in the editor.
             
             <h3>Gibbs Energy Calculator</h3>
         </div>
-        <h5 style="text-align:center; width:720px; margin:auto; color:blue; "> Note: The Gibbs Energy Calculator is developed and tested only in a specific range (see table below), input values outside the range yields a Warning message </h5>
+        <h5 style="text-align:center; width:720px; margin:auto; color:blue; "> Note: The Gibbs Energy Calculator is developed and tested only in a specific range (see table 1 below), input values outside the range yields a Warning message </h5>
         <div id="wrap3">
             <p>Enter Pressures between 1-4000 bar, Temperatures between 0-600 <sup>o</sup>C<br/>
             Only densities above 0.4 g cm<sup>-3</sup> will be displayed in the output</p>
@@ -419,6 +419,108 @@ and open the template in the editor.
             3. Derek M. Hall, Serguei N. Lvov, Andrzej Anderko, Isaac K. Gamwo (2023), Modeling aqueous association constants and mineral solubilities at subcritical and supercritical temperatures, <em>Journal of Molecular Liquids</em>, Volume 390, Part B, 2023.
         </p>
         <br>
+        <div id="stepTable2">
+        <table class="innerTable">
+            <caption> Table 1</caption>
+            <tr>
+                <th> Species</td>
+                <th> Pressure Range/ Bar</th>
+                <th> Temperature range/ C</th>
+
+            </tr>
+            <tr>
+                <td>Ba<sup>2+</sup></td>
+                <td>1-500</td>
+                <td>0-300</td>
+            </tr>
+            <tr>
+                <td>Cl<sup>-</sup></td>
+                <td>1-500</td>
+                <td>0-300</td>
+            </tr>
+            <tr>
+                <td>K<sup>+</sup></td>
+                <td>1-500</td>
+                <td>0-300</td>
+            </tr>
+            <tr>
+                <td>Li<sup>+</sup></td>
+                <td>1-500</td>
+                <td>0-300</td>
+            </tr>
+            <tr>
+                <td>Na<sup>+</sup></td>
+                <td>1-500</td>
+                <td>0-300</td>
+            </tr>
+            <tr>
+                <td>NH<sub>3</sub>O</td>
+                <td>1-500</td>
+                <td>0-300</td>
+            </tr>
+            <tr>
+                <td>NH4<sup>+</sup></td>
+                <td>1-500</td>
+                <td>0-300</td>
+            </tr>
+            <tr>
+                <td>OH<sup>-</sup></td>
+                <td>1-500</td>
+                <td>0-300</td>
+            </tr>
+            <tr>
+                <td>PO<sub>4</sub><sup>3-</sup></td>
+                <td>1-500</td>
+                <td>0-300</td>
+            </tr>
+            <tr>
+                <td>HPO<sub>4</sub><sup>2-</sup></td>
+                <td>1-500</td>
+                <td>0-300</td>
+            </tr>
+            <tr>
+                <td>H<sub>2</sub>PO<sub>4</sub><sup>-</sup></td>
+                <td>1-500</td>
+                <td>0-300</td>
+            </tr>
+            <tr>
+                <td>H<sub>3</sub>PO<sub>4</sub><sup>0</sup></td>
+                <td>1-500</td>
+                <td>0-300</td>
+            </tr>
+            <tr>
+                <td>SiO<sub>2</sub><sup>0</sup></td>
+                <td>1-500</td>
+                <td>0-300</td>
+            </tr>
+            <tr>
+                <td>SO<sub>4</sub><sup>2-</sup></td>
+                <td>1-500</td>
+                <td>0-300</td>
+            </tr>
+            <tr>
+                <td>KCl<sup>0</sup></td>
+                <td>100-3500</td>
+                <td>100-600</td>
+            </tr>
+            <tr>
+                <td>KOH<sup>0</sup></td>
+                <td>100-3500</td>
+                <td>100-600</td>
+            </tr>
+            <tr>
+                <td>NaOH<sup>0</sup></td>
+                <td>100-3500</td>
+                <td>100-600</td>
+            </tr>
+            <tr>
+                <td>BaSO<sub>4</sub><sup>0</sup></td>
+                <td>400-2000</td>
+                <td>200-600</td>
+            </tr>
+
+        </table>
+        </div>
         <h3 style="text-align: center;">Acknowledgements</h3>
         <p class="reference-text">
             Haining Zhao has designed and programmed the functionalities for calculating the dissociation constant of water, saturation pressure, and density in different phases.
