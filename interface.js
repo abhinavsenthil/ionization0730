@@ -70,7 +70,7 @@ const allTextFieldIDs = ['Dens', 'Constant', 'Temp', 'Pres', 'Pkw', 'Pkwl', 'Pkw
 
 function validateUserInputs(){
     document.getElementById('calculate_button').disabled = false;
-    displayMessages = new Set();
+    displayMessages = {"error": new Set(), "warning": new Set()};
     console.log('tabname is: ', TABNAME);
     document.getElementById(err).innerHTML = '';
     fields = ['Gibbs-Temp', 'Gibbs-Pres'];
@@ -127,11 +127,11 @@ function validateUserInputRange(field, type){
     
 }
 
-var displayMessages = new Set();
+var displayMessages = {"error": new Set(), "warning": new Set()};
 function displayError(msg, type='error'){
     
-    if(msg){
-        displayMessages.add([msg, type]);
+    if(msg && (type === 'error' || type === 'warning')){
+        displayMessages[type].add(msg);
     }
 
     if(type==='warning'){
@@ -142,7 +142,7 @@ function displayError(msg, type='error'){
     }
     else if(type === 'reset'){
         document.getElementById(err).innerHTML = '';
-        displayMessages = new Set();
+        displayMessages = {"error": new Set(), "warning": new Set()};;
     }
     else{
         document.getElementById(err).style.color = 'red';
@@ -150,22 +150,33 @@ function displayError(msg, type='error'){
 
     document.getElementById(err).innerHTML = '';
     let messages = '';
-    for (const [message, type_] of displayMessages) {
-        let color = 'blue';
-        if(type_ === 'error'){
-            color = 'red';
-            document.getElementById('calculate_button').disabled = true;
-        }
-        messages += ('<div style = "color:'+color + ';">' + message + '</div>');
-        
-      }
-      document.getElementById(err).innerHTML = messages + '</br>';
+    let note = '';
+    for (const type in displayMessages) {
+        messages =  displayMessages['error'];
+        if(messages && messages.size > 0) note = displayMsgByType(messages, 'error');
+        else {note = displayMsgByType(displayMessages['warning'], 'warning');}
       
+    }
+    
+      document.getElementById(err).innerHTML = note + '</br>';
+  
+    
     
 }
 
-
-
+function displayMsgByType(messages, type){
+    let note = '';
+    for (const message of messages) {
+        let color = 'blue';
+        if(type === 'error'){
+            color = 'red';
+            document.getElementById('calculate_button').disabled = true;
+        }
+        note += ('<div style = "color:'+color + ';">' + message + '</div>');
+        
+      }
+      return note;
+}
 
 var pres;
 var temp;
@@ -406,7 +417,7 @@ function ajaxPost(p, t){
          }
          else
          {
-            displayError("Please enter the correct temperature: 0-373.917 oC");
+            displayError("Please enter the correct temperature: 0-373.95 oC");
          }
          // Done by abhinav from here
     }
@@ -594,7 +605,7 @@ function generateTable(){
     console.log(allData);
 
     if(valsOmmitted === true){
-        displayError("Some value(s) are not displayed as certain input(s) of Pressure and Temperature yield a Density below 0.4 g cm <sup>-3</sup>") 
+        displayError("Some value(s) are not displayed as certain input(s) of pressure and temperature yield a density below 0.4 g cm <sup>-3</sup>") 
         valsOmmitted = false;
     }
 
