@@ -13,8 +13,6 @@ function validateSpeciesDataInput(species, TempC, PBar, gibbsDens){
 
 }
 
-
-
 const allTextFieldIDs = ['Dens', 'Constant', 'Temp', 'Pres', 'Pkw', 'Pkwl', 'Pkwv', 'LiqDens', 'scDens', 'VapDen', 'Psat', 'Gibbs-Temp', 'Gibbs-Dens', 'Gibbs-Pres', 'Start', 'End', 'Step'];
         const optionToFields = {'PT': ['Pres', 'Temp', 'Psat', 'Pkw', 'Pkwl', 'Pkwv', 'LiqDens', 'scDens', 'VapDen'], 
                                 'PT2': ['Gibbs-Temp', 'Gibbs-Pres'], 
@@ -122,9 +120,7 @@ function validateUserInputRange(field, type){
     }
 
     displayError(error_msg, 'warning');
-
-
-    
+ 
 }
 
 var displayMessages = {"error": new Set(), "warning": new Set()};
@@ -159,9 +155,7 @@ function displayError(msg, type='error'){
     }
     
       document.getElementById(err).innerHTML = note + '</br>';
-  
-    
-    
+ 
 }
 
 function displayMsgByType(messages, type){
@@ -172,8 +166,7 @@ function displayMsgByType(messages, type){
             color = 'red';
             document.getElementById('calculate_button').disabled = true;
         }
-        note += ('<div style = "color:'+color + ';">' + message + '</div>');
-        
+        note += ('<div style = "color:'+color + ';">' + message + '</div>');     
       }
       return note;
 }
@@ -555,9 +548,7 @@ function generateTable(){
         tableHTML += "<th style='width:15%'><em>ε</em></th>";
         tableHTML += "<th>Δ<sub>f</sub>G<sup>0</sup><sub>j</sub> / kJ mol<sup>-1</sup></th>";
         tableHTML += "</tr>";
-
     }
-    
     
     for (let i = 0; i < allData.length; i++) {
         

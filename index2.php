@@ -39,7 +39,7 @@ and open the template in the editor.
                 document.getElementById('calculatorTitle').innerHTML = '<h3> Gibbs Energy Calculator </h3>';
             }
             else{
-                document.getElementById('SpeciesBlock').style.display = "none";
+                document.getElementById('SpeciesBlock').style.display = "block";
                 
             }
             var i, tabcontent, tablinks;
@@ -64,7 +64,7 @@ and open the template in the editor.
             // doing this for changing the heading of the calculator - december 4
             if(tabName === 'GibbsWithParam'){
                 document.getElementById('calculatorTitle').innerHTML = '<h3> Gibbs Energy Calculator (custom) </h3>';
-                document.getElementById('fd7').style.display = "none";
+                document.getElementById('fd7').style.display = "block";
                 
             }
 
@@ -115,7 +115,7 @@ and open the template in the editor.
             
             <h3>Gibbs Energy Calculator</h3>
         </div>
-        <h5 style="text-align:center; width:720px; margin:auto; color:blue; "> Note: The Gibbs Energy Calculator is developed and tested only in a specific range (see Table 1 below), input values outside the range yields a Warning message </h5>
+        <h5 style="text-align:center; width:720px; margin:auto; color:blue; "> Note: The Gibbs Energy Calculator is developed and tested only in a specific range (see Table 1 below), input values outside the range yields a warning message </h5>
         <div id="wrap3">
             <p>Enter Pressures between 1-4000 bar, Temperatures between 0-600 <sup>o</sup>C<br/>
             Only densities above 0.4 g cm<sup>-3</sup> will be displayed in the output</p>
@@ -171,7 +171,7 @@ and open the template in the editor.
                         <label for="PT2">Δ<sub>f</sub> 𝐺<sup>0</sup><sub>j</sub> at a given <em>t</em>-<em>P</em></label><br>
 
                         <input type="radio" name="inputselector" value="4" id="PD2" onclick="chooseConditions(this)" />
-                        <label for="PD2">Δ<sub>f</sub> 𝐺<sup>0</sup><sub>j</sub> on saturation curve</label><br>
+                        <label for="PD2">Δ<sub>f</sub> 𝐺<sup>0</sup><sub>j</sub> on saturation curve (t > 373.95 C)</label><br>
 
                     </form>
 
@@ -185,9 +185,14 @@ and open the template in the editor.
                             <td class="one"><em>P</em> / bar</td>
                             <td><input class="two" type="number" id="Gibbs-Pres" label="Input P / bar" title="Input P / bar" onblur="" onkeyup="validateUserInputs()"/></td>
                         </tr>
-                        <tr>
+                        <!-- if gibbs dens is enabled below, remove the hidden var-->
+                        <input type="hidden" id="Gibbs-Dens" label="Input density" title="Input density" />
+                        
+                            <!-- Comment: mar 6: density requested to be taken out -->
+                             <tr>
+
                             <td class="one"><em>ρ</em><sub>H2O</sub>(l) / g cm<sup>-3</sup></td>
-                            <td><input class="two" type="number" id="Gibbs-Dens" label="Input density" title="Input density" onblur="" /></td>
+                            <td><input class="two" type="number" id="Gibbs-Dens" label="Input density" title="Input density" onblur="" disabled/></td>
                         </tr>
 
                     </table>
