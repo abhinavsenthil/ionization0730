@@ -188,7 +188,8 @@ and open the template in the editor.
                         <!-- if gibbs dens is enabled below, remove the hidden var-->
                         <input type="hidden" id="Gibbs-Dens" label="Input density" title="Input density" />
                         
-                            <!-- Comment: mar 6: density requested to be taken out -->
+                            <!-- Comment: mar 6: density requested to be taken out
+                                put it back again smh -->
                              <tr>
 
                             <td class="one"><em>ρ</em><sub>H2O</sub>(l) / g cm<sup>-3</sup></td>
@@ -277,14 +278,14 @@ and open the template in the editor.
                     <legend>Set Parameters</legend>
                     <table role="presentation">
                         <tr>
-                            <td class="one" style="width:25%;">Δ<sub>f</sub>G<sup>0</sup><sub>TrPr</sub>: </td>
+                            <td class="one" style="width:25%;">Δ<sub>f</sub>G<sup>0</sup><sub>TrPr</sub>: / kJ mol<sup>-1</sup> </td>
                             <td style="width:20%;"><input class="two2" type="number" id="params1" name="Temp" label="Input  t / oC" title="Input  t / oC" onblur="" /></td>
                             <td style="width:10%;">&nbsp;</td>
                             <td class="one" style="width:25%;">σ<sub>w</sub> / A:</td>
                             <td style="width:20%;"><input class="two2" type="number" id="params5" name="Temp" label="Input  t / oC" title="Input  t / oC" onblur="" /></td>
                         </tr>
                         <tr>
-                            <td class="one" style="width:25%;">ΔS<sub>j</sub><sup>0</sup><sub>TrPr</sub>: </td>
+                            <td class="one" style="width:25%;">ΔS<sub>j</sub><sup>0</sup><sub>TrPr</sub>: / kJ mol<sup>-1</sup>K <sup>-1</sup></td>
                             <td style="width:20%;"><input class="two2" type="number" id="params2" name="Temp" label="Input  t / oC" title="Input  t / oC" onblur="" /></td>
                             <td style="width:10%;">&nbsp;</td>
                             <td class="one" style="width:25%;">C / JK<sup>-1</sup>:</td>

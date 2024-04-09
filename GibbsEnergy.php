@@ -24,8 +24,19 @@ function getSpeciestoProperites($Species){
         "NaCl" => [-94019, 26.25, 0.3397, 3.739, 0.3449, -8.343, 32.03, 0],
         "SiO20" => [-199190, 13.54, 0.523, 0.592, 1.312, -6.855, 1.34, 0]
     );
-
+    
     $properties = $Species_to_properties[$Species];
+    for ($i = 0; $i < count($properties); ++$i) {
+        if ($i == 0) {
+            $properties[$i] = round($properties[$i] * 4.184 / 1000, 1);
+        } else if ($i == 1 || $i == 2 || $i == 5) {
+            $properties[$i] = round($properties[$i] * 4.184, 2);
+        } else if ($i == 3 || $i == 4) {
+            $properties[$i] = round($properties[$i] * 2, 2);
+        } else {
+            continue;
+        }
+    }
 
     return $properties;
 
@@ -181,7 +192,7 @@ function GibbsEnergy($Species, $t, $p, $DilectricConstant, $ro, $paramsArr){
     $Gvalues = $Gvalues / 1000;
 
 
-    return $Gvalues; //*4.184 for kjmol-1
+    return $Gvalues * 4.184; //*4.184 for kjmol-1
 };
 
 function Calcb2($DilectricConstant)
