@@ -1,6 +1,6 @@
 <?php
 
-function getSpeciestoProperites($Species){
+function getSpeciestoProperites($Species, $change = true){
     $Species_to_properties = array(
         "PO43-" => [-234480, -53.00, -0.567, 3.351, 0.776, -72.463, 0.00, -3],
         "HPO42-" => [-260310, -8.00, 0.292, 2.493, 0.873, -35.409, 0.00, -2],
@@ -26,15 +26,17 @@ function getSpeciestoProperites($Species){
     );
     
     $properties = $Species_to_properties[$Species];
-    for ($i = 0; $i < count($properties); ++$i) {
-        if ($i == 0) {
-            $properties[$i] = round($properties[$i] * 4.184 / 1000, 1);
-        } else if ($i == 1 || $i == 2 || $i == 5) {
-            $properties[$i] = round($properties[$i] * 4.184, 2);
-        } else if ($i == 3 || $i == 4) {
-            $properties[$i] = round($properties[$i] * 2, 2);
-        } else {
-            continue;
+    if($change == true){
+        for ($i = 0; $i < count($properties); ++$i) {
+            if ($i == 0) {
+                $properties[$i] = round($properties[$i] * 4.184 / 1000, 1);
+            } else if ($i == 1 || $i == 2 || $i == 5) {
+                $properties[$i] = round($properties[$i] * 4.184, 2);
+            } else if ($i == 3 || $i == 4) {
+                $properties[$i] = round($properties[$i] * 2, 2);
+            } else {
+                continue;
+            }
         }
     }
 
@@ -51,9 +53,23 @@ function GibbsEnergy($Species, $t, $p, $DilectricConstant, $ro, $paramsArr){
 
 
     if(!$paramsArr){
-        $properties = getSpeciestoProperites($Species);}
+        $properties = getSpeciestoProperites($Species, $change = false);}
     else{
         $properties = $paramsArr;
+        for ($i = 0; $i < count($properties); ++$i) {
+            if ($i == 0) {
+                // Inverse conversion from J/mol to cal/mol
+                $properties[$i] = round($properties[$i] * 1000 / 4.184, 1);
+            } else if ($i == 1 || $i == 2 || $i == 5) {
+                // Inverse conversion from J/mol to cal/mol
+                $properties[$i] = round($properties[$i] / 4.184, 2);
+            } else if ($i == 3 || $i == 4) {
+                // Inverse conversion
+                $properties[$i] = round($properties[$i] / 2, 2);
+            } else {
+                continue;
+            }
+        }
     }
 
     
