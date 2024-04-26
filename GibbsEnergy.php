@@ -49,9 +49,8 @@ function GibbsEnergy($Species, $t, $p, $DilectricConstant, $ro, $paramsArr){
     // Create a hashmap that maps each species to the following properties (TABLE 2 of Hall et al 2023) - can convert to DB later if necessary
     // $ro is density, g/cm^3
     // Trun is in Kelvin
+    // also, i misspelled dilectric, too late to change now :)
     
-
-
     if(!$paramsArr){
         $properties = getSpeciestoProperites($Species, $change = false);}
     else{
@@ -71,8 +70,6 @@ function GibbsEnergy($Species, $t, $p, $DilectricConstant, $ro, $paramsArr){
             }
         }
     }
-
-    
 
 
     // All of this is a direct conversion of Dr. Hall's Mathematica code
@@ -114,16 +111,16 @@ function GibbsEnergy($Species, $t, $p, $DilectricConstant, $ro, $paramsArr){
 
     $depsdt25 = -0.36005189; // del eps del  (numerical approximation)
     $dbdt25 = -0.00206593; // del b del t (numerical approximation)
-    $gmsa = 166261.8 * ($zi ** 2) / ($riMSA + $rw * $b6 / $b3) * (1 / $DilectricConstant - 1); // Gmsa
+    $gmsa = 166261.8 * (pow($zi, 2)) / ($riMSA + $rw * $b6 / $b3) * (1 / $DilectricConstant - 1); // Gmsa
 
-    $gmsa25 = 166261.8 * ($zi ** 2) / ($riMSA + $rw * $b625 / $b325) * (1 / $epsref - 1); // Gmsa25
-    $dsmsa25 = (166261.8 * ($zi ** 2) / ($riMSA + $rw * $b625 / $b325) / ($epsref ** 2) * $depsdt25 + 166261.8 * ($zi ** 2) / ($riMSA + $rw * $b625 / $b325) ** 2 * (1 / $epsref - 1) * $rw * $dbdt25 * (-1 / 6 / $b325 - $b625 / $b325 ** 2 / 3)); // smsaref
+    $gmsa25 = 166261.8 * (pow($zi, 2)) / ($riMSA + $rw * $b625 / $b325) * (1 / $epsref - 1); // Gmsa25
+    $dsmsa25 = (166261.8 * (pow($zi, 2)) / ($riMSA + $rw * $b625 / $b325) / (pow($epsref, 2)) * $depsdt25 + 166261.8 * (pow($zi, 2)) / ($riMSA + $rw * $b625 / $b325) ** 2 * (1 / $epsref - 1) * $rw * $dbdt25 * (-1 / 6 / $b325 - $b625 / pow($b325, 2) / 3)); // smsaref
     $G3 = ($gmsa - $gmsa25 + $dsmsa25 * ($Trun - $Tref)); // MSA contributions, Gmsa - Gmsaref + Smsaref(T-Tr)
     $G4 = ($R * $Trun * log($R * $cj * $Trun * $ro / (100 * $Pref)) - 
         $R * $Tref * log($R * $cj * $Tref * $roref / (100 * $Pref)) + ($Trun - $Tref) *
         $R * (-log($roref * $R * $cj * $Tref / (100 * $Pref)) - (1 + 
-            $Tref / $roref * (-0.258666 * 10 ** -3)))); // standard state contributions, Gss-Gssref+ Sssref(T-Tref)
-    $alf25 = 2.5530 * 10 ** -4;
+            $Tref / $roref * (-0.258666 * pow(10, -3))))); // standard state contributions, Gss-Gssref+ Sssref(T-Tref)
+    $alf25 = 2.5530 * (10 ** -4);
 
     $K = $riMSA / $rw; // ratio of radii
     $Nconv = 0.602214; // Na*cm3/A3
@@ -132,15 +129,15 @@ function GibbsEnergy($Species, $t, $p, $DilectricConstant, $ro, $paramsArr){
     $tet25 = pi() / 6 * (2 * $rw) ** 3 * $Nconv * $roref / $Mw;
     $tet125 = 1 - $tet25;
     $F = -log($tet1) + 3 * $K * ($tet / $tet1) + 
-    3 * $K ** 2 * ($tet / $tet1 ** 2 + $tet / $tet1 + log($tet1)) - 
-    $K ** 3 * (((3 * $tet ** 3 - 6 * $tet ** 2 + $tet) / $tet1 ** 3) + 2 * log($tet1)); // Ghs/RT
+    3 * pow($K, 2) * ($tet / $tet1 ** 2 + $tet / $tet1 + log($tet1)) - 
+    pow($K, 3) * (((3 * $tet ** 3 - 6 * $tet ** 2 + $tet) / $tet1 ** 3) + 2 * log($tet1)); // Ghs/RT
     $F25 = -log($tet125) + 3 * $K * ($tet25 / $tet125) + 
-    3 * $K ** 2 * ($tet25 / $tet125 ** 2 + $tet25 / $tet125 + log($tet125)) - 
-    $K ** 3 * (((3 * $tet25 ** 3 - 6 * $tet25 ** 2 + $tet25) / $tet125 ** 3) + 
+    3 * pow($K, 2) * ($tet25 / $tet125 ** 2 + $tet25 / $tet125 + log($tet125)) - 
+    pow($K, 3) * (((3 * $tet25 ** 3 - 6 * $tet25 ** 2 + $tet25) / $tet125 ** 3) + 
         2 * log($tet125)); // Ghs/RT 25C
     $L25 = (1 / $tet125) + 3 * $K * (1 / $tet125 + $tet25 / $tet125 ** 2) + 
     3 * $K ** 2 * (2 * $tet25 / $tet125 ** 3 + (1 + $tet25) / $tet125 ** 2) - 
-    $K ** 3 * (((9 * $tet25 ** 2 - 12 * $tet25 + 1) / $tet125 ** 3) + ((9 * $tet25 ** 3 - 18 * $tet25 ** 2 + 3 * $tet25) / $tet125 ** 4) - (2 / $tet125)); // Lvov 1990 appendix HS
+    pow($K, 3) * (((9 * $tet25 ** 2 - 12 * $tet25 + 1) / $tet125 ** 3) + ((9 * $tet25 ** 3 - 18 * $tet25 ** 2 + 3 * $tet25) / $tet125 ** 4) - (2 / $tet125)); // Lvov 1990 appendix HS
 
     $muhs25 = $R * $Tref * $F25; // G Hard sphere at 25C
     $muhs = $R * $Trun * $F; // G hard sphere
@@ -152,7 +149,7 @@ function GibbsEnergy($Species, $t, $p, $DilectricConstant, $ro, $paramsArr){
     ($riMSA**3 * (($KK**3*2*(1 - $b12/$b3)*pow($b12/$b6, 3)) +
         2*$DilectricConstant*pow(1 + $KK*$b6/$b3, 3) + pow(1 + $KK*$b12/$b6, 3)));
 
-    $Deps25 = 2 * pow(1 + $b225/12, 4) * pow(1 + $b225/3, 2) / (3 * pow(1 - $b225/6, 6))
+    $Deps25 = 2 * pow(1 + $b225/12, 4) * (1 + $b225/3) / (3 * pow(1 - $b225/6, 6))
     + pow(1 + $b225/12, 3) * pow(1 + $b225/3, 2) / (3 * pow(1 - $b225/6, 6))
     + pow(1 + $b225/12, 4) * pow(1 + $b225/3, 2) / pow(1 - $b225/6, 7);
 
@@ -161,31 +158,32 @@ function GibbsEnergy($Species, $t, $p, $DilectricConstant, $ro, $paramsArr){
     $Db625 = -1/6;
     $db2dt25 = $depsdt25 / $Deps25;
 
-    $dGDMSAdb225 = -14393.164 * $dmol**2 * $Deps25 /
-        ($riMSA**3 * (($KK*$b1225/$b625)**3 +
-            2*$KK**3*$b1225**3*($Db1225/$b325 - $b1225*$Db325/$b325**2)/$b625**3 +
-            2*(1 + $KK*$b625/$b325)**3*$epsref))
-        + 14393.164 * $dmol**2 * (-1 + $epsref) *
-        (6*$KK**3*$b1225**2*($Db1225/$b325 - $b1225*$Db325/$b325**2)/$b625**3 +
-            2*$KK**3*$b1225**3*(-$Db1225/$b325 + $b1225*$Db325/$b325**2)/$b625**3 -
-            6*$KK**3*$b1225**3*($Db625/$b625**4) +
-            6*(1 + $KK*$b625/$b325)**2*$epsref*(-$KK*$b625*$Db325/$b325**2 + $KK*$Db625/$b325) +
-            3*(1 + $KK*$b1225/$b625)**2*($KK*$Db1225/$b625 - $KK*$b1225*$Db625/$b625**2) +
-            2*pow(1 + $KK*$b625/$b325, 3) * $Deps25)
-        / ($riMSA**3 * (($KK*$b1225/$b625)**3 +
-            2*$KK**3*$b1225**3*($Db1225/$b325 - $b1225*$Db325/$b325**2)/$b625**3 +
-            2*(1 + $KK*$b625/$b325)**3*$epsref)**2);
+    $dGDMSAdb225 = -14393.164 * pow($dmol, 2) * $Deps25 /
+    ($riMSA**3 * ((1 + $KK*$b1225/$b625)**3 +
+        2*$KK**3*$b1225**3*($Db1225/$b625 - $b1225*$Db325/$b325**2)/$b625**3 +
+        2*pow(1 + $KK*$b625/$b325, 3)*$epsref)) +
+   14393.164 * pow($dmol, 2) * (-1 + $epsref) *
+   (6*$KK**3*$b1225**2*(1 - $b1225/$b325)*$Db1225/$b625**3 +
+       2*$KK**3*$b1225**3*(-$Db1225/$b325 + $b1225*$Db325/pow($b325, 2))/$b625**3 -
+       6*$KK**3*$b1225**3*(1 - $b1225/$b325)*$Db625/pow($b625, 4) +
+       6*pow(1 + $KK*$b625/$b325, 2)*$epsref*(-$KK*$b625*$Db325/pow($b325, 2) + $KK*$Db625/$b325) +
+       3*pow(1 + $KK*$b1225/$b625, 2)*($KK*$Db1225/$b625 - $KK*$b1225*$Db625/pow($b625, 2)) +
+       2*pow(1 + $KK*$b625/$b325, 3) * $Deps25) /
+    ($riMSA**3 * ((1 + $KK*$b1225/$b625)**3 +
+        2*$KK**3*$b1225**3*(1 - $b1225/$b325)/$b625**3 +
+        2*pow(1 + $KK*$b625/$b325, 3)*$epsref)**2);
 
     $SDMSA25 = -$dGDMSAdb225 * $db2dt25;
 
-    $GDMSA25 = -14393.164 * $dmol**2 * ($epsref - 1) /
-        ($riMSA**3 * (($KK*$b1225/$b325)**3 +
-            2*$KK**3*$b1225**3*($Db1225/$b625 - $b1225*$Db625/$b625**2)/$b325**3 +
-            2*(1 + $KK*$b1225/$b625)**3*$epsref));
+    $GDMSA25 = -14393.164 *
+    pow($dmol, 2) * ($epsref - 1) /
+    ($riMSA**3 * (($KK**3*2*(1 - $b1225/$b325)*pow($b1225/$b625, 3)) +
+    2*$epsref*pow(1 + $KK*$b625/$b325, 3) + pow(1 + $KK*$b1225/$b625, 3)));
+
 
     if($properties[7] == 0) {
         $G6 = 0;
-        }
+    }
     else $G6 = $GDMSA - $GDMSA25 + $SDMSA25 * ($Trun - $Tref);
     // Dipole-dipole contributions
     if($Species == "BaSO40" || $Species == "NH30"){
@@ -196,17 +194,8 @@ function GibbsEnergy($Species, $t, $p, $DilectricConstant, $ro, $paramsArr){
     $Gent = $G1 - $Gfaqs;
     $Gref = $G1 - $Gent;
 
-    if($Species == "Ba2+"){
-        $Gvalues= $Gvalues;
-    }
-
-    if($Species == "Na+" && ($t <= 317 && $p <= 120)){
-        $Gvalues= $Gvalues + 11000;
-    }
-
     // to set it to kJ, divide by 1000
     $Gvalues = $Gvalues / 1000;
-
 
     return $Gvalues * 4.184; //*4.184 for kjmol-1
 };

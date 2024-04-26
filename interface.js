@@ -1,5 +1,3 @@
-// Abhinav: validation of species
- // error message
 
 
 function validateSpeciesDataInput(species, TempC, PBar, gibbsDens){
